@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, FC} from 'react';
 import { DataGrid, GridColDef, GridValueGetterParams, GridApi} from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import axios from "axios";
@@ -17,7 +17,7 @@ interface IActivities {
     __v?: number,
 }
 
-const VendorProjectTable = ()=>{
+const VendorProjectTable : FC = ()=>{
     // we can also leave it uninitialized but add in <IActivities[] | undefined>
     const [activities, setActivities]= useState<IActivities[]>([]); 
 
@@ -64,11 +64,11 @@ const VendorProjectTable = ()=>{
             <DataGrid
               rows={rows}
               columns={columns}
-              pageSize={5}
+              pageSize={10}
               rowsPerPageOptions={[5]}
               
             />
-            <pre>{JSON.stringify(activities, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(activities, null, 2)}</pre> */}
           </div>
         );
       }
