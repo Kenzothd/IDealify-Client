@@ -1,12 +1,13 @@
 import "./App.css";
 import VendorProjectTable from "./components/vendor/VendorProjectTable";
+import VendorAccount from "./components/vendor/VendorAccount";
 
 function App() {
   return (
-    <div>
-      <h1>Hello Faith</h1>
-      <VendorProjectTable/>
-    </div>
+    <>
+      <VendorProjectTable />
+      <VendorAccount />
+    </>
   );
 }
 
