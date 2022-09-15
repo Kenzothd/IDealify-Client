@@ -1,10 +1,11 @@
 import "./App.css";
+import VendorAccount from "./components/vendor/VendorAccount";
 
 function App() {
   return (
-    <div>
-      <h1>Hello Faith</h1>
-    </div>
+    <>
+      <VendorAccount />
+    </>
   );
 }
 
