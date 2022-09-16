@@ -101,7 +101,7 @@ const VendorCreateProduct: FC = () => {
 
   return (
     <>
-      <h1>Add Project</h1>
+      <h1>Add New Project</h1>
       <form onSubmit={formik.handleSubmit}>
         <Grid
           container
