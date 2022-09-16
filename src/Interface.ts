@@ -6,7 +6,7 @@ export interface IVendor {
   contactNumber?: number;
   companyName: string;
   registrationNumber: string;
-  incorporationDate: Date;
+  incorporationDate: Date | string;
   registeredOfficeAddress: string;
   uploadedFiles: string[];
   trackedProjects?: string[];
