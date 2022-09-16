@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import urlcat from "urlcat";
 import {
   Button,
   FormControl,
@@ -10,9 +11,12 @@ import {
   TextField,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import axios from "axios";
+const SERVER = import.meta.env.VITE_SERVER;
 const VendorCreateProduct: FC = () => {
   const [design, setDesign] = React.useState("");
   const [housingType, setHousingType] = React.useState("");
+  const [data, setData] = useState(0);
   const designOptions = [
     "Modern",
     "Mid-century modern",
@@ -89,8 +93,22 @@ const VendorCreateProduct: FC = () => {
         )
         .required("Project end date required"),
       designTheme: Yup.string().required("Required"),
-      // i should check here if the client exists
-      clientUsername: Yup.string().required("Required"),
+
+      // there is a bug here whereby it will show prev error message if re-entering, ask simon
+      clientUsername: Yup.string()
+        .required("Required")
+        .test(
+          "value-name",
+          "Client username does not exists",
+          (name: any): any => {
+            const userUrl = urlcat(SERVER, `clients/findByName/${name}`);
+            axios
+              .get(userUrl)
+              .then((res) => setData(res.data.length))
+              .catch((err) => console.log(err));
+            return data;
+          }
+        ),
       totalCosting: Yup.string().required("Required"),
       comments: Yup.string().required("Required"),
     }),
@@ -160,10 +178,7 @@ const VendorCreateProduct: FC = () => {
                     label="Design Theme"
                     id="designTheme"
                     name="designTheme"
-                    onChange={(e) => {
-                      handleDesignChange(e);
-                      formik.handleChange(e);
-                    }}
+                    onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     sx={{ width: "100%" }}
                   >
