@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 
 const VendorCreateProduct: FC = () => {
   const formik = useFormik({
@@ -43,10 +43,18 @@ const VendorCreateProduct: FC = () => {
     <>
       <h1>Account</h1>
       <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={3}>
-          <Grid item md={12}>
+        <Grid
+          container
+          spacing={3}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Grid item sm={12} md={12}>
             <Grid container spacing={2}>
-              <Grid item md={6}>
+              <Grid item xs={12} sm={6} md={6}>
                 <TextField
                   required
                   id="projectName"
@@ -62,7 +70,7 @@ const VendorCreateProduct: FC = () => {
                   <div>{formik.errors.projectName}</div>
                 ) : null}
               </Grid>
-              <Grid item md={6}>
+              <Grid item xs={12} sm={6} md={6}>
                 <TextField
                   required
                   autoComplete="off"
@@ -82,9 +90,9 @@ const VendorCreateProduct: FC = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item md={12}>
+          <Grid item sm={12} md={12}>
             <Grid container spacing={2}>
-              <Grid item md={4}>
+              <Grid item xs={12} sm={4} md={4}>
                 <TextField
                   required
                   autoComplete="off"
@@ -101,7 +109,7 @@ const VendorCreateProduct: FC = () => {
                   <div>{formik.errors.designTheme}</div>
                 ) : null}
               </Grid>
-              <Grid item md={4}>
+              <Grid item xs={12} sm={4} md={4}>
                 <TextField
                   required
                   autoComplete="off"
@@ -117,7 +125,7 @@ const VendorCreateProduct: FC = () => {
                   <div>{formik.errors.housingType}</div>
                 ) : null}
               </Grid>
-              <Grid item md={4}>
+              <Grid item xs={12} sm={4} md={4}>
                 <TextField
                   required
                   autoComplete="off"
@@ -136,9 +144,9 @@ const VendorCreateProduct: FC = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item md={12}>
+          <Grid item sm={12} md={12}>
             <Grid container spacing={2}>
-              <Grid item md={6}>
+              <Grid item xs={6} sm={6} md={6}>
                 <TextField
                   required
                   autoComplete="off"
@@ -159,7 +167,7 @@ const VendorCreateProduct: FC = () => {
                   <div>{formik.errors.projectStartDate}</div>
                 ) : null}
               </Grid>
-              <Grid item md={6}>
+              <Grid item xs={6} sm={6} md={6}>
                 <TextField
                   required
                   autoComplete="off"
@@ -182,7 +190,7 @@ const VendorCreateProduct: FC = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item md={12}>
+          <Grid item xs={12} sm={12} md={12}>
             <TextField
               required
               autoComplete="off"
@@ -204,8 +212,18 @@ const VendorCreateProduct: FC = () => {
               <div>{formik.errors.comments}</div>
             ) : null}
           </Grid>
-          <Grid item md={12}>
-            <button type="submit">submit</button>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button type="submit">Submit</Button>
           </Grid>
         </Grid>
       </form>
