@@ -36,6 +36,7 @@ const VendorCreateProduct: FC = () => {
     "Hollywood Regency",
     "Modern farmhouse",
     "Black & White",
+    "Others",
   ];
 
   const housingOptions = [
