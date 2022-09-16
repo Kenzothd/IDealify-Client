@@ -12,7 +12,8 @@ import {
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 const VendorCreateProduct: FC = () => {
   const [design, setDesign] = React.useState("");
-  const options = [
+  const [housingType, setHousingType] = React.useState("");
+  const designOptions = [
     "Modern",
     "Mid-century modern",
     "Minimalist",
@@ -37,8 +38,29 @@ const VendorCreateProduct: FC = () => {
     "Black & White",
   ];
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const housingOptions = [
+    "1-Room Flat (HDB)",
+    "2-Room Flat (HDB)",
+    "3-Room Flat (HDB)",
+    "4-Room Flat (HDB)",
+    "5-Room Flat (HDB)",
+    "Executive Flat (HDB)",
+    "Studio Apartment (HDB)",
+    "Detached House",
+    "Semi-detached House",
+    "Terrace House",
+    "Condominium",
+    "Executive Condominium",
+    "Apartment",
+    "Others",
+  ];
+
+  const handleDesignChange = (event: SelectChangeEvent) => {
     setDesign(event.target.value);
+  };
+
+  const handleHousingChange = (event: SelectChangeEvent) => {
+    setHousingType(event.target.value);
   };
 
   const formik = useFormik({
@@ -65,7 +87,7 @@ const VendorCreateProduct: FC = () => {
           `Date should not be later than ${new Date().toLocaleDateString()}`
         )
         .required("Project end date required"),
-      // designTheme: Yup.string().required("Required"),
+      designTheme: Yup.string().required("Required"),
       clientUsername: Yup.string().required("Required"),
       totalCosting: Yup.string().required("Required"),
       comments: Yup.string().required("Required"),
@@ -137,10 +159,14 @@ const VendorCreateProduct: FC = () => {
                     label="Design Theme"
                     id="designTheme"
                     name="designTheme"
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleDesignChange(e);
+                      formik.handleChange(e);
+                    }}
+                    onBlur={formik.handleBlur}
                     sx={{ width: "100%" }}
                   >
-                    {options.map((option, i) => (
+                    {designOptions.map((option, i) => (
                       <MenuItem key={i} value={option}>
                         {option}
                       </MenuItem>
@@ -152,17 +178,27 @@ const VendorCreateProduct: FC = () => {
                 ) : null}
               </Grid>
               <Grid item xs={12} sm={4} md={4}>
-                <TextField
-                  required
-                  autoComplete="off"
-                  variant="filled"
-                  label="Housing Type"
-                  id="housingType"
-                  name="housingType"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  sx={{ width: "100%" }}
-                />
+                <FormControl variant="filled" sx={{ width: "100%" }}>
+                  <InputLabel required>Housing Type</InputLabel>
+                  <Select
+                    value={housingType}
+                    label="Housing Type"
+                    id="housingType"
+                    name="housingType"
+                    onChange={(e) => {
+                      handleHousingChange(e);
+                      formik.handleChange(e);
+                    }}
+                    onBlur={formik.handleBlur}
+                    sx={{ width: "100%" }}
+                  >
+                    {housingOptions.map((option, i) => (
+                      <MenuItem key={i} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
                 {formik.touched.housingType && formik.errors.housingType ? (
                   <div>{formik.errors.housingType}</div>
                 ) : null}
