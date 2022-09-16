@@ -37,7 +37,7 @@ const VendorAccount: FC = () => {
   console.log(vendorAccount);
 
   useEffect(() => {
-    const url = urlcat(SERVER, "/vendors/id/632446b43643aa447806ba68");
+    const url = urlcat(SERVER, "/vendors/id/63242cc3aa5c38de67a9dec6");
 
     axios
       .get(url)
@@ -108,7 +108,7 @@ const VendorAccount: FC = () => {
       console.log("hi");
       setToggle(!toggle);
       //   console.log(values);
-      const url = urlcat(SERVER, `vendors/id/632446b43643aa447806ba68`);
+      const url = urlcat(SERVER, `vendors/id/63242cc3aa5c38de67a9dec6`);
       axios
         .put(url, values)
         .then((res) => console.log(res.data))
@@ -139,11 +139,11 @@ const VendorAccount: FC = () => {
               <div>{formik.errors.contactPerson}</div>
             ) : null}
 
-            <label htmlFor="userName">Username</label>
+            <label htmlFor="username">Username</label>
             <input
               required
-              id="userName"
-              name="userName"
+              id="username"
+              name="username"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -240,13 +240,13 @@ const VendorAccount: FC = () => {
               <div>{formik.errors.incorporationDate}</div>
             ) : null}
 
-            <label htmlFor="registeredOfficeAdd">
+            <label htmlFor="registeredOfficeAddress">
               Registered Office Address
             </label>
             <input
               required
-              id="registeredOfficeAdd"
-              name="registeredOfficeAdd"
+              id="registeredOfficeAddress"
+              name="registeredOfficeAddress"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
