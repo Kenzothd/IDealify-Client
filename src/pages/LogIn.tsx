@@ -1,6 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 
-const LogIn = ()=>{
+const LogIn: FC = () => {
+    return (
+        <h1>Login</h1>
+    )
 
 }
 
