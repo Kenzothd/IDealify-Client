@@ -13,6 +13,7 @@ import { IVendor } from "../../Interface";
 import axios from "axios";
 import { date } from "yup/lib/locale";
 import format from "date-fns/format";
+import Button from "@mui/material/Button";
 
 const SERVER = import.meta.env.VITE_SERVER;
 
@@ -27,7 +28,7 @@ const VendorAccount: FC = () => {
     registrationNumber: "",
     incorporationDate: new Date(),
     registeredOfficeAddress: "",
-    uploadedFiles: ["", ""],
+    uploadedFiles: [""],
     trackedProjects: [""],
     brandSummary: "",
   });
@@ -44,18 +45,31 @@ const VendorAccount: FC = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  const FILE_SIZE = 160 * 1024;
+  const SUPPORTED_FORMATS = [
+    "image/jpg",
+    "image/jpeg",
+    "image/gif",
+    "image/png",
+  ];
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       contactPerson: vendorAccount.contactPersonName,
+      username: vendorAccount.username,
       email: vendorAccount.email,
       password: vendorAccount.password,
+      contactNumber: vendorAccount.contactNumber,
       companyName: vendorAccount.companyName,
       registrationNumber: vendorAccount.registrationNumber,
       incorporationDate: vendorAccount.incorporationDate,
+      registeredOfficeAddress: vendorAccount.registeredOfficeAddress,
+      //   uploadedfiles: vendorAccount.uploadedFiles,
     },
     validationSchema: Yup.object({
       contactPerson: Yup.string().required("Required"),
+      username: Yup.string().required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string()
         .matches(
@@ -63,6 +77,7 @@ const VendorAccount: FC = () => {
           "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
         )
         .required("Required"),
+      contactNumber: Yup.number().required("Required"),
       companyName: Yup.string().required("Required"),
       registrationNumber: Yup.string()
         .min(9, "Must be 9 characters or more")
@@ -74,11 +89,30 @@ const VendorAccount: FC = () => {
           `Date should be equal or earlier than ${new Date().toLocaleDateString()}`
         )
         .required("End Date required"),
+      registeredOfficeAddress: Yup.string().required("Required"),
+      //   uploadedFiles: Yup.mixed()
+      //     .required("A file is required")
+      //     .test(
+      //       "fileSize",
+      //       "File too large",
+      //       (value) => value && value.size <= FILE_SIZE
+      //     )
+      //     .test(
+      //       "fileFormat",
+      //       "Unsupported Format",
+      //       (value) => value && SUPPORTED_FORMATS.includes(value.type)
+      //     ),
     }),
     onSubmit: (values) => {
+      console.log(values.username);
       console.log("hi");
       setToggle(!toggle);
-      console.log(values);
+      //   console.log(values);
+      const url = urlcat(SERVER, `vendors/id/632446b43643aa447806ba68`);
+      axios
+        .put(url, values)
+        .then((res) => console.log(res.data))
+        .catch((error) => console.log(error));
     },
   });
 
@@ -103,6 +137,20 @@ const VendorAccount: FC = () => {
             />
             {formik.touched.contactPerson && formik.errors.contactPerson ? (
               <div>{formik.errors.contactPerson}</div>
+            ) : null}
+
+            <label htmlFor="userName">Username</label>
+            <input
+              required
+              id="userName"
+              name="userName"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.username}
+            />
+            {formik.touched.username && formik.errors.username ? (
+              <div>{formik.errors.username}</div>
             ) : null}
 
             <label htmlFor="email">email</label>
@@ -132,7 +180,20 @@ const VendorAccount: FC = () => {
               <div>{formik.errors.password}</div>
             ) : null}
 
-            <label htmlFor="companyName">companyName</label>
+            <label htmlFor="contactNumber">Contact Number</label>
+            <input
+              required
+              id="contactNumber"
+              name="contactNumber"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.contactNumber}
+            />
+            {formik.touched.contactNumber && formik.errors.contactNumber ? (
+              <div>{formik.errors.contactNumber}</div>
+            ) : null}
+
+            <label htmlFor="companyName">Company Name</label>
             <input
               required
               id="companyName"
@@ -146,7 +207,7 @@ const VendorAccount: FC = () => {
               <div>{formik.errors.companyName}</div>
             ) : null}
 
-            <label htmlFor="registrationNumber">registrationNumber</label>
+            <label htmlFor="registrationNumber">Registration Number</label>
             <input
               required
               id="registrationNumber"
@@ -161,7 +222,7 @@ const VendorAccount: FC = () => {
               <div>{formik.errors.registrationNumber}</div>
             ) : null}
 
-            <label htmlFor="incorporationDate">incorporationDate</label>
+            <label htmlFor="incorporationDate">Incorporation Date</label>
             <input
               required
               type="date"
@@ -178,6 +239,41 @@ const VendorAccount: FC = () => {
             formik.errors.incorporationDate ? (
               <div>{formik.errors.incorporationDate}</div>
             ) : null}
+
+            <label htmlFor="registeredOfficeAdd">
+              Registered Office Address
+            </label>
+            <input
+              required
+              id="registeredOfficeAdd"
+              name="registeredOfficeAdd"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.registeredOfficeAddress}
+            />
+            {formik.touched.registeredOfficeAddress &&
+            formik.errors.registeredOfficeAddress ? (
+              <div>{formik.errors.registeredOfficeAddress}</div>
+            ) : null}
+
+            {/* <label htmlFor="uploadedFiles">Upload Files</label>
+            <Button variant="contained" component="label">
+              Upload File
+              <input
+                id="uploadedFiles"
+                name="uploadedFiles"
+                type="file"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.uploadedfiles}
+                hidden
+              />
+              {formik.touched.uploadedfiles && formik.errors.uploadedfiles ? (
+                <div>{formik.errors.uploadedfiles}</div>
+              ) : null}
+            </Button> */}
+
             <button type="submit">done</button>
           </form>
         </>
@@ -192,9 +288,15 @@ const VendorAccount: FC = () => {
               id="contactPerson"
               name="contactPerson"
               value={vendorAccount?.contactPersonName}
-              InputProps={{
-                readOnly: true,
-              }}
+            />
+          </div>
+          <div>
+            <label htmlFor="username">Username</label>
+            <TextField
+              disabled
+              id="username"
+              name="username"
+              value={vendorAccount?.username}
             />
           </div>
           <div>
@@ -204,9 +306,6 @@ const VendorAccount: FC = () => {
               id="email"
               name="email"
               value={vendorAccount?.email}
-              InputLabelProps={{
-                shrink: true,
-              }}
             />
           </div>
           <div>
@@ -217,11 +316,15 @@ const VendorAccount: FC = () => {
               name="password"
               type="password"
               value={vendorAccount?.password}
-              InputProps={{
-                readOnly: true,
-              }}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+            />
+          </div>
+          <div>
+            <label htmlFor="contactNumber">Contact Number</label>
+            <TextField
+              disabled
+              id="contactNumber"
+              name="contactNumber"
+              value={vendorAccount?.contactNumber}
             />
           </div>
           <div>
@@ -231,11 +334,6 @@ const VendorAccount: FC = () => {
               id="companyName"
               name="companyName"
               value={vendorAccount?.companyName}
-              InputProps={{
-                readOnly: true,
-              }}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
             />
           </div>
           <div>
@@ -245,11 +343,6 @@ const VendorAccount: FC = () => {
               id="registrationNumber"
               name="registrationNumber"
               value={vendorAccount?.registrationNumber}
-              InputProps={{
-                readOnly: true,
-              }}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
             />
           </div>
           <div>
@@ -257,19 +350,36 @@ const VendorAccount: FC = () => {
             <TextField
               disabled
               type="date"
-              sx={{ width: 220 }}
-              InputLabelProps={{
-                shrink: true,
-              }}
               id="incorporationDate"
               name="incorporationDate"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              // value={format(
-              //   new Date(vendorAccount?.incorporationDate),
-              //   "yyyy-MM-dd"
-              // )}
+              value={format(
+                new Date(vendorAccount?.incorporationDate),
+                "yyyy-MM-dd"
+              )}
             />
+          </div>
+          <div>
+            <label htmlFor="registrationOfficeAddress">
+              Registered Office Address
+            </label>
+            <TextField
+              disabled
+              id="registrationOfficeAddress"
+              name="registrationOfficeAddress"
+              value={vendorAccount?.registeredOfficeAddress}
+            />
+          </div>
+          <div>
+            <label htmlFor="uploadedFiles">Upload Files</label>
+            <Button disabled variant="contained" component="label">
+              Upload File
+              <input
+                id="uploadedFiles"
+                name="uploadedFiles"
+                type="file"
+                hidden
+              />
+            </Button>
           </div>
           <button onClick={handlerEdit}>Edit</button>
         </>
