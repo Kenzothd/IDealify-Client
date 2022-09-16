@@ -8,7 +8,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 // When using TypeScript 4.x and above
 import type {} from "@mui/x-date-pickers/themeAugmentation";
 import urlcat from "urlcat";
-import react, { useState, useEffect } from "react";
+import react, { FC, useState, useEffect } from "react";
 import { IVendor } from "../../Interface";
 import axios from "axios";
 import { date } from "yup/lib/locale";
@@ -16,7 +16,7 @@ import format from "date-fns/format";
 
 const SERVER = import.meta.env.VITE_SERVER;
 
-const VendorAccount = () => {
+const VendorAccount: FC = () => {
   const [vendorAccount, setVendorAccount] = useState<IVendor>({
     email: "",
     contactPersonName: "",
@@ -24,19 +24,19 @@ const VendorAccount = () => {
     password: "",
     contactNumber: 0,
     companyName: "",
-    registrationNumber: "doiqfoeqwf0",
-    incorporationDate: new Date("2015-03-25"),
+    registrationNumber: "",
+    incorporationDate: new Date(),
     registeredOfficeAddress: "",
-    uploadedFiles: ["url", "url"],
-    trackedProjects: ["p1", "p2"],
+    uploadedFiles: ["", ""],
+    trackedProjects: [""],
     brandSummary: "",
   });
   const [toggle, setToggle] = useState<boolean>(false);
 
-  //   console.log(vendorAccount);
+  console.log(vendorAccount);
 
   useEffect(() => {
-    const url = urlcat(SERVER, "/vendors/id/6321b18a94bfa21bbb0657e4");
+    const url = urlcat(SERVER, "/vendors/id/632446b43643aa447806ba68");
 
     axios
       .get(url)
@@ -45,18 +45,17 @@ const VendorAccount = () => {
   }, []);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      contactPerson: "",
-      email: "",
-      password: "",
-      companyName: "",
-      registrationNumber: "",
-      incorporationDate: "",
+      contactPerson: vendorAccount.contactPersonName,
+      email: vendorAccount.email,
+      password: vendorAccount.password,
+      companyName: vendorAccount.companyName,
+      registrationNumber: vendorAccount.registrationNumber,
+      incorporationDate: vendorAccount.incorporationDate,
     },
     validationSchema: Yup.object({
-      contactPerson: Yup.string()
-        .max(15, "Must be 15 characters or less")
-        .required("Required"),
+      contactPerson: Yup.string().required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string()
         .matches(
@@ -77,9 +76,9 @@ const VendorAccount = () => {
         .required("End Date required"),
     }),
     onSubmit: (values) => {
-      //   setToggle(!toggle);
+      console.log("hi");
+      setToggle(!toggle);
       console.log(values);
-      console.log(toggle);
     },
   });
 
@@ -94,73 +93,68 @@ const VendorAccount = () => {
           <h1>Account</h1>
           <form onSubmit={formik.handleSubmit}>
             <label htmlFor="contactPerson">Person In-Charge</label>
-            <TextField
+            <input
               required
               id="contactPerson"
               name="contactPerson"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={vendorAccount?.contactPersonName}
+              value={formik.values.contactPerson}
             />
             {formik.touched.contactPerson && formik.errors.contactPerson ? (
               <div>{formik.errors.contactPerson}</div>
             ) : null}
 
             <label htmlFor="email">email</label>
-            <TextField
+            <input
               required
-              label="Required"
               id="email"
               name="email"
               type="email"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={vendorAccount?.email}
+              value={formik.values.email}
             />
             {formik.touched.email && formik.errors.email ? (
               <div>{formik.errors.email}</div>
             ) : null}
 
             <label htmlFor="password">password</label>
-            <TextField
+            <input
               required
-              label="Required"
               id="password"
               name="password"
-              type="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={vendorAccount?.password}
+              value={formik.values.password}
             />
             {formik.touched.password && formik.errors.password ? (
               <div>{formik.errors.password}</div>
             ) : null}
 
             <label htmlFor="companyName">companyName</label>
-            <TextField
+            <input
               required
-              label="Required"
               id="companyName"
               name="companyName"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={vendorAccount?.companyName}
+              value={formik.values.companyName}
             />
             {formik.touched.companyName && formik.errors.companyName ? (
               <div>{formik.errors.companyName}</div>
             ) : null}
 
             <label htmlFor="registrationNumber">registrationNumber</label>
-            <TextField
+            <input
               required
-              label="Required"
               id="registrationNumber"
               name="registrationNumber"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={vendorAccount?.registrationNumber}
+              value={formik.values.registrationNumber}
             />
             {formik.touched.registrationNumber &&
             formik.errors.registrationNumber ? (
@@ -168,20 +162,15 @@ const VendorAccount = () => {
             ) : null}
 
             <label htmlFor="incorporationDate">incorporationDate</label>
-            <TextField
+            <input
               required
-              label="Required"
               type="date"
-              sx={{ width: 220 }}
-              InputLabelProps={{
-                shrink: true,
-              }}
               id="incorporationDate"
               name="incorporationDate"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={format(
-                new Date(vendorAccount?.incorporationDate),
+                new Date(formik.values.incorporationDate),
                 "yyyy-MM-dd"
               )}
             />
@@ -189,7 +178,7 @@ const VendorAccount = () => {
             formik.errors.incorporationDate ? (
               <div>{formik.errors.incorporationDate}</div>
             ) : null}
-            <button type="submit">submit</button>
+            <button type="submit">done</button>
           </form>
         </>
       ) : (
@@ -200,7 +189,7 @@ const VendorAccount = () => {
             <label htmlFor="contactPerson">Person In-Charge</label>
             <TextField
               disabled
-              id="icontactPerson"
+              id="contactPerson"
               name="contactPerson"
               value={vendorAccount?.contactPersonName}
               InputProps={{
@@ -212,8 +201,8 @@ const VendorAccount = () => {
             <label htmlFor="email">Email</label>
             <TextField
               disabled
-              id="icontactPerson"
-              name="contactPerson"
+              id="email"
+              name="email"
               value={vendorAccount?.email}
               InputLabelProps={{
                 shrink: true,
@@ -224,8 +213,9 @@ const VendorAccount = () => {
             <label htmlFor="password">Password</label>
             <TextField
               disabled
-              id="incorporationDate"
-              name="incorporationDate"
+              id="password"
+              name="password"
+              type="password"
               value={vendorAccount?.password}
               InputProps={{
                 readOnly: true,
