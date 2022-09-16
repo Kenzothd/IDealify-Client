@@ -11,14 +11,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/vendor/project-tracker"
-          element={<VendorProjectTable />}
-        />
         <Route path="/activity/:id" element={<Activity />} />
         <Route path="/client/sign-up" element={<ClientSignUp />} />
         <Route path="/vendor/sign-up" element={<VendorSignUp />} />
         <Route path="/vendor/account" element={<VendorAccount />} />
+        <Route path="/vendor/project" element={<VendorProjectTable />} />
       </Routes>
     </BrowserRouter>
   );
