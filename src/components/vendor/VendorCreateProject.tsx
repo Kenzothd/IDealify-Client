@@ -89,12 +89,12 @@ const VendorCreateProduct: FC = () => {
         )
         .required("Project end date required"),
       designTheme: Yup.string().required("Required"),
+      // i should check here if the client exists
       clientUsername: Yup.string().required("Required"),
       totalCosting: Yup.string().required("Required"),
       comments: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      //   setToggle(!toggle);
       console.log(values);
     },
   });
