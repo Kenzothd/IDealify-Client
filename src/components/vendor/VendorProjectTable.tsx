@@ -11,17 +11,9 @@ import axios from "axios";
 import urlcat from "urlcat";
 const SERVER = import.meta.env.VITE_SERVER;
 import format from "date-fns/format";
-interface IActivities {
-  _id: string;
-  activityTitle: string;
-  activityDescription: string;
-  activityStartDate: Date;
-  activityEndDate: Date;
-  personInCharge: string;
-  status: string;
-  photos: string[];
-  __v?: number;
-}
+import { IActivities } from "../../Interface";
+
+// currently fetching all activities instead of vendor's specific activities 
 
 const VendorProjectTable: FC = () => {
   // we can also leave it uninitialized but add in <IActivities[] | undefined>

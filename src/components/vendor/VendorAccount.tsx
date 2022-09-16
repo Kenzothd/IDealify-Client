@@ -36,7 +36,7 @@ const VendorAccount = () => {
   //   console.log(vendorAccount);
 
   useEffect(() => {
-    const url = urlcat(SERVER, "/vendors/id/6323ee4d75db88b24321a1ef");
+    const url = urlcat(SERVER, "/vendors/id/6321b18a94bfa21bbb0657e4");
 
     axios
       .get(url)
@@ -275,10 +275,10 @@ const VendorAccount = () => {
               name="incorporationDate"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={format(
-                new Date(vendorAccount?.incorporationDate),
-                "yyyy-MM-dd"
-              )}
+              // value={format(
+              //   new Date(vendorAccount?.incorporationDate),
+              //   "yyyy-MM-dd"
+              // )}
             />
           </div>
           <button onClick={handlerEdit}>Edit</button>

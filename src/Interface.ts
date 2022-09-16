@@ -40,3 +40,15 @@ export interface IClient {
   // favourites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Portfolio" }],
   // messages: [{ type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
 }
+
+export interface IActivities {
+  _id: string;
+  activityTitle: string;
+  activityDescription: string;
+  activityStartDate: Date;
+  activityEndDate: Date;
+  personInCharge: string;
+  status: string;
+  photos: string[];
+  __v?: number;
+}
