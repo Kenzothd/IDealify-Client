@@ -5,7 +5,7 @@ import VendorAccount from "./components/vendor/VendorAccount";
 function App() {
   return (
     <>
-      <VendorProjectTable />
+      {/* <VendorProjectTable /> */}
       <VendorAccount />
     </>
   );
