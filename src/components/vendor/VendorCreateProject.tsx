@@ -1,9 +1,46 @@
 import React, { FC, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Button, Grid, TextField } from "@mui/material";
-
+import {
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  TextField,
+} from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 const VendorCreateProduct: FC = () => {
+  const [design, setDesign] = React.useState("");
+  const options = [
+    "Modern",
+    "Mid-century modern",
+    "Minimalist",
+    "Scandinavian",
+    "Industrial style",
+    "Contemporary interior design",
+    "Urban style",
+    "Traditional / Classic style",
+    "Transitional style",
+    "Art Deco style",
+    "Country style",
+    "Coastal style",
+    "Shabby chic",
+    "Eclectic",
+    "Vintage style",
+    "Asian / Zen interior design",
+    "Bohemian style",
+    "Tropical style",
+    "Rustic style ",
+    "Hollywood Regency",
+    "Modern farmhouse",
+    "Black & White",
+  ];
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setDesign(event.target.value);
+  };
+
   const formik = useFormik({
     initialValues: {
       projectName: "",
@@ -28,7 +65,7 @@ const VendorCreateProduct: FC = () => {
           `Date should not be later than ${new Date().toLocaleDateString()}`
         )
         .required("Project end date required"),
-      designTheme: Yup.string().required("Required"),
+      // designTheme: Yup.string().required("Required"),
       clientUsername: Yup.string().required("Required"),
       totalCosting: Yup.string().required("Required"),
       comments: Yup.string().required("Required"),
@@ -41,7 +78,7 @@ const VendorCreateProduct: FC = () => {
 
   return (
     <>
-      <h1>Account</h1>
+      <h1>Add Project</h1>
       <form onSubmit={formik.handleSubmit}>
         <Grid
           container
@@ -93,18 +130,23 @@ const VendorCreateProduct: FC = () => {
           <Grid item sm={12} md={12}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={4} md={4}>
-                <TextField
-                  required
-                  autoComplete="off"
-                  variant="filled"
-                  label="Design Theme"
-                  id="designTheme"
-                  name="designTheme"
-                  type="text"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  sx={{ width: "100%" }}
-                />
+                <FormControl variant="filled" sx={{ width: "100%" }}>
+                  <InputLabel required>Design Theme</InputLabel>
+                  <Select
+                    value={design}
+                    label="Design Theme"
+                    id="designTheme"
+                    name="designTheme"
+                    onChange={handleChange}
+                    sx={{ width: "100%" }}
+                  >
+                    {options.map((option, i) => (
+                      <MenuItem key={i} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
                 {formik.touched.designTheme && formik.errors.designTheme ? (
                   <div>{formik.errors.designTheme}</div>
                 ) : null}
