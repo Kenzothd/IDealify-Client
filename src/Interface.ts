@@ -8,7 +8,7 @@ export interface IVendor {
   registrationNumber: string;
   incorporationDate: Date | string;
   registeredOfficeAddress: string;
-  uploadedFiles: string[];
+  uploadedFiles?: string[];
   trackedProjects?: string[];
   brandSummary?: string;
   // messages: [{type: mongoose.Schema.Types.ObjectId, ref: "Message" }],

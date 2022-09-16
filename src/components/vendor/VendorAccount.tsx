@@ -144,7 +144,6 @@ const VendorAccount: FC = () => {
               required
               id="userName"
               name="userName"
-              type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.username}
