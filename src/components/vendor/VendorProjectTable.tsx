@@ -1,4 +1,5 @@
 import React, { useEffect, useState, FC } from "react";
+import {useNavigate} from "react-router-dom"
 import {
   DataGrid,
   GridColDef,
@@ -26,6 +27,7 @@ const VendorProjectTable: FC = () => {
   // we can also leave it uninitialized but add in <IActivities[] | undefined>
   const [activities, setActivities] = useState<IActivities[]>([]);
   const [refreshActivities, setRefreshActivities] = useState<boolean>(false);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const url = urlcat(SERVER, "/activities");
@@ -52,17 +54,6 @@ const VendorProjectTable: FC = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
-        const onClick = (e: React.MouseEvent) => {
-          console.log(e.target);
-          console.log(params.row.status);
-        };
-
-        // (params.row.status === "Upcoming" && "purple") ||
-        //       (params.row.status === "Pending" && "gray") ||
-        //       (params.row.status === "In Progress" && "yellow") ||
-        //       (params.row.status === "Completed" && "green") ||
-        //       (params.row.status === "Cancelled" && "red"),
-
         let bgColor: string;
         switch (params.row.status){
           case "Upcoming":
@@ -133,7 +124,9 @@ const VendorProjectTable: FC = () => {
       renderCell: (params) => {
         const onClick = (e: React.MouseEvent) => {
           console.log(e.target);
-          console.log(params.row);
+          const id = params.row.id;
+          navigate(`/activity/${id}`)
+
         };
         return <Button onClick={onClick} sx={{backgroundColor:"yellow", color:"black",  borderRadius: 8,}}>view</Button>;
       },
