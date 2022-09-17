@@ -82,9 +82,7 @@ const VendorCreateProduct: FC = () => {
     validationSchema: Yup.object({
       projectName: Yup.string().required("Required"),
       housingType: Yup.string().required("Required"),
-      projectStartDate: Yup.date()
-        .default(new Date())
-        .required("Project start date required"),
+      projectStartDate: Yup.date().default(new Date()),
       projectEndDate: Yup.date()
         .default(new Date())
         .min(
