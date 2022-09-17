@@ -17,7 +17,7 @@ const VendorLoginForm: FC = () => {
 
     const { setTokenState } = useContext(TokenContext) as ITokenContext
 
-
+    const navigateToProjects = useNavigate()
 
     const formik = useFormik({
         initialValues: {
@@ -36,6 +36,8 @@ const VendorLoginForm: FC = () => {
             axios.post(url, values)
                 .then(res => {
                     setTokenState(res.data.token)
+                    navigateToProjects('/vendor/secret')
+
                 })
                 .catch(error => setError(error.response.data.error))
 
@@ -76,7 +78,7 @@ const VendorLoginForm: FC = () => {
 
 
 
-            <button type="submit">Sign Up</button>
+            <button type="submit">Log In</button>
             <span>{error}</span>
         </form>
     )
