@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from "react";
 import urlcat from "urlcat";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from "react-router-dom";
 
 interface IUsers {
     _id?: String;
@@ -17,18 +18,17 @@ interface IUsers {
 
 const ClientSignUpForm: FC = () => {
 
-    const [currentUsers, setCurrentUsers] = useState<Object[]>([])
+    // const [currentUsers, setCurrentUsers] = useState<Object[]>([])
     const [error, setError] = useState<String>('')
 
     const SERVER = import.meta.env.VITE_SERVER;
     const url = urlcat(SERVER, "/clients");
+    const findNameUrl = urlcat(SERVER, "/clients/name");
 
-    useEffect(() => {
-        axios(url).then(res => setCurrentUsers(res.data))
-    }, [])
+    // useEffect(() => {
+    //     axios(url).then(res => setCurrentUsers(res.data))
+    // }, [])
 
-    // console.log(currentUsers)
-    // console.log(currentUsers.map((user: IUsers) => user.username).includes('clovis'))
 
 
     const formik = useFormik({
@@ -41,16 +41,36 @@ const ClientSignUpForm: FC = () => {
         validationSchema: Yup.object(
             {
                 email: Yup.string().email("Invalid email address").required("Required"),
+                // .test('testing', 'Email is in used', function (value): boolean {
+                //     const foundEmailTest = currentUsers.map((user: IUsers) => user.email).some((email) => email?.toLowerCase() === value?.toLowerCase())
+                //     console.log(`this is input: ${value}, this is ${foundEmailTest}`)
+                //     return !foundEmailTest
+                // }),
                 fullName: Yup.string().required("Required"),
                 username: Yup.string()
                     .min(3, "Must be 3 characters or more")
                     .max(20, 'Must be 20 characters or less')
                     .required('Required')
-                    .test('testing', 'Username Existed', function (value: any): any {
-                        const foundUserTest = currentUsers.map((user: IUsers) => user.username).some((name) => name === value)
-                        console.log(`this is input: ${value}, this is ${foundUserTest}`)
-                        return !foundUserTest
-                    }),
+                // .test('testing', 'Username is in used', function (value): boolean {
+                //     const foundUserTest = currentUsers.map((user: IUsers) => user.username).some((name) => name?.toLowerCase() === value?.toLowerCase())
+                //     console.log(`this is input: ${value}, this is ${foundUserTest}`)
+                //     return !foundUserTest
+                // })
+                // .test('testing', 'Username is in used', function (value): boolean {
+                //     const user = { username: value }
+                //     console.log(user)
+                //     setTimeout(() => {
+                //         axios.post(url, user)
+                //             .then(res => console.log(res.data))
+                //             .catch(error => setError(error.response.data.error))
+                //     }, 2000)
+
+
+                //     const a = error === '' ? true : false
+
+                //     return a
+                // })
+                ,
                 password: Yup.string()
                     .matches(
                         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
@@ -63,6 +83,8 @@ const ClientSignUpForm: FC = () => {
             axios.post(url, values)
                 .then(res => console.log(res.data))
                 .catch(error => setError(error.response.data.error))
+
+
 
         },
     });
@@ -124,6 +146,7 @@ const ClientSignUpForm: FC = () => {
 
 
             <button type="submit">Sign Up</button>
+            <span>{error}</span>
         </form>
     );
 };

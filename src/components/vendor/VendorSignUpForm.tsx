@@ -5,11 +5,31 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 
+//TO GET FROM KENZO
+
+interface IVendor {
+    email: string;
+    contactPersonName: string;
+    username: string;
+    password: string;
+    contactNumber?: number;
+    companyName: string;
+    registrationNumber: string;
+    incorporationDate: Date;
+    registeredOfficeAddress: string;
+    uploadedFiles: string[];
+    trackedProjects?: string[];
+    brandSummary?: string;
+    // messages: [{type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
+    // portfolio: [{type: mongoose.Schema.Types.ObjectId, ref: "Portfolio" }],
+    // review: [{type: mongoose.Schema.Types.ObjectId, ref: "Review" }]
+}
+
 
 const VendorSignUpForm: FC = () => {
 
-    // const SERVER = import.meta.env.VITE_SERVER;
-    // const url = urlcat(SERVER, "/clients");
+    const SERVER = import.meta.env.VITE_SERVER;
+    const url = urlcat(SERVER, "/vendors");
 
     // const testUser = {
     //     username: "pear",
@@ -28,9 +48,14 @@ const VendorSignUpForm: FC = () => {
     const formik = useFormik({
         initialValues: {
             email: '',
-            companyName: '',
+            ContactPerson: '',
             userName: '',
             password: '',
+            contactNumber: '',
+            companyName: '',
+            registrationNumber: '',
+            incorporationDate: '',
+
         },
         validationSchema: Yup.object(
             {
