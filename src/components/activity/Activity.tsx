@@ -34,6 +34,7 @@ const Activity: FC = () => {
   const { id } = useParams();
   const url = urlcat(SERVER, `/activities/id/${id}`);
   const [activity, setActivity] = useState<IActivities>({
+    projectId: "",
     _id: "",
     activityTitle: "",
     activityDescription: "",
