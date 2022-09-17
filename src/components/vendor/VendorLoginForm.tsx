@@ -15,7 +15,7 @@ const VendorLoginForm: FC = () => {
 
   const { setTokenState } = useContext<ITokenContext>(TokenContext);
 
-  const navigateToProjects = useNavigate();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -32,7 +32,7 @@ const VendorLoginForm: FC = () => {
         .post(url, values)
         .then((res) => {
           setTokenState(res.data.token);
-          navigateToProjects("/vendor/secret");
+          navigate("/vendor/projects");
         })
         .catch((error) => setError(error.response.data.error));
     },

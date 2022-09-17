@@ -10,25 +10,22 @@ import VendorLogIn from "./pages/VendorLogIn";
 import TokenProvider from "./contextStore/TokenProvider";
 import SecretPage from "./pages/SecretPage";
 
-
-
-
 function App() {
   return (
     <TokenProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/vendor/projects" element={<VendorProjectsPage />} />
-          <Route path="/activity/:id" element={<Activity />} />
+          {/* <Route path="/" element={<LandingPage />} /> */}
           <Route path="/client/sign-up" element={<ClientSignUp />} />
           <Route path="/vendor/sign-up" element={<VendorSignUp />} />
           <Route path="/vendor/login" element={<VendorLogIn />} />
           <Route path="/vendor/account" element={<VendorAccount />} />
           <Route path="/vendor/secret" element={<SecretPage />} />
+          <Route path="/vendor/projects" element={<VendorProjectsPage />} />
+          <Route path="/activity/:id" element={<Activity />} />
         </Routes>
       </BrowserRouter>
     </TokenProvider>
-
   );
 }
 

@@ -17,6 +17,7 @@ const VendorCreateProduct: FC = () => {
   const [design, setDesign] = React.useState("");
   const [housingType, setHousingType] = React.useState("");
   const [data, setData] = useState(0);
+
   const designOptions = [
     "Modern",
     "Mid-century modern",

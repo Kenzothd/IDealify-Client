@@ -14,7 +14,7 @@ const TokenProvider = ({ children }: any) => {
     setTokenState: setToken,
   };
 
-  console.log("token received in context: ", tokenContext.token);
+  // console.log("token received in context: ", tokenContext.token);
 
   return (
     <TokenContext.Provider value={tokenContext}>
