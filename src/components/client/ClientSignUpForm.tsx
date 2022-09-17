@@ -143,8 +143,6 @@ const ClientSignUpForm: FC = () => {
                 <div>{formik.errors.password}</div>
             ) : null}
 
-
-
             <button type="submit">Sign Up</button>
             <span>{error}</span>
         </form>

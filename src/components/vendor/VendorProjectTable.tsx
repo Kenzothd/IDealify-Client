@@ -1,5 +1,5 @@
 import React, { useEffect, useState, FC } from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import {
   DataGrid,
   GridColDef,
@@ -13,20 +13,24 @@ const SERVER = import.meta.env.VITE_SERVER;
 import format from "date-fns/format";
 import { IActivities } from "../../Interface";
 
-// currently fetching all activities instead of vendor's specific activities 
+// currently fetching all activities instead of vendor's specific activities
 
 const VendorProjectTable: FC = () => {
   // we can also leave it uninitialized but add in <IActivities[] | undefined>
   const [activities, setActivities] = useState<IActivities[]>([]);
   const [refreshActivities, setRefreshActivities] = useState<boolean>(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const url = urlcat(SERVER, "/activities");
+    const url = urlcat(
+      SERVER,
+      `/activities/project?projectId=6322ca80102f0fb0edf322e4` // random Project ID used here
+    );
     axios
       .get(url)
       .then((res) => {
         setActivities(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, [refreshActivities]);
@@ -47,24 +51,24 @@ const VendorProjectTable: FC = () => {
       align: "center",
       renderCell: (params) => {
         let bgColor: string;
-        switch (params.row.status){
+        switch (params.row.status) {
           case "Upcoming":
-           bgColor = "purple"; 
-           break;
+            bgColor = "purple";
+            break;
           case "Pending":
             bgColor = "gray";
             break;
           case "In Progress":
-            bgColor ="orange";
+            bgColor = "orange";
             break;
           case "Completed":
-            bgColor="green";
+            bgColor = "green";
             break;
           case "Cancelled":
-            bgColor= "red";
+            bgColor = "red";
             break;
-          default: 
-            bgColor= "gray";
+          default:
+            bgColor = "gray";
             break;
         }
         return (
@@ -76,7 +80,7 @@ const VendorProjectTable: FC = () => {
               borderRadius: 8,
               padding: "3px 10px",
               display: "inline-block",
-              backgroundColor: bgColor
+              backgroundColor: bgColor,
             }}
           >
             {params.row.status}
@@ -117,16 +121,23 @@ const VendorProjectTable: FC = () => {
         const onClick = (e: React.MouseEvent) => {
           console.log(e.target);
           const id = params.row.id;
-          navigate(`/activity/${id}`)
-
+          navigate(`/activity/${id}`);
         };
-        return <Button onClick={onClick} sx={{backgroundColor:"yellow", color:"black",  borderRadius: 8,}}>view</Button>;
+        return (
+          <Button
+            onClick={onClick}
+            sx={{ backgroundColor: "yellow", color: "black", borderRadius: 8 }}
+          >
+            view
+          </Button>
+        );
       },
     },
   ];
 
   const rows = activities.map((activity) => {
     return {
+      projectId: activity.projectId,
       id: activity._id,
       activityTitle: activity.activityTitle,
       status: activity.status,

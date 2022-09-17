@@ -42,6 +42,7 @@ export interface IClient {
 }
 
 export interface IActivities {
+  projectId: string;
   _id: string;
   activityTitle: string;
   activityDescription: string;
