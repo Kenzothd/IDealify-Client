@@ -4,22 +4,37 @@ import urlcat from "urlcat";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
+
+
+//TO GET FROM KENZO
+
+interface IVendor {
+  email: string;
+  contactPersonName: string;
+  username: string;
+  password: string;
+  contactNumber?: number;
+  companyName: string;
+  registrationNumber: string;
+  incorporationDate: Date;
+  registeredOfficeAddress: string;
+  uploadedFiles: string[];
+  trackedProjects?: string[];
+  brandSummary?: string;
+  // messages: [{type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
+  // portfolio: [{type: mongoose.Schema.Types.ObjectId, ref: "Portfolio" }],
+  // review: [{type: mongoose.Schema.Types.ObjectId, ref: "Review" }]
+}
+
+
 const VendorSignUpForm: FC = () => {
-  // const SERVER = import.meta.env.VITE_SERVER;
-  // const url = urlcat(SERVER, "/clients");
 
-  // const testUser = {
-  //     username: "pear",
-  //     password: "pearpear",
-  //     email: "pear@hotmail.com",
-  //     fullName: "pear"
-  // }
 
-  // const handleUser = () => {
-  //     axios.post(url, testUser)
-  //         .then(res => res.data)
-  //         .catch(error => { error })
-  // }
+
+  const SERVER = import.meta.env.VITE_SERVER;
+  const url = urlcat(SERVER, "/vendors");
+
+
 
   const formik = useFormik({
     initialValues: {
@@ -74,6 +89,7 @@ const VendorSignUpForm: FC = () => {
         <div>{formik.errors.companyName}</div>
       ) : null}
 
+
       <label htmlFor="userName">User Name</label>
       <input
         id="userName"
@@ -86,6 +102,7 @@ const VendorSignUpForm: FC = () => {
       {formik.touched.userName && formik.errors.userName ? (
         <div>{formik.errors.userName}</div>
       ) : null}
+
 
       <label htmlFor="password">Password</label>
       <input
