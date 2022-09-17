@@ -14,6 +14,7 @@ import axios from "axios";
 import { date } from "yup/lib/locale";
 import format from "date-fns/format";
 import Button from "@mui/material/Button";
+import { render } from "react-dom";
 
 const SERVER = import.meta.env.VITE_SERVER;
 
@@ -34,10 +35,10 @@ const VendorAccount: FC = () => {
   });
   const [toggle, setToggle] = useState<boolean>(false);
 
-  console.log(vendorAccount);
+  //   console.log(vendorAccount);
 
   useEffect(() => {
-    const url = urlcat(SERVER, "/vendors/id/63242cc3aa5c38de67a9dec6");
+    const url = urlcat(SERVER, "/vendors/id/632446b43643aa447806ba68");
 
     axios
       .get(url)
@@ -56,63 +57,80 @@ const VendorAccount: FC = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      contactPerson: vendorAccount.contactPersonName,
-      username: vendorAccount.username,
-      email: vendorAccount.email,
-      password: vendorAccount.password,
-      contactNumber: vendorAccount.contactNumber,
-      companyName: vendorAccount.companyName,
-      registrationNumber: vendorAccount.registrationNumber,
-      incorporationDate: vendorAccount.incorporationDate,
-      registeredOfficeAddress: vendorAccount.registeredOfficeAddress,
-      //   uploadedfiles: vendorAccount.uploadedFiles,
+      //   contactPersonName: vendorAccount.contactPersonName,
+      //   username: vendorAccount.username,
+      //   email: vendorAccount.email,
+      //   password: vendorAccount.password,
+      //   contactNumber: vendorAccount.contactNumber,
+      //   companyName: vendorAccount.companyName,
+      //   registrationNumber: vendorAccount.registrationNumber,
+      //   incorporationDate: vendorAccount.incorporationDate,
+      //   registeredOfficeAddress: vendorAccount.registeredOfficeAddress,
+      uploadedFiles: null,
     },
-    validationSchema: Yup.object({
-      contactPerson: Yup.string().required("Required"),
-      username: Yup.string().required("Required"),
-      email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string()
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-        )
-        .required("Required"),
-      contactNumber: Yup.number().required("Required"),
-      companyName: Yup.string().required("Required"),
-      registrationNumber: Yup.string()
-        .min(9, "Must be 9 characters or more")
-        .required("Required"),
-      incorporationDate: Yup.date()
-        .default(new Date())
-        .max(
-          new Date(),
-          `Date should be equal or earlier than ${new Date().toLocaleDateString()}`
-        )
-        .required("End Date required"),
-      registeredOfficeAddress: Yup.string().required("Required"),
-      //   uploadedFiles: Yup.mixed()
-      //     .required("A file is required")
+    validationSchema: Yup.object().shape({
+      //   contactPersonName: Yup.string().required("Required"),
+      //   username: Yup.string()
       //     .test(
-      //       "fileSize",
-      //       "File too large",
-      //       (value) => value && value.size <= FILE_SIZE
+      //       "value-name",
+      //       "username must not have spacing",
+      //       (username: any) => !username.includes(" ")
       //     )
+      //     .required("Required"),
+      //   email: Yup.string().email("Invalid email address").required("Required"),
+      //   password: Yup.string()
+      //     .matches(
+      //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      //       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      //     )
+      //     .required("Required"),
+      //   contactNumber: Yup.number().required("Required"),
+      //   companyName: Yup.string().required("Required"),
+      //   registrationNumber: Yup.string()
+      //     .min(9, "Must be 9 characters or more")
+      //     .required("Required")
       //     .test(
-      //       "fileFormat",
-      //       "Unsupported Format",
-      //       (value) => value && SUPPORTED_FORMATS.includes(value.type)
+      //       "value-name",
+      //       "Registration Number must not have spacing",
+      //       (username: any) => !username.includes(" ")
       //     ),
+      //   incorporationDate: Yup.date()
+      //     .default(new Date())
+      //     .max(
+      //       new Date(),
+      //       `Date should be equal or earlier than ${new Date().toLocaleDateString()}`
+      //     )
+      //     .required("End Date required"),
+      //   registeredOfficeAddress: Yup.string().required("Required"),
+      uploadedFiles: Yup.mixed().required("A file is required"),
+      // .test(
+      //   "fileSize",
+      //   "File too large",
+      //   (value) => value && value.size <= FILE_SIZE
+      // )
+      // .test(
+      //   "fileFormat",
+      //   "Unsupported Format",
+      //   (value) => value && SUPPORTED_FORMATS.includes(value.type)
+      // ),
     }),
     onSubmit: (values) => {
-      console.log(values.username);
-      console.log("hi");
-      setToggle(!toggle);
-      //   console.log(values);
-      const url = urlcat(SERVER, `vendors/id/63242cc3aa5c38de67a9dec6`);
-      axios
-        .put(url, values)
-        .then((res) => console.log(res.data))
-        .catch((error) => console.log(error));
+      //   console.log(
+      //     {
+      //       fileName: values.uploadedFiles.name,
+      //       type: values.uploadedFiles.type,
+      //       size: `${values.uploadedFiles.size} bytes`,
+      //     },
+      //     null,
+      //     2
+      //   );
+
+      //   setToggle(!toggle);
+      const url = urlcat(SERVER, `vendors/id/632446b43643aa447806ba68`);
+      //   axios
+      //     .put(url, values)
+      //     .then((res) => setVendorAccount(res.data))
+      //     .catch((error) => console.log(error));
     },
   });
 
@@ -126,17 +144,18 @@ const VendorAccount: FC = () => {
         <>
           <h1>Account</h1>
           <form onSubmit={formik.handleSubmit}>
-            <label htmlFor="contactPerson">Person In-Charge</label>
+            {/* <label htmlFor="contactPersonName">Person In-Charge</label>
             <input
               required
-              id="contactPerson"
-              name="contactPerson"
+              id="contactPersonName"
+              name="contactPersonName"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.contactPerson}
+              value={formik.values.contactPersonName}
             />
-            {formik.touched.contactPerson && formik.errors.contactPerson ? (
-              <div>{formik.errors.contactPerson}</div>
+            {formik.touched.contactPersonName &&
+            formik.errors.contactPersonName ? (
+              <div>{formik.errors.contactPersonName}</div>
             ) : null}
 
             <label htmlFor="username">Username</label>
@@ -254,24 +273,28 @@ const VendorAccount: FC = () => {
             {formik.touched.registeredOfficeAddress &&
             formik.errors.registeredOfficeAddress ? (
               <div>{formik.errors.registeredOfficeAddress}</div>
-            ) : null}
+            ) : null} */}
 
-            {/* <label htmlFor="uploadedFiles">Upload Files</label>
+            <label htmlFor="uploadedFiles">Upload Files</label>
             <Button variant="contained" component="label">
               Upload File
               <input
                 id="uploadedFiles"
                 name="uploadedFiles"
                 type="file"
-                onChange={formik.handleChange}
+                onChange={(event: any) => {
+                  formik.setFieldValue(
+                    "uploadedFiles",
+                    event.currentTarget.files[0]
+                  );
+                }}
                 onBlur={formik.handleBlur}
-                value={formik.values.uploadedfiles}
                 hidden
               />
-              {formik.touched.uploadedfiles && formik.errors.uploadedfiles ? (
-                <div>{formik.errors.uploadedfiles}</div>
+              {formik.touched.uploadedFiles && formik.errors.uploadedFiles ? (
+                <div>{formik.errors.uploadedFiles}</div>
               ) : null}
-            </Button> */}
+            </Button>
 
             <button type="submit">done</button>
           </form>
@@ -280,7 +303,7 @@ const VendorAccount: FC = () => {
         <>
           <h1>typo Page </h1>
           <h1>Account</h1>
-          <div>
+          {/* <div>
             <label htmlFor="contactPerson">Person In-Charge</label>
             <TextField
               disabled
@@ -367,7 +390,7 @@ const VendorAccount: FC = () => {
               name="registrationOfficeAddress"
               value={vendorAccount?.registeredOfficeAddress}
             />
-          </div>
+          </div> */}
           <div>
             <label htmlFor="uploadedFiles">Upload Files</label>
             <Button disabled variant="contained" component="label">
