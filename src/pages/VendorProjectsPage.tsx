@@ -6,7 +6,7 @@ const VendorProjectsPage: FC = () => {
   return (
     <>
       <VendorCreateProject />
-      {/* <VendorProjectTable /> */}
+      <VendorProjectTable />
     </>
   );
 };

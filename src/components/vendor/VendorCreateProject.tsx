@@ -178,7 +178,10 @@ const VendorCreateProduct: FC = () => {
                     label="Design Theme"
                     id="designTheme"
                     name="designTheme"
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      handleDesignChange(e);
+                      formik.handleChange(e);
+                    }}
                     onBlur={formik.handleBlur}
                     sx={{ width: "100%" }}
                   >
