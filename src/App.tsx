@@ -11,8 +11,9 @@ import TokenProvider from "./contextStore/TokenProvider";
 import SecretPage from "./pages/SecretPage";
 
 
-function App() {
 
+
+function App() {
   return (
     <TokenProvider>
       <BrowserRouter>
