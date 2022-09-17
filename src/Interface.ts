@@ -41,7 +41,6 @@ export interface IClient {
   // messages: [{ type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
 }
 
-<<<<<<< HEAD
 export interface IActivities {
   _id: string;
   activityTitle: string;
@@ -53,76 +52,8 @@ export interface IActivities {
   photos: string[];
   __v?: number;
 }
-=======
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export interface ITokenContext {
-  token: String[],
-  setTokenState: (data: String) => void
+  token: String[];
+  setTokenState: (data: String) => void;
 }
-
->>>>>>> clovis
