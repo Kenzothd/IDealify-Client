@@ -38,7 +38,7 @@ const VendorAccount: FC = () => {
   //   console.log(vendorAccount);
 
   useEffect(() => {
-    const url = urlcat(SERVER, "/vendors/id/63242cc3aa5c38de67a9dec6");
+    const url = urlcat(SERVER, "/vendors/id/6325aa99d54ca6c36c4007e4");
 
     axios
       .get(url)
@@ -66,7 +66,7 @@ const VendorAccount: FC = () => {
       registrationNumber: vendorAccount.registrationNumber,
       incorporationDate: vendorAccount.incorporationDate,
       registeredOfficeAddress: vendorAccount.registeredOfficeAddress,
-      // uploadedFiles: null,
+      uploadedFiles: null,
     },
     validationSchema: Yup.object().shape({
       contactPersonName: Yup.string().required("Required"),
@@ -102,7 +102,7 @@ const VendorAccount: FC = () => {
         )
         .required("End Date required"),
       registeredOfficeAddress: Yup.string().required("Required"),
-      // uploadedFiles: Yup.mixed().required("A file is required"),
+      uploadedFiles: Yup.mixed().required("A file is required"),
       // .test(
       //   "fileSize",
       //   "File too large",
@@ -114,24 +114,26 @@ const VendorAccount: FC = () => {
       //   (value) => value && SUPPORTED_FORMATS.includes(value.type)
       // ),
     }),
-    onSubmit: (values) => {
-      console.log("values have been extracted");
-      //   console.log(
-      //     {
-      //       fileName: values.uploadedFiles.name,
-      //       type: values.uploadedFiles.type,
-      //       size: `${values.uploadedFiles.size} bytes`,
-      //     },
-      //     null,
-      //     2
-      //   );
+
+    onSubmit: (values: any) => {
+      console.log(
+        // {
+        //   fileName: values.uploadedFiles.name,
+        //   type: values.uploadedFiles.type,
+        //   size: `${values.uploadedFiles.size} bytes`,
+        // },
+        // null,
+        // 2,
+        // values.uploadedFiles,
+        values
+      );
 
       //   setToggle(!toggle);
-      const url = urlcat(SERVER, `vendors/id/63242cc3aa5c38de67a9dec6`);
-      //   axios
-      //     .put(url, values)
-      //     .then((res) => setVendorAccount(res.data))
-      //     .catch((error) => console.log(error));
+      const url = urlcat(SERVER, `vendors/id/6325aa99d54ca6c36c4007e4`);
+      axios
+        .put(url, values)
+        .then((res) => console.log(res.data))
+        .catch((error) => console.log(error));
     },
   });
 
@@ -283,6 +285,7 @@ const VendorAccount: FC = () => {
                 id="uploadedFiles"
                 name="uploadedFiles"
                 type="file"
+                accept="image/*"
                 onChange={(event: any) => {
                   formik.setFieldValue(
                     "uploadedFiles",
