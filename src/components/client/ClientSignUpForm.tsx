@@ -19,6 +19,7 @@ interface IUsers {
 const ClientSignUpForm: FC = () => {
   // const [currentUsers, setCurrentUsers] = useState<Object[]>([])
   const [error, setError] = useState<String>("");
+  const token: any = sessionStorage.getItem("token");
 
   const SERVER = import.meta.env.VITE_SERVER;
   const url = urlcat(SERVER, "/clients");
@@ -74,8 +75,13 @@ const ClientSignUpForm: FC = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
       axios
-        .post(url, values)
+        .post(url, values, config)
         .then((res) => console.log(res.data))
         .catch((error) => setError(error.response.data.error));
     },

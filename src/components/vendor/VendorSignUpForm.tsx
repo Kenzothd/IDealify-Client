@@ -4,11 +4,11 @@ import urlcat from "urlcat";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, Grid, TextField } from "@mui/material";
-import TokenContext from "../../contextStore/token-context";
-import { ITokenContext } from "../../Interface";
 import { useNavigate } from "react-router-dom";
 
 const VendorSignUpForm: FC = () => {
+  const token: any = sessionStorage.getItem("token");
+
   const [username, setUsername] = useState(0);
   const [regNum, setRegNum] = useState(0);
   const SERVER = import.meta.env.VITE_SERVER;
@@ -37,8 +37,13 @@ const VendorSignUpForm: FC = () => {
           "Vendor username is in used",
           (name: any): boolean => {
             const userUrl = urlcat(SERVER, `vendors/findByName/${name}`);
+            const config = {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            };
             axios
-              .get(userUrl)
+              .get(userUrl, config)
               .then((res) => setUsername(res.data.length))
               .catch((err) => console.log(err));
             return username === 0 ? true : false;
@@ -64,8 +69,13 @@ const VendorSignUpForm: FC = () => {
               SERVER,
               `vendors/findByRegistrationNum/${num}`
             );
+            const config = {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            };
             axios
-              .get(userUrl)
+              .get(userUrl, config)
               .then((res) => setRegNum(res.data.length))
               .catch((err) => console.log(err));
             return regNum === 0 ? true : false;

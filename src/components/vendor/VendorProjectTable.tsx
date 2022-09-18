@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState, FC } from "react";
-import { ITokenContext } from "../../Interface";
-
 import { useNavigate, useParams } from "react-router-dom";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Button, Typography } from "@mui/material";
@@ -8,7 +6,8 @@ import axios from "axios";
 import urlcat from "urlcat";
 import format from "date-fns/format";
 import { IActivities } from "../../Interface";
-import TokenContext from "../../contextStore/token-context";
+// import TokenContext from "../../contextStore/token-context";
+// import { ITokenContext } from "../../Interface";
 
 // currently fetching all activities instead of vendor's specific activities
 
@@ -17,7 +16,8 @@ const VendorProjectTable: FC = () => {
   // we can also leave it uninitialized but add in <IActivities[] | undefined>
   const [activities, setActivities] = useState<IActivities[]>([]);
   const [refreshActivities, setRefreshActivities] = useState<boolean>(false);
-  const { token } = useContext<ITokenContext>(TokenContext);
+  // const { token } = useContext<ITokenContext>(TokenContext);
+  const token: any = sessionStorage.getItem("token");
   const navigate = useNavigate();
   const { projectid } = useParams();
 
