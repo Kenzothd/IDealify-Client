@@ -27,10 +27,11 @@ const VendorProjectTracker: FC = () => {
     },
   ]);
   const [vendor, setVendor] = useState({});
-  const navigatetoLogin = useNavigate();
+  const navigate = useNavigate();
 
   // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI0ODc2NTc5Nzk2NGEyNjk5NjhmZTgiLCJ1c2VybmFtZSI6ImNsb2NsbyIsImlhdCI6MTY2MzQwODE4NCwiZXhwIjoxNjYzNDA5OTg0fQ.xcW6Tf8b0paHmEhz8d5o85cRfk3we3GbJDIZym-GzA0"
-  const { token } = useContext(TokenContext) as ITokenContext;
+  //   const { token } = useContext(TokenContext) as ITokenContext;
+  const token: any = sessionStorage.getItem("token");
 
   //   useEffect(() => {
   //     const url = urlcat(
@@ -69,9 +70,14 @@ const VendorProjectTracker: FC = () => {
       })
       .catch((error) => {
         console.log({ Error: error.response.data.error });
-        navigatetoLogin("/vendor/login");
+        navigate("/vendor/login");
       });
   }, []);
+
+  const handlerViewProj = (e: any) => {
+    console.log(e.target.id);
+    navigate(`/vendor/projects/${e.target.id}`);
+  };
 
   return (
     <>
@@ -89,7 +95,9 @@ const VendorProjectTracker: FC = () => {
             <p>{ele.projectName}</p>
             <p>{ele.projectStatus}</p>
           </div>
-          <button>View Project</button>
+          <button id={ele._id} onClick={handlerViewProj}>
+            View Project
+          </button>
         </div>
       ))}
     </>

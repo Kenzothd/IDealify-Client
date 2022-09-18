@@ -3,43 +3,35 @@ import React, { FC, useContext, useState } from "react";
 import urlcat from "urlcat";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  Button,
-  Grid,
-  TextField,
-} from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import TokenContext from "../../contextStore/token-context";
 import { ITokenContext } from "../../Interface";
 import { useNavigate } from "react-router-dom";
 
-
-
 const VendorSignUpForm: FC = () => {
-
   const [username, setUsername] = useState(0);
   const [regNum, setRegNum] = useState(0);
   const SERVER = import.meta.env.VITE_SERVER;
   const url = urlcat(SERVER, "/vendors");
-  const { setTokenState } = useContext<ITokenContext>(TokenContext);
-  const navigateToProjects = useNavigate()
-
+  const navigateToProjects = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      contactPersonName: '',
-      username: '',
-      email: '',
-      password: '',
-      contactNumber: '',
-      companyName: '',
-      registrationNumber: '',
-      incorporationDate: '',
-      registeredOfficeAddress: '',
+      contactPersonName: "",
+      username: "",
+      email: "",
+      password: "",
+      contactNumber: "",
+      companyName: "",
+      registrationNumber: "",
+      incorporationDate: "",
+      registeredOfficeAddress: "",
       // uploadedFiles: null,
     },
     validationSchema: Yup.object().shape({
       contactPersonName: Yup.string().required("Required"),
-      username: Yup.string().required("Required")
+      username: Yup.string()
+        .required("Required")
         .test(
           "value-name",
           "Vendor username is in used",
@@ -68,7 +60,10 @@ const VendorSignUpForm: FC = () => {
           "value-registrationNumber",
           "Registration number is in used",
           (num: any): boolean => {
-            const userUrl = urlcat(SERVER, `vendors/findByRegistrationNum/${num}`);
+            const userUrl = urlcat(
+              SERVER,
+              `vendors/findByRegistrationNum/${num}`
+            );
             axios
               .get(userUrl)
               .then((res) => setRegNum(res.data.length))
@@ -85,19 +80,18 @@ const VendorSignUpForm: FC = () => {
         .required("Required"),
       registeredOfficeAddress: Yup.string().required("Required"),
       // uploadedFiles: Yup.mixed().required("A file is required"),
-
     }),
     onSubmit: (values: any) => {
       // console.log(values);
       axios
         .post(url, values)
-        .then((res) => setTokenState(res.data.token))
+        .then((res) => {
+          sessionStorage.setItem("token", res.data.token);
+          navigateToProjects("/vendor/projects");
+        })
         .catch((error) => console.log(error.response.data.error));
-      navigateToProjects("/vendor/secret");
     },
-  },
-  );
-
+  });
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -110,7 +104,6 @@ const VendorSignUpForm: FC = () => {
           alignItems: "center",
         }}
       >
-
         <Grid item sm={12} md={12}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={6}>
@@ -127,7 +120,7 @@ const VendorSignUpForm: FC = () => {
                 value={formik.values.contactPersonName}
               />
               {formik.touched.contactPersonName &&
-                formik.errors.contactPersonName ? (
+              formik.errors.contactPersonName ? (
                 <div>{formik.errors.contactPersonName}</div>
               ) : null}
             </Grid>
@@ -151,7 +144,6 @@ const VendorSignUpForm: FC = () => {
             </Grid>
           </Grid>
         </Grid>
-
 
         <Grid item sm={12} md={12}>
           <Grid container spacing={2}>
@@ -193,7 +185,6 @@ const VendorSignUpForm: FC = () => {
           </Grid>
         </Grid>
 
-
         <Grid item sm={12} md={12}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={6}>
@@ -234,7 +225,6 @@ const VendorSignUpForm: FC = () => {
           </Grid>
         </Grid>
 
-
         <Grid item sm={12} md={12}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={6}>
@@ -251,7 +241,7 @@ const VendorSignUpForm: FC = () => {
                 value={formik.values.registrationNumber}
               />
               {formik.touched.registrationNumber &&
-                formik.errors.registrationNumber ? (
+              formik.errors.registrationNumber ? (
                 <div>{formik.errors.registrationNumber}</div>
               ) : null}
             </Grid>
@@ -276,16 +266,14 @@ const VendorSignUpForm: FC = () => {
                 //   "yyyy-MM-dd"
                 // )}
                 value={formik.values.incorporationDate}
-
               />
               {formik.touched.incorporationDate &&
-                formik.errors.incorporationDate ? (
+              formik.errors.incorporationDate ? (
                 <div>{formik.errors.incorporationDate}</div>
               ) : null}
             </Grid>
           </Grid>
         </Grid>
-
 
         <Grid item sm={12} md={12}>
           <Grid container spacing={2}>
@@ -303,7 +291,7 @@ const VendorSignUpForm: FC = () => {
                 value={formik.values.registeredOfficeAddress}
               />
               {formik.touched.registeredOfficeAddress &&
-                formik.errors.registeredOfficeAddress ? (
+              formik.errors.registeredOfficeAddress ? (
                 <div>{formik.errors.registeredOfficeAddress}</div>
               ) : null}
             </Grid>
@@ -327,7 +315,6 @@ const VendorSignUpForm: FC = () => {
             </Grid> */}
           </Grid>
         </Grid>
-
 
         <Button type="submit">Submit</Button>
       </Grid>

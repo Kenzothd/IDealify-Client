@@ -1,5 +1,5 @@
 import React, { useEffect, useState, FC } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   DataGrid,
   GridColDef,
@@ -20,12 +20,14 @@ const VendorProjectTable: FC = () => {
   const [activities, setActivities] = useState<IActivities[]>([]);
   const [refreshActivities, setRefreshActivities] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { projectid } = useParams();
 
   useEffect(() => {
     const url = urlcat(
       SERVER,
-      `/activities/project?projectId=6322ca80102f0fb0edf322e4` // random Project ID used here
+      `/activities/project?projectId=${projectid}` // random Project ID used here
     );
+
     axios
       .get(url)
       .then((res) => {

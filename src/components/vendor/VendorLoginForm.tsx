@@ -13,9 +13,7 @@ const VendorLoginForm: FC = () => {
   const SERVER = import.meta.env.VITE_SERVER;
   const url = urlcat(SERVER, "/vendors/login");
 
-
   const { setTokenState } = useContext<ITokenContext>(TokenContext);
-
 
   const navigateToProjects = useNavigate();
 
@@ -33,8 +31,9 @@ const VendorLoginForm: FC = () => {
       axios
         .post(url, values)
         .then((res) => {
-          setTokenState(res.data.token);
-          navigateToProjects("/vendor/projects/tracker");
+          //   setTokenState(res.data.token);
+          sessionStorage.setItem("token", res.data.token);
+          navigateToProjects("/vendor/projects");
         })
         .catch((error) => setError(error.response.data.error));
     },
@@ -73,6 +72,5 @@ const VendorLoginForm: FC = () => {
     </form>
   );
 };
-
 
 export default VendorLoginForm;
