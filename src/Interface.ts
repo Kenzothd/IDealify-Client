@@ -17,6 +17,7 @@ export interface IVendor {
 }
 
 export interface IProject {
+  _id?: string;
   vendorID?: string;
   clientID?: string;
   projectName: string;
