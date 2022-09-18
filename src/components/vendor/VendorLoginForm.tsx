@@ -31,7 +31,9 @@ const VendorLoginForm: FC = () => {
       axios
         .post(url, values)
         .then((res) => {
-          setTokenState(res.data.token);
+
+          sessionStorage.setItem('token', res.data.token)
+          // setTokenState(token);
           navigateToProjects("/vendor/secret");
         })
         .catch((error) => setError(error.response.data.error));

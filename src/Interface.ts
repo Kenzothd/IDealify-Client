@@ -55,6 +55,6 @@ export interface IActivities {
 }
 
 export interface ITokenContext {
-  token: String[];
+  token: String;
   setTokenState: (data: String) => void;
 }

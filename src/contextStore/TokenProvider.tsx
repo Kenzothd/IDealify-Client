@@ -3,10 +3,10 @@ import { ITokenContext } from "../Interface";
 import TokenContext from "./token-context";
 
 const TokenProvider = ({ children }: any) => {
-  const [vendorToken, setVendorToken] = useState<String[]>([]);
+  const [vendorToken, setVendorToken] = useState<String>('');
 
   const setToken = (data: String) => {
-    setVendorToken([...vendorToken, data]);
+    setVendorToken(data);
   };
 
   const tokenContext: ITokenContext = {

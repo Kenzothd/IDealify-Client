@@ -1,29 +1,27 @@
 import axios from "axios";
-import React, { FC, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import urlcat from "urlcat";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import format from "date-fns/format";
 import {
   Button,
-  FormControl,
   Grid,
-  InputLabel,
-  MenuItem,
   TextField,
 } from "@mui/material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import TokenContext from "../../contextStore/token-context";
+import { ITokenContext } from "../../Interface";
+import { useNavigate } from "react-router-dom";
 
 
 
 const VendorSignUpForm: FC = () => {
 
-
-  const [data, setData] = useState(0);
+  const [username, setUsername] = useState(0);
   const [regNum, setRegNum] = useState(0);
   const SERVER = import.meta.env.VITE_SERVER;
   const url = urlcat(SERVER, "/vendors");
-
+  const { setTokenState } = useContext<ITokenContext>(TokenContext);
+  const navigateToProjects = useNavigate()
 
 
   const formik = useFormik({
@@ -42,11 +40,6 @@ const VendorSignUpForm: FC = () => {
     validationSchema: Yup.object().shape({
       contactPersonName: Yup.string().required("Required"),
       username: Yup.string().required("Required")
-        // .test(
-        //   "value-name",
-        //   "username must not have spacing",
-        //   (username: any) => !username.includes(" ")
-        // )
         .test(
           "value-name",
           "Vendor username is in used",
@@ -54,9 +47,9 @@ const VendorSignUpForm: FC = () => {
             const userUrl = urlcat(SERVER, `vendors/findByName/${name}`);
             axios
               .get(userUrl)
-              .then((res) => setData(res.data.length))
+              .then((res) => setUsername(res.data.length))
               .catch((err) => console.log(err));
-            return data === 0 ? true : false;
+            return username === 0 ? true : false;
           }
         ),
       email: Yup.string().email("Invalid email address").required("Required"),
@@ -71,17 +64,6 @@ const VendorSignUpForm: FC = () => {
       registrationNumber: Yup.string()
         .min(9, "Must be 9 characters or more")
         .required("Required")
-        // .test(
-        //   "value-name",
-        //   "Registration Number must not have spacing",
-        //   (username: any): any => {
-        //     if (username.length > 0) {
-        //       return !username.includes(" ")
-        //     } else {
-        //       return true
-        //     }
-        //   }
-        // )
         .test(
           "value-registrationNumber",
           "Registration number is in used",
@@ -102,17 +84,16 @@ const VendorSignUpForm: FC = () => {
         )
         .required("Required"),
       registeredOfficeAddress: Yup.string().required("Required"),
-      uploadedFiles: Yup.mixed().required("A file is required"),
+      // uploadedFiles: Yup.mixed().required("A file is required"),
 
     }),
     onSubmit: (values: any) => {
-      console.log('hi');
-
-      // const url = urlcat(SERVER, 'vendors');
-      // axios
-      //   .get(url, values)
-      //   .then((res) => console.log(res.data))
-      //   .catch((error) => console.log(error));
+      // console.log(values);
+      axios
+        .post(url, values)
+        .then((res) => setTokenState(res.data.token))
+        .catch((error) => console.log(error.response.data.error));
+      navigateToProjects("/vendor/secret");
     },
   },
   );
