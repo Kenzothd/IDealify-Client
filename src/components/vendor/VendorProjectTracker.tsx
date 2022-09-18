@@ -79,6 +79,10 @@ const VendorProjectTracker: FC = () => {
     navigate(`/vendor/projects/${e.target.id}`);
   };
 
+  const handlerAddProj = () => {
+    navigate(`/vendor/create-project`);
+  };
+
   return (
     <>
       <ul>
@@ -88,6 +92,7 @@ const VendorProjectTracker: FC = () => {
         <li>Project Tracker</li>
       </ul>
       <button>Back to Inbox</button>
+      <button onClick={handlerAddProj}>Add Projects</button>
       <h1>Projects</h1>
       {projects.map((ele) => (
         <div key={ele._id}>

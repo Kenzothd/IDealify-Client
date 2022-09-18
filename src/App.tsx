@@ -11,6 +11,8 @@ import TokenProvider from "./contextStore/TokenProvider";
 import SecretPage from "./pages/SecretPage";
 import VendorProjectTracker from "./components/vendor/VendorProjectTracker";
 import VendorProjectTable from "./components/vendor/VendorProjectTable";
+import VendorCreateProduct from "./components/vendor/VendorCreateProject";
+import VendorAddActivity from "./components/vendor/VendorAddActivity";
 
 function App() {
   return (
@@ -19,7 +21,7 @@ function App() {
         <Routes>
           <Route
             path="/vendor/create-project"
-            element={<VendorProjectsPage />}
+            element={<VendorCreateProduct />}
           />
           <Route path="/vendor/projects" element={<VendorProjectTracker />} />
           <Route
@@ -31,7 +33,14 @@ function App() {
           <Route path="/vendor/login" element={<VendorLogIn />} />
           <Route path="/vendor/account" element={<VendorAccount />} />
           <Route path="/vendor/secret" element={<SecretPage />} />
-          <Route path="/activity/:id" element={<Activity />} />
+          <Route
+            path="/vendor/projects/:projectid/add-activity"
+            element={<VendorAddActivity />}
+          />
+          <Route
+            path="/vendor/projects/:projectid/activity/:activityid"
+            element={<Activity />}
+          />
         </Routes>
       </BrowserRouter>
     </TokenProvider>

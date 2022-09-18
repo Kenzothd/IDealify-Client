@@ -15,7 +15,7 @@ const SERVER = import.meta.env.VITE_SERVER;
 import format from "date-fns/format";
 import sub from "date-fns/sub";
 import parseISO from "date-fns/parseISO";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IActivities } from "../../Interface";
 
 const buttonSx = {
@@ -31,8 +31,8 @@ const buttonSx = {
 };
 
 const Activity: FC = () => {
-  const { id } = useParams();
-  const url = urlcat(SERVER, `/activities/id/${id}`);
+  const { projectid, activityid } = useParams();
+  const url = urlcat(SERVER, `/activities/id/${activityid}`);
   const [activity, setActivity] = useState<IActivities>({
     projectId: "",
     _id: "",
@@ -46,6 +46,7 @@ const Activity: FC = () => {
     __v: 0,
   });
   const [offEditMode, setOffEditMode] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -117,6 +118,10 @@ const Activity: FC = () => {
       bgColor = "gray";
       break;
   }
+
+  const handlerBackToProjTable = () => {
+    navigate(`/vendor/projects/${projectid}`);
+  };
 
   return (
     <>
@@ -234,6 +239,7 @@ const Activity: FC = () => {
           </Button>
         </form>
       </Card>
+      <button onClick={handlerBackToProjTable}>Back to Project Table</button>
     </>
   );
 };
