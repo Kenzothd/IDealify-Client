@@ -1,12 +1,5 @@
-import React, { useState, useEffect, FC } from "react";
-import {
-  Avatar,
-  Button,
-  Card,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import React, { useContext, useState, useEffect, FC } from "react";
+import { Button, Card, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import urlcat from "urlcat";
 import { useFormik } from "formik";
@@ -33,6 +26,7 @@ const buttonSx = {
 const Activity: FC = () => {
   const { id } = useParams();
   const url = urlcat(SERVER, `/activities/id/${id}`);
+  const token: any = sessionStorage.getItem("token");
   const [activity, setActivity] = useState<IActivities>({
     projectId: "",
     _id: "",
@@ -48,8 +42,14 @@ const Activity: FC = () => {
   const [offEditMode, setOffEditMode] = useState(true);
 
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    console.log(token);
     axios
-      .get(url)
+      .get(url, config)
       .then((res) => setActivity(res.data))
       .catch((err) => console.log(err));
   }, []);

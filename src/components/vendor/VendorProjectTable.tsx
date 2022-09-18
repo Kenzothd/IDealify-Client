@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState, FC } from "react";
 import { ITokenContext } from "../../Interface";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Button, Typography } from "@mui/material";
@@ -23,7 +24,7 @@ const VendorProjectTable: FC = () => {
   useEffect(() => {
     const url = urlcat(
       SERVER,
-      `/activities/project?projectId=${projectid}` // random Project ID used here
+      `/activities/projects?projectId=${projectid}` // random Project ID used here
     );
     const config = {
       headers: {
