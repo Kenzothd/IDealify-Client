@@ -7,7 +7,6 @@ import * as Yup from "yup";
 const SERVER = import.meta.env.VITE_SERVER;
 import format from "date-fns/format";
 import sub from "date-fns/sub";
-import parseISO from "date-fns/parseISO";
 import { useNavigate, useParams } from "react-router-dom";
 import { IActivities } from "../../Interface";
 
@@ -27,7 +26,9 @@ const Activity: FC = () => {
   const { projectid, activityid } = useParams();
   const url = urlcat(SERVER, `/activities/id/${activityid}`);
   const token: any = sessionStorage.getItem("token");
-
+  const [offEditMode, setOffEditMode] = useState(true);
+  const navigate = useNavigate();
+  
   const [activity, setActivity] = useState<IActivities>({
     projectId: "",
     _id: "",
@@ -40,8 +41,6 @@ const Activity: FC = () => {
     photos: ["url", "url"],
     __v: 0,
   });
-  const [offEditMode, setOffEditMode] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const config = {

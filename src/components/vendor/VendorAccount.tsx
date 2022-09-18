@@ -31,6 +31,9 @@ const buttonSx = {
 const SERVER = import.meta.env.VITE_SERVER;
 
 const VendorAccount: FC = () => {
+  const token: any = sessionStorage.getItem("token");
+  const [offEditMode, setOffEditMode] = useState<boolean>(true);
+
   const [vendorAccount, setVendorAccount] = useState<IVendor>({
     email: "",
     contactPersonName: "",
@@ -45,15 +48,18 @@ const VendorAccount: FC = () => {
     trackedProjects: [""],
     brandSummary: "",
   });
-  const [offEditMode, setOffEditMode] = useState<boolean>(true);
 
   //   console.log(vendorAccount);
 
   useEffect(() => {
     const url = urlcat(SERVER, "/vendors/id/6326ad9268fde94c3e6438d4");
-
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
     axios
-      .get(url)
+      .get(url, config)
       .then((res) => setVendorAccount(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -145,8 +151,13 @@ const VendorAccount: FC = () => {
         );
 
         const url = urlcat(SERVER, `vendors/id/6326ad9268fde94c3e6438d4`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
         axios
-          .put(url, values)
+          .put(url, values, config)
           .then((res) => setVendorAccount(res.data))
           .catch((error) => console.log(error));
       }

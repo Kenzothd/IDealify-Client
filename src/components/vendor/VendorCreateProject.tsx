@@ -13,12 +13,15 @@ import {
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 const SERVER = import.meta.env.VITE_SERVER;
+
 const VendorCreateProduct: FC = () => {
   const [design, setDesign] = React.useState("");
   const [housingType, setHousingType] = React.useState("");
   const [data, setData] = useState(0);
   const navigate = useNavigate();
+  const token: any = sessionStorage.getItem("token");
 
   const designOptions = [
     "Modern",
@@ -103,8 +106,14 @@ const VendorCreateProduct: FC = () => {
           "Client username does not exists",
           (name: any): any => {
             const userUrl = urlcat(SERVER, `clients/findByName/${name}`);
+            const config = {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            };
+
             axios
-              .get(userUrl)
+              .get(userUrl, config)
               .then((res) => setData(res.data.length))
               .catch((err) => console.log(err));
             return data;

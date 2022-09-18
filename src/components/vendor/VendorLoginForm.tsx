@@ -4,16 +4,16 @@ import urlcat from "urlcat";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import TokenContext from "../../contextStore/token-context";
-import { ITokenContext } from "../../Interface";
+// import TokenContext from "../../contextStore/token-context";
+// import { ITokenContext } from "../../Interface";
 
 const VendorLoginForm: FC = () => {
   const [error, setError] = useState<String>("");
 
   const SERVER = import.meta.env.VITE_SERVER;
   const url = urlcat(SERVER, "/vendors/login");
-
-  const { setTokenState } = useContext<ITokenContext>(TokenContext);
+  // const { setTokenState } = useContext<ITokenContext>(TokenContext);
+  const token: any = sessionStorage.getItem("token");
 
   const navigate = useNavigate();
 
@@ -28,13 +28,18 @@ const VendorLoginForm: FC = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
       axios
-        .post(url, values)
+        .post(url, values, config)
         .then((res) => {
           //   setTokenState(res.data.token);
           console.log(res.data.token);
           sessionStorage.setItem("token", res.data.token);
-          setTokenState(res.data.token);
+          // setTokenState(res.data.token);
           navigate("/vendor/projects");
         })
         .catch((error) => setError(error.response.data.error));
