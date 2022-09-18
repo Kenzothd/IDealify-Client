@@ -22,11 +22,7 @@ function App() {
         <Routes>
           <Route
             path="/vendor/create-project"
-<<<<<<< HEAD
-            element={<VendorCreateProject />}
-=======
             element={<VendorCreateProduct />}
->>>>>>> kenzo
           />
           <Route path="/vendor/projects" element={<VendorProjectTracker />} />
           <Route
