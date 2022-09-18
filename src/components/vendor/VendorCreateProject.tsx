@@ -12,11 +12,13 @@ import {
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const SERVER = import.meta.env.VITE_SERVER;
 const VendorCreateProduct: FC = () => {
   const [design, setDesign] = React.useState("");
   const [housingType, setHousingType] = React.useState("");
   const [data, setData] = useState(0);
+  const navigate = useNavigate();
 
   const designOptions = [
     "Modern",
@@ -116,9 +118,17 @@ const VendorCreateProduct: FC = () => {
     },
   });
 
+  const handlerBackToProj = () => {
+    navigate(`/vendor/projects/`);
+  };
+
   return (
     <>
-      <h1>Add New Project</h1>
+      <h1>
+        Add New Project
+        <button onClick={handlerBackToProj}>Back to Project</button>
+      </h1>
+
       <form onSubmit={formik.handleSubmit}>
         <Grid
           container

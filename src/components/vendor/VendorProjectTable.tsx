@@ -31,7 +31,6 @@ const VendorProjectTable: FC = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-
     axios
       .get(url, config)
       .then((res) => {
@@ -127,7 +126,7 @@ const VendorProjectTable: FC = () => {
         const onClick = (e: React.MouseEvent) => {
           console.log(e.target);
           const id = params.row.id;
-          navigate(`/activity/${id}`);
+          navigate(`/vendor/projects/${projectid}/activity/${id}`);
         };
         return (
           <Button
@@ -163,6 +162,14 @@ const VendorProjectTable: FC = () => {
     setRefreshActivities(!refreshActivities);
   };
 
+  const handlerBackToProj = () => {
+    navigate("/vendor/projects");
+  };
+
+  const handlerAddActivity = () => {
+    navigate(`/vendor/projects/${projectid}/add-activity`);
+  };
+
   return (
     <div style={{ height: 600, width: "100%" }}>
       <DataGrid
@@ -173,6 +180,8 @@ const VendorProjectTable: FC = () => {
       />
       <Button onClick={refreshActivitiesHandler}>Refresh Activities</Button>
       {/* <pre>{JSON.stringify(activities, null, 2)}</pre> */}
+      <button onClick={handlerBackToProj}>Back to project</button>
+      <button onClick={handlerAddActivity}>Add activity</button>
     </div>
   );
 };
