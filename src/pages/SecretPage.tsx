@@ -11,9 +11,9 @@ const SecretPage = () => {
   const navigatetoLogin = useNavigate();
 
   // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI0ODc2NTc5Nzk2NGEyNjk5NjhmZTgiLCJ1c2VybmFtZSI6ImNsb2NsbyIsImlhdCI6MTY2MzQwODE4NCwiZXhwIjoxNjYzNDA5OTg0fQ.xcW6Tf8b0paHmEhz8d5o85cRfk3we3GbJDIZym-GzA0"
-  // const { token } = useContext<ITokenContext>(TokenContext);
 
-  const token: any = sessionStorage.getItem('token')
+  const token: any = sessionStorage.getItem("token");
+
   const SERVER = import.meta.env.VITE_SERVER;
   const vendorUrl = urlcat(SERVER, "vendors/verify");
   const projectUrl = urlcat(SERVER, "projects");

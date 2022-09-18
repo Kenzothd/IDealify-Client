@@ -1,13 +1,99 @@
-import React from "react";
+import React, { useState, useEffect, FC, useContext } from "react";
+import { IProject } from "../../Interface";
+import urlcat from "urlcat";
+import axios from "axios";
+import TokenContext from "../../contextStore/token-context";
+import { useNavigate } from "react-router-dom";
+import { ITokenContext } from "../../Interface";
 
-const VendorProjectTracker = () => {
+const SERVER = import.meta.env.VITE_SERVER;
 
-    return ( 
-        <>
-        
-        </>
-    )
+const VendorProjectTracker: FC = () => {
+  const [projects, setProjects] = useState<IProject[]>([
+    {
+      _id: "",
+      vendorID: "",
+      clientID: "",
+      projectName: "",
+      housingType: [""],
+      projectStartDate: new Date(),
+      projectEndDate: new Date(),
+      projectStatus: [""],
+      uploadedFiles: "",
+      description: "",
+      projectProgress: "",
+      // review:{type: mongoose.Schema.Types.ObjectId, ref: "Review" },
+      designTheme: [""],
+    },
+  ]);
+  const [vendor, setVendor] = useState({});
+  const navigatetoLogin = useNavigate();
 
+  // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI0ODc2NTc5Nzk2NGEyNjk5NjhmZTgiLCJ1c2VybmFtZSI6ImNsb2NsbyIsImlhdCI6MTY2MzQwODE4NCwiZXhwIjoxNjYzNDA5OTg0fQ.xcW6Tf8b0paHmEhz8d5o85cRfk3we3GbJDIZym-GzA0"
+  const { token } = useContext(TokenContext) as ITokenContext;
+
+  //   useEffect(() => {
+  //     const url = urlcat(
+  //       SERVER,
+  //       `/projects/id/6326ad9268fde94c3e6438d4` // vendor Project ID used here
+  //     );
+  //     axios
+  //       .get(url)
+  //       .then((res) => setProjects([...res.data]))
+  //       .catch((err) => console.log(err));
+  //   }, []);
+
+  const vendorUrl = urlcat(SERVER, "vendors/verify");
+  const projectUrl = urlcat(SERVER, "projects");
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  console.log("vendor", vendor);
+  console.log("projects", projects);
+
+  useEffect(() => {
+    // Verify Vendor
+    axios
+      .post(vendorUrl, {}, config)
+      .then((res) => setVendor(res.data))
+      .then((res) => {
+        // Get Projects
+        axios
+          .get(projectUrl, config)
+          .then((res) => setProjects(res.data))
+          .catch((error) => console.log({ Error: error.response.data.error }));
+      })
+      .catch((error) => {
+        console.log({ Error: error.response.data.error });
+        navigatetoLogin("/vendor/login");
+      });
+  }, []);
+
+  return (
+    <>
+      <ul>
+        <li>Account</li>
+        <li>Favourites</li>
+        <li>Inbox</li>
+        <li>Project Tracker</li>
+      </ul>
+      <button>Back to Inbox</button>
+      <h1>Projects</h1>
+      {projects.map((ele) => (
+        <div key={ele._id}>
+          <div>
+            <p>{ele.projectName}</p>
+            <p>{ele.projectStatus}</p>
+          </div>
+          <button>View Project</button>
+        </div>
+      ))}
+    </>
+  );
 };
 
 export default VendorProjectTracker;

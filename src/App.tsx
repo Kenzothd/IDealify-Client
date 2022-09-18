@@ -9,9 +9,7 @@ import VendorProjectsPage from "./pages/VendorProjectsPage";
 import VendorLogIn from "./pages/VendorLogIn";
 import TokenProvider from "./contextStore/TokenProvider";
 import SecretPage from "./pages/SecretPage";
-
-
-
+import VendorProjectTracker from "./components/vendor/VendorProjectTracker";
 
 function App() {
   return (
@@ -19,6 +17,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/vendor/projects" element={<VendorProjectsPage />} />
+          <Route
+            path="/vendor/projects/tracker"
+            element={<VendorProjectTracker />}
+          />
           <Route path="/activity/:id" element={<Activity />} />
           <Route path="/client/sign-up" element={<ClientSignUp />} />
           <Route path="/vendor/sign-up" element={<VendorSignUp />} />
@@ -28,7 +30,6 @@ function App() {
         </Routes>
       </BrowserRouter>
     </TokenProvider>
-
   );
 }
 
