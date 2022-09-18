@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState, FC } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -7,29 +8,48 @@ import {
   GridApi,
 } from "@mui/x-data-grid";
 import { Button, Menu, Typography } from "@mui/material";
+=======
+import React, { useContext, useEffect, useState, FC } from "react";
+import { ITokenContext } from "../../Interface";
+import { useNavigate } from "react-router-dom";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Button, Typography } from "@mui/material";
+>>>>>>> faith_v2
 import axios from "axios";
 import urlcat from "urlcat";
-const SERVER = import.meta.env.VITE_SERVER;
 import format from "date-fns/format";
 import { IActivities } from "../../Interface";
+import TokenContext from "../../contextStore/token-context";
 
 // currently fetching all activities instead of vendor's specific activities
 
+const SERVER = import.meta.env.VITE_SERVER;
 const VendorProjectTable: FC = () => {
   // we can also leave it uninitialized but add in <IActivities[] | undefined>
   const [activities, setActivities] = useState<IActivities[]>([]);
   const [refreshActivities, setRefreshActivities] = useState<boolean>(false);
+  const { token } = useContext<ITokenContext>(TokenContext);
   const navigate = useNavigate();
   const { projectid } = useParams();
 
   useEffect(() => {
     const url = urlcat(
       SERVER,
+<<<<<<< HEAD
       `/activities/project?projectId=${projectid}` // random Project ID used here
     );
 
+=======
+      `/activities/projects?projectId=6322ca80102f0fb0edf322e4` // random Project ID used here
+    );
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+>>>>>>> faith_v2
     axios
-      .get(url)
+      .get(url, config)
       .then((res) => {
         setActivities(res.data);
         console.log(res.data);

@@ -15,7 +15,7 @@ const VendorLoginForm: FC = () => {
 
   const { setTokenState } = useContext<ITokenContext>(TokenContext);
 
-  const navigateToProjects = useNavigate();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -31,9 +31,14 @@ const VendorLoginForm: FC = () => {
       axios
         .post(url, values)
         .then((res) => {
+<<<<<<< HEAD
           //   setTokenState(res.data.token);
           sessionStorage.setItem("token", res.data.token);
           navigateToProjects("/vendor/projects");
+=======
+          setTokenState(res.data.token);
+          navigate("/vendor/projects");
+>>>>>>> faith_v2
         })
         .catch((error) => setError(error.response.data.error));
     },
