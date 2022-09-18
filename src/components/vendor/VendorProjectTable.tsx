@@ -1,20 +1,8 @@
-<<<<<<< HEAD
-import React, { useEffect, useState, FC } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  DataGrid,
-  GridColDef,
-  GridValueGetterParams,
-  GridApi,
-} from "@mui/x-data-grid";
 import { Button, Menu, Typography } from "@mui/material";
-=======
 import React, { useContext, useEffect, useState, FC } from "react";
 import { ITokenContext } from "../../Interface";
-import { useNavigate } from "react-router-dom";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Button, Typography } from "@mui/material";
->>>>>>> faith_v2
 import axios from "axios";
 import urlcat from "urlcat";
 import format from "date-fns/format";
@@ -35,19 +23,15 @@ const VendorProjectTable: FC = () => {
   useEffect(() => {
     const url = urlcat(
       SERVER,
-<<<<<<< HEAD
       `/activities/project?projectId=${projectid}` // random Project ID used here
     );
 
-=======
-      `/activities/projects?projectId=6322ca80102f0fb0edf322e4` // random Project ID used here
-    );
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
->>>>>>> faith_v2
+
     axios
       .get(url, config)
       .then((res) => {
