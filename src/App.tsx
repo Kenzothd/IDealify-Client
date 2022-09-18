@@ -5,7 +5,8 @@ import VendorAccount from "./components/vendor/VendorAccount";
 import VendorSignUp from "./pages/VendorSignUp";
 import ClientSignUp from "./pages/ClientSignUp";
 import Activity from "./components/activity/Activity";
-import VendorProjectsPage from "./pages/VendorProjectsPage";
+import VendorCreateProject from "./components/vendor/VendorCreateProject";
+
 import VendorLogIn from "./pages/VendorLogIn";
 import TokenProvider from "./contextStore/TokenProvider";
 import SecretPage from "./pages/SecretPage";
@@ -19,7 +20,7 @@ function App() {
         <Routes>
           <Route
             path="/vendor/create-project"
-            element={<VendorProjectsPage />}
+            element={<VendorCreateProject />}
           />
           <Route path="/vendor/projects" element={<VendorProjectTracker />} />
           <Route
