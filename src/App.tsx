@@ -26,22 +26,30 @@ function App() {
     <TokenProvider>
       <BrowserRouter>
         <Routes>
+          {/* PRIVATE ROUTE EXAMPLE */}
+          {/* <Route element={<PrivateRoutes />}>
+            <Route path="/vendor/projects" element={<VendorProjectTracker />} />
+          </Route> */}
+
           <Route path="/" element={<LandingPage />} />
+
+          {/* client */}
+          <Route path="/client/sign-up" element={<ClientSignUp />} />
+          <Route path="/client/login" element={<ClientLogIn />} />
+
+          {/* vendor */}
+          <Route path="/vendor/sign-up" element={<VendorSignUp />} />
+          <Route path="/vendor/login" element={<VendorLogIn />} />
+
           <Route
             path="/vendor/create-project"
             element={<VendorCreateProduct />}
           />
-          <Route element={<PrivateRoutes />}>
-            <Route path="/vendor/projects" element={<VendorProjectTracker />} />
-          </Route>
           <Route
             path="/vendor/projects/:projectid"
             element={<VendorProjectTable />}
           />
-          <Route path="/client/sign-up" element={<ClientSignUp />} />
-          <Route path="/vendor/sign-up" element={<VendorSignUp />} />
-          <Route path="/vendor/login" element={<VendorLogIn />} />
-          <Route path="/client/login" element={<ClientLogIn />} />
+
           <Route path="/vendor/account" element={<VendorAccount />} />
           <Route path="/vendor/dashboard" element={<VendorDashboard />} />
           <Route

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const VendorDashboard: FC = () => {
   const navigate = useNavigate();
 
-  const handlerAddProj = () => {
+  const handleCreateProject = () => {
     navigate(`/vendor/create-project`);
   };
   return (
@@ -15,7 +15,7 @@ const VendorDashboard: FC = () => {
         <br />
         <a>Favourites</a>
       </div>
-      <button onClick={handlerAddProj}>Add Projects</button>
+      <button onClick={handleCreateProject}>Create New Project</button>
       <VendorProjectTracker />
     </>
   );

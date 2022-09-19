@@ -57,21 +57,10 @@ const VendorProjectTracker: FC = () => {
   console.log("projects", projects);
 
   useEffect(() => {
-    // Verify Vendor
     axios
-      .post(vendorUrl, {}, config)
-      .then((res) => setVendor(res.data))
-      .then((res) => {
-        // Get Projects
-        axios
-          .get(projectUrl, config)
-          .then((res) => setProjects(res.data))
-          .catch((error) => console.log({ Error: error.response.data.error }));
-      })
-      .catch((error) => {
-        console.log({ Error: error.response.data.error });
-        navigate("/vendor/login");
-      });
+      .get(projectUrl, config)
+      .then((res) => setProjects(res.data))
+      .catch((error) => console.log({ Error: error.response.data.error }));
   }, []);
 
   const handleProjectView = (e: any) => {
