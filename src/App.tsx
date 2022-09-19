@@ -27,28 +27,23 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          {/* below is a private route trial */}
-          {/* <Route element={<PrivateRoutes />}>
-            <Route path="/vendor/dashboard" element={<VendorDashboard />} />
-          </Route> */}
-
-          {/* clients */}
-          <Route path="/client/sign-up" element={<ClientSignUp />} />
-          <Route path="/client/login" element={<ClientLogIn />} />
-
-          {/* vendor */}
-          <Route path="/vendor/sign-up" element={<VendorSignUp />} />
-          <Route path="/vendor/login" element={<VendorLogIn />} />
-          <Route path="/vendor/account" element={<VendorAccount />} />
-          <Route path="/vendor/dashboard" element={<VendorDashboard />} />
           <Route
             path="/vendor/create-project"
             element={<VendorCreateProduct />}
           />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/vendor/projects" element={<VendorProjectTracker />} />
+          </Route>
           <Route
             path="/vendor/projects/:projectid"
             element={<VendorProjectTable />}
           />
+          <Route path="/client/sign-up" element={<ClientSignUp />} />
+          <Route path="/vendor/sign-up" element={<VendorSignUp />} />
+          <Route path="/vendor/login" element={<VendorLogIn />} />
+          <Route path="/client/login" element={<ClientLogIn />} />
+          <Route path="/vendor/account" element={<VendorAccount />} />
+          <Route path="/vendor/dashboard" element={<VendorDashboard />} />
           <Route
             path="/vendor/projects/:projectid/add-activity"
             element={<VendorAddActivity />}
