@@ -22,7 +22,7 @@ function App() {
         <Routes>
           <Route
             path="/vendor/create-project"
-            element={<VendorCreateProject />}
+            element={<VendorCreateProduct />}
           />
           <Route path="/vendor/projects" element={<VendorProjectTracker />} />
           <Route
