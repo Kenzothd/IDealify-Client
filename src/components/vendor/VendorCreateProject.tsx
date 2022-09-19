@@ -133,11 +133,7 @@ const VendorCreateProduct: FC = () => {
 
   return (
     <>
-      <h1>
-        Add New Project
-        <button onClick={handlerBackToProj}>Back to Project</button>
-      </h1>
-
+      <h1>Add New Project</h1>
       <form onSubmit={formik.handleSubmit}>
         <Grid
           container
@@ -342,6 +338,7 @@ const VendorCreateProduct: FC = () => {
           </Grid>
         </Grid>
       </form>
+      <button onClick={handlerBackToProj}>back to projects</button>
     </>
   );
 };

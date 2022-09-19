@@ -36,7 +36,6 @@ const VendorLoginForm: FC = () => {
       axios
         .post(url, values, config)
         .then((res) => {
-          //   setTokenState(res.data.token);
           console.log(res.data.token);
           sessionStorage.setItem("token", res.data.token);
           // setTokenState(res.data.token);
