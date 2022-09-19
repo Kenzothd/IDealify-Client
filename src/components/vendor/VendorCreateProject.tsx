@@ -19,10 +19,11 @@ const SERVER = import.meta.env.VITE_SERVER;
 const VendorCreateProduct: FC = () => {
   const [design, setDesign] = React.useState("");
   const [housingType, setHousingType] = React.useState("");
-  const [data, setData] = useState(0);
+  // const [data, setData] = useState(0);
   const navigate = useNavigate();
   const token: any = sessionStorage.getItem("token");
   const { vendorid } = useParams();
+  const [username, setUsername] = useState(0);
 
   const designOptions = [
     "Modern",
@@ -104,20 +105,19 @@ const VendorCreateProduct: FC = () => {
         .required("Required")
         .test(
           "value-name",
-          "Client username does not exists",
-          (name: any): any => {
+          "Client username does not exist",
+          (name: any): boolean => {
             const userUrl = urlcat(SERVER, `clients/findByName/${name}`);
             const config = {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             };
-
             axios
               .get(userUrl, config)
-              .then((res) => setData(res.data.length))
+              .then((res) => setUsername(res.data.length))
               .catch((err) => console.log(err));
-            return data;
+            return username === 0 ? false : true;
           }
         ),
       totalCosting: Yup.string().required("Required"),
