@@ -40,7 +40,7 @@ const PrivateRoutes: FC = () => {
     const diffInMilliseconds = differenceInMilliseconds(expiryDate, today);
     console.log(diffInMilliseconds);
     if (diffInMilliseconds < 0) {
-      return payload === "vendor" ? (
+      return payload.userType === "Vendor" ? (
         <Navigate to="/vendor/login" />
       ) : (
         <Navigate to="/client/login" />
