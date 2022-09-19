@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SERVER = import.meta.env.VITE_SERVER;
 
@@ -22,6 +22,7 @@ const VendorCreateProduct: FC = () => {
   const [data, setData] = useState(0);
   const navigate = useNavigate();
   const token: any = sessionStorage.getItem("token");
+  const { vendorid } = useParams();
 
   const designOptions = [
     "Modern",
@@ -127,8 +128,8 @@ const VendorCreateProduct: FC = () => {
     },
   });
 
-  const handlerBackToProj = () => {
-    navigate(`/vendor/projects/`);
+  const handleBackToDashboard = () => {
+    navigate(`/vendor/${vendorid}/dashboard`);
   };
 
   return (
@@ -338,7 +339,7 @@ const VendorCreateProduct: FC = () => {
           </Grid>
         </Grid>
       </form>
-      <button onClick={handlerBackToProj}>back to projects</button>
+      <button onClick={handleBackToDashboard}>Back to Dashboard</button>
     </>
   );
 };

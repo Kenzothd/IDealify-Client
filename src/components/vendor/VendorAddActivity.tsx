@@ -61,10 +61,10 @@ const VendorAddActivity: FC = () => {
   });
 
   const navigate = useNavigate();
-  const { projectid } = useParams();
+  const { vendorid, projectid } = useParams();
 
-  const handlerBackToProjTable = () => {
-    navigate(`/vendor/projects/${projectid}`);
+  const handleReturnToActivities = () => {
+    navigate(`/vendor/${vendorid}/projects/${projectid}`);
   };
   return (
     <>
@@ -230,7 +230,9 @@ const VendorAddActivity: FC = () => {
           </Grid>
         </Grid>
       </form>
-      <button onClick={handlerBackToProjTable}>Back to Project Table</button>
+      <button onClick={handleReturnToActivities}>
+        Return to all Activities
+      </button>
     </>
   );
 };

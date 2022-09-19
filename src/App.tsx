@@ -42,22 +42,25 @@ function App() {
           <Route path="/vendor/login" element={<VendorLogIn />} />
 
           <Route
-            path="/vendor/create-project"
+            path="/vendor/:vendorid/create-project"
             element={<VendorCreateProduct />}
           />
+
+          <Route path="/vendor/:vendorid/account" element={<VendorAccount />} />
           <Route
-            path="/vendor/projects/:projectid"
+            path="/vendor/:vendorid/dashboard"
+            element={<VendorDashboard />}
+          />
+          <Route
+            path="/vendor/:vendorid/projects/:projectid"
             element={<VendorProjectTable />}
           />
-
-          <Route path="/vendor/account" element={<VendorAccount />} />
-          <Route path="/vendor/dashboard" element={<VendorDashboard />} />
           <Route
-            path="/vendor/projects/:projectid/add-activity"
+            path="/vendor/:vendorid/projects/:projectid/add-activity"
             element={<VendorAddActivity />}
           />
           <Route
-            path="/vendor/projects/:projectid/activity/:activityid"
+            path="/vendor/:vendorid/projects/:projectid/activity/:activityid"
             element={<Activity />}
           />
         </Routes>

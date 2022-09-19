@@ -23,12 +23,12 @@ const buttonSx = {
 };
 
 const Activity: FC = () => {
-  const { projectid, activityid } = useParams();
+  const { vendorid, projectid, activityid } = useParams();
   const url = urlcat(SERVER, `/activities/id/${activityid}`);
   const token: any = sessionStorage.getItem("token");
   const [offEditMode, setOffEditMode] = useState(true);
   const navigate = useNavigate();
-  
+
   const [activity, setActivity] = useState<IActivities>({
     projectId: "",
     _id: "",
@@ -119,8 +119,8 @@ const Activity: FC = () => {
       break;
   }
 
-  const handlerBackToProjTable = () => {
-    navigate(`/vendor/projects/${projectid}`);
+  const handleReturnToAllActivities = () => {
+    navigate(`/vendor/${vendorid}/projects/${projectid}`);
   };
 
   return (
@@ -239,7 +239,9 @@ const Activity: FC = () => {
           </Button>
         </form>
       </Card>
-      <button onClick={handlerBackToProjTable}>Back to Project Table</button>
+      <button onClick={handleReturnToAllActivities}>
+        Return To View All Activities
+      </button>
     </>
   );
 };

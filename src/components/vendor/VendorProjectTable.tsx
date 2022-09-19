@@ -6,26 +6,18 @@ import axios from "axios";
 import urlcat from "urlcat";
 import format from "date-fns/format";
 import { IActivities } from "../../Interface";
-// import TokenContext from "../../contextStore/token-context";
-// import { ITokenContext } from "../../Interface";
-
-// currently fetching all activities instead of vendor's specific activities
 
 const SERVER = import.meta.env.VITE_SERVER;
 const VendorProjectTable: FC = () => {
   // we can also leave it uninitialized but add in <IActivities[] | undefined>
   const [activities, setActivities] = useState<IActivities[]>([]);
   const [refreshActivities, setRefreshActivities] = useState<boolean>(false);
-  // const { token } = useContext<ITokenContext>(TokenContext);
   const token: any = sessionStorage.getItem("token");
   const navigate = useNavigate();
-  const { projectid } = useParams();
+  const { vendorid, projectid } = useParams();
 
   useEffect(() => {
-    const url = urlcat(
-      SERVER,
-      `/activities/projects?projectId=${projectid}` // random Project ID used here
-    );
+    const url = urlcat(SERVER, `/activities/projects?projectId=${projectid}`);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -126,7 +118,7 @@ const VendorProjectTable: FC = () => {
         const onClick = (e: React.MouseEvent) => {
           console.log(e.target);
           const id = params.row.id;
-          navigate(`/vendor/projects/${projectid}/activity/${id}`);
+          navigate(`/vendor/${vendorid}/projects/${projectid}/activity/${id}`);
         };
         return (
           <Button
@@ -162,12 +154,12 @@ const VendorProjectTable: FC = () => {
     setRefreshActivities(!refreshActivities);
   };
 
-  const handlerBackToProj = () => {
-    navigate("/vendor/projects");
+  const handleBackToDashboard = () => {
+    navigate(`/vendor/${vendorid}/dashboard`);
   };
 
-  const handlerAddActivity = () => {
-    navigate(`/vendor/projects/${projectid}/add-activity`);
+  const handleAddActivity = () => {
+    navigate(`/vendor/${vendorid}/projects/${projectid}/add-activity`);
   };
 
   return (
@@ -180,8 +172,8 @@ const VendorProjectTable: FC = () => {
       />
       <Button onClick={refreshActivitiesHandler}>Refresh Activities</Button>
       {/* <pre>{JSON.stringify(activities, null, 2)}</pre> */}
-      <button onClick={handlerBackToProj}>Back to project</button>
-      <button onClick={handlerAddActivity}>Add activity</button>
+      <button onClick={handleBackToDashboard}>Back to Dashboard</button>
+      <button onClick={handleAddActivity}>Add activity</button>
     </div>
   );
 };
