@@ -20,22 +20,20 @@ import VendorAddActivity from "./components/vendor/VendorAddActivity";
 import LandingPage from "./pages/LandingPage";
 import ClientLogIn from "./pages/ClientLogIn";
 import VendorDashboard from "./pages/VendorDashboard";
+import LoginRedirect from "./pages/LoginRedirect";
 
 function App() {
   return (
     <TokenProvider>
       <BrowserRouter>
         <Routes>
-          {/* PRIVATE ROUTE EXAMPLE */}
-          {/* <Route element={<PrivateRoutes />}>
-            <Route path="/vendor/projects" element={<VendorProjectTracker />} />
-          </Route> */}
+          {/* for all */}
 
           <Route path="/" element={<LandingPage />} />
-
+          <Route path="/login-redirecr" element={<LandingPage />} />
           {/* client */}
           <Route path="/client/sign-up" element={<ClientSignUp />} />
-          <Route path="/client/login" element={<ClientLogIn />} />
+          <Route path="/login-redirect" element={<LoginRedirect />} />
 
           {/* vendor */}
           <Route path="/vendor/sign-up" element={<VendorSignUp />} />
@@ -45,7 +43,6 @@ function App() {
               path="/vendor/:vendorid/create-project"
               element={<VendorCreateProduct />}
             />
-
             <Route
               path="/vendor/:vendorid/account"
               element={<VendorAccount />}

@@ -1,5 +1,15 @@
 import React, { useContext, useState, useEffect, FC } from "react";
-import { Button, Card, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  TextField,
+  Typography,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+} from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import axios from "axios";
 import urlcat from "urlcat";
 import { useFormik } from "formik";
@@ -27,6 +37,7 @@ const Activity: FC = () => {
   const url = urlcat(SERVER, `/activities/id/${activityid}`);
   const token: any = sessionStorage.getItem("token");
   const [offEditMode, setOffEditMode] = useState(true);
+
   const navigate = useNavigate();
 
   const [activity, setActivity] = useState<IActivities>({
@@ -42,6 +53,13 @@ const Activity: FC = () => {
     __v: 0,
   });
 
+  const activityStatusOptions = [
+    "Pending",
+    "Upcoming",
+    "In Progress",
+    "Completed",
+    "Cancelled",
+  ];
   useEffect(() => {
     const config = {
       headers: {
@@ -89,9 +107,14 @@ const Activity: FC = () => {
         alert("data has been sent for update");
         setOffEditMode(!offEditMode);
         console.log(values);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
         axios
-          .put(url, values)
-          .then((res) => console.log(res.data))
+          .put(url, values, config)
+          .then((res) => setActivity(res.data))
           .catch((err) => console.log(err));
       }
     },
@@ -121,6 +144,9 @@ const Activity: FC = () => {
 
   const handleReturnToAllActivities = () => {
     navigate(`/vendor/${vendorid}/projects/${projectid}`);
+  };
+  const handleStatusChange = (event: SelectChangeEvent) => {
+    setActivity({ ...activity, status: event.target.value });
   };
 
   return (
@@ -216,6 +242,34 @@ const Activity: FC = () => {
           />
           {formik.touched.activityEndDate && formik.errors.activityEndDate ? (
             <div>{formik.errors.activityEndDate}</div>
+          ) : null}
+          <FormControl
+            disabled={offEditMode}
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            <InputLabel required>Activity Status</InputLabel>
+            <Select
+              value={formik.values.status}
+              label="Activity Status"
+              id="activityStatus"
+              name="activityStatus"
+              onChange={(e) => {
+                handleStatusChange(e);
+                formik.handleChange(e);
+              }}
+              onBlur={formik.handleBlur}
+              sx={{ width: "100%" }}
+            >
+              {activityStatusOptions.map((option, i) => (
+                <MenuItem key={i} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {formik.touched.status && formik.errors.status ? (
+            <div>{formik.errors.status}</div>
           ) : null}
           <TextField
             required
