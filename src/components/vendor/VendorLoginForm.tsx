@@ -39,7 +39,7 @@ const VendorLoginForm: FC = () => {
           console.log(res.data.token);
           sessionStorage.setItem("token", res.data.token);
           // setTokenState(res.data.token);
-          navigate("/vendor/projects");
+          navigate("/vendor/dashboard");
         })
         .catch((error) => setError(error.response.data.error));
     },

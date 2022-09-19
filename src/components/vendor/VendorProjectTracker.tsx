@@ -74,25 +74,13 @@ const VendorProjectTracker: FC = () => {
       });
   }, []);
 
-  const handlerViewProj = (e: any) => {
+  const handleProjectView = (e: any) => {
     console.log(e.target.id);
     navigate(`/vendor/projects/${e.target.id}`);
   };
 
-  const handlerAddProj = () => {
-    navigate(`/vendor/create-project`);
-  };
-
   return (
     <>
-      <ul>
-        <li>Account</li>
-        <li>Favourites</li>
-        <li>Inbox</li>
-        <li>Project Tracker</li>
-      </ul>
-      <button>Back to Inbox</button>
-      <button onClick={handlerAddProj}>Add Projects</button>
       <h1>Projects</h1>
       {projects.map((ele) => (
         <div key={ele._id}>
@@ -100,7 +88,7 @@ const VendorProjectTracker: FC = () => {
             <p>{ele.projectName}</p>
             <p>{ele.projectStatus}</p>
           </div>
-          <button id={ele._id} onClick={handlerViewProj}>
+          <button id={ele._id} onClick={handleProjectView}>
             View Project
           </button>
         </div>
