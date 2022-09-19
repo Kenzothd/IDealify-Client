@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import differenceInMilliseconds from "date-fns/differenceInMilliseconds";
+
 // how the token payload looks:
 // {
 //   "userId": "63259af521ed28ea05508815",
@@ -50,5 +51,4 @@ const PrivateRoutes: FC = () => {
     }
   }
 };
-
 export default PrivateRoutes;
