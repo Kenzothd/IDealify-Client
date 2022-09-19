@@ -1,14 +1,10 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import React, { FC, useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-// date-fns
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-// When using TypeScript 4.x and above
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 import type {} from "@mui/x-date-pickers/themeAugmentation";
 import urlcat from "urlcat";
-import react, { FC, useState, useEffect } from "react";
 import { IVendor } from "../../Interface";
 import axios from "axios";
 import { date } from "yup/lib/locale";
