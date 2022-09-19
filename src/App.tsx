@@ -40,29 +40,33 @@ function App() {
           {/* vendor */}
           <Route path="/vendor/sign-up" element={<VendorSignUp />} />
           <Route path="/vendor/login" element={<VendorLogIn />} />
+          <Route element={<PrivateRoutes />}>
+            <Route
+              path="/vendor/:vendorid/create-project"
+              element={<VendorCreateProduct />}
+            />
 
-          <Route
-            path="/vendor/:vendorid/create-project"
-            element={<VendorCreateProduct />}
-          />
-
-          <Route path="/vendor/:vendorid/account" element={<VendorAccount />} />
-          <Route
-            path="/vendor/:vendorid/dashboard"
-            element={<VendorDashboard />}
-          />
-          <Route
-            path="/vendor/:vendorid/projects/:projectid"
-            element={<VendorProjectTable />}
-          />
-          <Route
-            path="/vendor/:vendorid/projects/:projectid/add-activity"
-            element={<VendorAddActivity />}
-          />
-          <Route
-            path="/vendor/:vendorid/projects/:projectid/activity/:activityid"
-            element={<Activity />}
-          />
+            <Route
+              path="/vendor/:vendorid/account"
+              element={<VendorAccount />}
+            />
+            <Route
+              path="/vendor/:vendorid/dashboard"
+              element={<VendorDashboard />}
+            />
+            <Route
+              path="/vendor/:vendorid/projects/:projectid"
+              element={<VendorProjectTable />}
+            />
+            <Route
+              path="/vendor/:vendorid/projects/:projectid/add-activity"
+              element={<VendorAddActivity />}
+            />
+            <Route
+              path="/vendor/:vendorid/projects/:projectid/activity/:activityid"
+              element={<Activity />}
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
     </TokenProvider>

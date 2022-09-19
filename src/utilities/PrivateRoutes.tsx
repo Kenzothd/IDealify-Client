@@ -36,12 +36,13 @@ const PrivateRoutes: FC = () => {
     const payload = parseJwt(token);
     const today = new Date();
     const expiryDate = new Date(payload.exp * 1000);
+    console.log(payload);
     console.log(today);
     console.log(expiryDate);
     const diffInMilliseconds = differenceInMilliseconds(expiryDate, today);
     console.log(diffInMilliseconds);
     if (diffInMilliseconds < 0) {
-      return payload.userType === "Vendor" ? (
+      return payload.userType === "vendor" ? (
         <Navigate to="/vendor/login" />
       ) : (
         <Navigate to="/client/login" />
