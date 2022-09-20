@@ -166,18 +166,18 @@ const VendorProjectTable: FC = () => {
   return (
     <>
       <VendorSingleProjectView />
-      <div style={{ height: 600, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[5]}
-        />
-        <Button onClick={refreshActivitiesHandler}>Refresh Activities</Button>
-        {/* <pre>{JSON.stringify(activities, null, 2)}</pre> */}
-        <button onClick={handleBackToDashboard}>Back to Dashboard</button>
-        <button onClick={handleAddActivity}>Add activity</button>
-      </div>
+
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={10}
+        rowsPerPageOptions={[5]}
+        sx={{ height: "500px", width: "100%" }}
+      />
+      <Button onClick={refreshActivitiesHandler}>Refresh Activities</Button>
+      {/* <pre>{JSON.stringify(activities, null, 2)}</pre> */}
+      <button onClick={handleBackToDashboard}>Back to Dashboard</button>
+      <button onClick={handleAddActivity}>Add activity</button>
     </>
   );
 };
