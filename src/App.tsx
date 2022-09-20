@@ -46,11 +46,11 @@ function App() {
 
 
           <Route
-            path="/vendor/:vendorid/create-project"
+            path="/vendor/:vendorid/products/:productid/create-project"
             element={<PrivateRoute outlet={<VendorCreateProduct />} />}
           />
           <Route
-            path="/vendor/:vendorid/update-project"
+            path="/vendor/:vendorid/projects/:projectid/update-project"
             element={<PrivateRoute outlet={<VendorUpdateProject />} />}
           />
 
