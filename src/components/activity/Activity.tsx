@@ -34,7 +34,6 @@ const buttonSx = {
 
 const Activity: FC = () => {
   const { vendorid, projectid, activityid } = useParams();
-  const url = urlcat(SERVER, `/activities/id/${activityid}`);
   const token: any = sessionStorage.getItem("token");
   const [offEditMode, setOffEditMode] = useState(true);
 
@@ -61,6 +60,7 @@ const Activity: FC = () => {
     "Cancelled",
   ];
   useEffect(() => {
+    const url = urlcat(SERVER, `/activities/id/${activityid}`);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -112,8 +112,11 @@ const Activity: FC = () => {
             Authorization: `Bearer ${token}`,
           },
         };
+        console.log(values);
+        const url = urlcat(SERVER, `/activities/id/${activityid}`);
+        const body = { ...values, projectId: projectid };
         axios
-          .put(url, values, config)
+          .put(url, body, config)
           .then((res) => setActivity(res.data))
           .catch((err) => console.log(err));
       }

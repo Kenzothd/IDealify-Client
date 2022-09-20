@@ -9,6 +9,7 @@ import {
   InputLabel,
   MenuItem,
   TextField,
+  Typography,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import axios from "axios";
@@ -19,11 +20,13 @@ const SERVER = import.meta.env.VITE_SERVER;
 const VendorCreateProduct: FC = () => {
   const [design, setDesign] = React.useState("");
   const [housingType, setHousingType] = React.useState("");
+  const [status, setStatus] = React.useState("");
+  const [username, setUsername] = useState(0);
+  const [clientId, setClientId] = useState("");
   // const [data, setData] = useState(0);
   const navigate = useNavigate();
   const token: any = sessionStorage.getItem("token");
   const { vendorid } = useParams();
-  const [username, setUsername] = useState(0);
 
   const designOptions = [
     "Modern",
@@ -68,6 +71,8 @@ const VendorCreateProduct: FC = () => {
     "Others",
   ];
 
+  const statusOptions = ["Upcoming", "In Progress", "Completed", "Cancelled"];
+
   const handleDesignChange = (event: SelectChangeEvent) => {
     setDesign(event.target.value);
   };
@@ -76,16 +81,21 @@ const VendorCreateProduct: FC = () => {
     setHousingType(event.target.value);
   };
 
+  const handleStatusChange = (event: SelectChangeEvent) => {
+    setStatus(event.target.value);
+  };
+
   const formik = useFormik({
     initialValues: {
       projectName: "",
       housingType: "",
       projectStartDate: "",
       projectEndDate: "",
+      projectStatus: "",
       designTheme: "",
       clientUsername: "",
       totalCosting: "",
-      comments: "",
+      description: "",
     },
     validationSchema: Yup.object({
       projectName: Yup.string().required("Required"),
@@ -98,8 +108,8 @@ const VendorCreateProduct: FC = () => {
           `Date should not be later than ${new Date().toLocaleDateString()}`
         )
         .required("Project end date required"),
+      projectStatus: Yup.string().required("Required"),
       designTheme: Yup.string().required("Required"),
-
       // there is a bug here whereby it will show prev error message if re-entering, ask simon
       clientUsername: Yup.string()
         .required("Required")
@@ -115,16 +125,54 @@ const VendorCreateProduct: FC = () => {
             };
             axios
               .get(userUrl, config)
-              .then((res) => setUsername(res.data.length))
+              .then((res) => {
+                setUsername(res.data.length);
+                setClientId(res.data[0]._id);
+              })
               .catch((err) => console.log(err));
             return username === 0 ? false : true;
           }
         ),
       totalCosting: Yup.string().required("Required"),
-      comments: Yup.string().required("Required"),
+      description: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      const url = urlcat(SERVER, `/projects/vendor/${vendorid}`);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // {
+      //   projectName: "",
+      //   housingType: "",
+      //   projectStartDate: "",
+      //   projectEndDate: "",
+      //   projectStatus: "",
+      //   designTheme: "",
+      //   clientUsername: "",
+      //   totalCosting: "",
+      //   description: "",
+      // }
+      const body = {
+        vendorId: vendorid,
+        clientId: clientId,
+        projectName: values.projectName,
+        housingType: values.housingType,
+        projectStartDate: values.projectStartDate,
+        projectEndDate: values.projectEndDate,
+        projectStatus: values.projectStatus,
+        uploadedFiles: ["url", "url", "url"],
+        description: values.description,
+        designTheme: values.designTheme,
+      };
+      axios
+        .post(url, body, config)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
     },
   });
 
@@ -147,7 +195,7 @@ const VendorCreateProduct: FC = () => {
         >
           <Grid item sm={12} md={12}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6} md={6}>
+              <Grid item xs={12} sm={4} md={4}>
                 <TextField
                   required
                   id="projectName"
@@ -163,7 +211,7 @@ const VendorCreateProduct: FC = () => {
                   <div>{formik.errors.projectName}</div>
                 ) : null}
               </Grid>
-              <Grid item xs={12} sm={6} md={6}>
+              <Grid item xs={12} sm={4} md={4}>
                 <TextField
                   required
                   autoComplete="off"
@@ -179,6 +227,32 @@ const VendorCreateProduct: FC = () => {
                 {formik.touched.clientUsername &&
                 formik.errors.clientUsername ? (
                   <div>{formik.errors.clientUsername}</div>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} sm={3.9} md={3.9}>
+                <FormControl variant="filled" sx={{ width: "100%" }}>
+                  <InputLabel required>Project Status</InputLabel>
+                  <Select
+                    value={status}
+                    label="Project Status"
+                    id="projectStatus"
+                    name="projectStatus"
+                    onChange={(e) => {
+                      handleStatusChange(e);
+                      formik.handleChange(e);
+                    }}
+                    onBlur={formik.handleBlur}
+                    sx={{ width: "100%" }}
+                  >
+                    {statusOptions.map((option, i) => (
+                      <MenuItem key={i} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                {formik.touched.projectStatus && formik.errors.projectStatus ? (
+                  <div>{formik.errors.projectStatus}</div>
                 ) : null}
               </Grid>
             </Grid>
@@ -307,9 +381,9 @@ const VendorCreateProduct: FC = () => {
               required
               autoComplete="off"
               variant="filled"
-              label="Comments"
-              id="comments"
-              name="comments"
+              label="Description"
+              id="description"
+              name="description"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -320,8 +394,8 @@ const VendorCreateProduct: FC = () => {
                 },
               }}
             />
-            {formik.touched.comments && formik.errors.comments ? (
-              <div>{formik.errors.comments}</div>
+            {formik.touched.description && formik.errors.description ? (
+              <div>{formik.errors.description}</div>
             ) : null}
           </Grid>
           <Grid
