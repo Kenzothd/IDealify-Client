@@ -6,6 +6,7 @@ import axios from "axios";
 import urlcat from "urlcat";
 import format from "date-fns/format";
 import { IActivities } from "../../Interface";
+import VendorSingleProjectView from "./VendorSingleProjectView";
 
 const SERVER = import.meta.env.VITE_SERVER;
 const VendorProjectTable: FC = () => {
@@ -163,18 +164,21 @@ const VendorProjectTable: FC = () => {
   };
 
   return (
-    <div style={{ height: 600, width: "100%" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[5]}
-      />
-      <Button onClick={refreshActivitiesHandler}>Refresh Activities</Button>
-      {/* <pre>{JSON.stringify(activities, null, 2)}</pre> */}
-      <button onClick={handleBackToDashboard}>Back to Dashboard</button>
-      <button onClick={handleAddActivity}>Add activity</button>
-    </div>
+    <>
+      <VendorSingleProjectView />
+      <div style={{ height: 600, width: "100%" }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[5]}
+        />
+        <Button onClick={refreshActivitiesHandler}>Refresh Activities</Button>
+        {/* <pre>{JSON.stringify(activities, null, 2)}</pre> */}
+        <button onClick={handleBackToDashboard}>Back to Dashboard</button>
+        <button onClick={handleAddActivity}>Add activity</button>
+      </div>
+    </>
   );
 };
 
