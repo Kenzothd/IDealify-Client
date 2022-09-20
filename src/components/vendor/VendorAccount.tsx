@@ -1,20 +1,17 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import React, { FC, useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-// date-fns
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-// When using TypeScript 4.x and above
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 import type {} from "@mui/x-date-pickers/themeAugmentation";
 import urlcat from "urlcat";
-import react, { FC, useState, useEffect } from "react";
 import { IVendor } from "../../Interface";
 import axios from "axios";
 import { date } from "yup/lib/locale";
 import format from "date-fns/format";
 import Button from "@mui/material/Button";
 import { render } from "react-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const buttonSx = {
   backgroundColor: "blue",
@@ -33,7 +30,8 @@ const SERVER = import.meta.env.VITE_SERVER;
 const VendorAccount: FC = () => {
   const token: any = sessionStorage.getItem("token");
   const [offEditMode, setOffEditMode] = useState<boolean>(true);
-
+  const { vendorid } = useParams();
+  const navigate = useNavigate();
   const [vendorAccount, setVendorAccount] = useState<IVendor>({
     email: "",
     contactPersonName: "",
@@ -52,7 +50,7 @@ const VendorAccount: FC = () => {
   //   console.log(vendorAccount);
 
   useEffect(() => {
-    const url = urlcat(SERVER, "/vendors/id/6326ad9268fde94c3e6438d4");
+    const url = urlcat(SERVER, `/vendors/id/${vendorid}`);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -150,7 +148,7 @@ const VendorAccount: FC = () => {
           values
         );
 
-        const url = urlcat(SERVER, `vendors/id/6326ad9268fde94c3e6438d4`);
+        const url = urlcat(SERVER, `vendors/id/${vendorid}`);
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -163,7 +161,9 @@ const VendorAccount: FC = () => {
       }
     },
   });
-
+  const handleReturnToDashboard = () => {
+    navigate(`/vendor/${vendorid}/dashboard`);
+  };
   return (
     <>
       <h1>Account</h1>
@@ -333,6 +333,7 @@ const VendorAccount: FC = () => {
           {offEditMode ? "Edit" : "Submit Changes"}
         </Button>
       </form>
+      <button onClick={handleReturnToDashboard}>Return to Dashboard</button>
     </>
   );
 };
