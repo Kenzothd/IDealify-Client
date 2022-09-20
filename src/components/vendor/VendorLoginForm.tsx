@@ -53,6 +53,7 @@ const VendorLoginForm: FC = () => {
           console.log(res.data.token);
           sessionStorage.setItem("token", res.data.token);
           const payload = parseJwt(res.data.token);
+          console.log(payload.userId);
           navigate(`/vendor/${payload.userId}/dashboard`);
         })
         .catch((error) => setError(error.response.data.error));

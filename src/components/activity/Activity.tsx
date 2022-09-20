@@ -20,11 +20,23 @@ import sub from "date-fns/sub";
 import { useNavigate, useParams } from "react-router-dom";
 import { IActivities } from "../../Interface";
 
+// const buttonSx = {
+//   backgroundColor: "blue",
+//   color: "white",
+//   margin: "3% auto",
+//   display: "flex",
+//   fontWeight: 700,
+//   fontSize: 12,
+//   letterSpacing: 1,
+//   borderRadius: 2,
+//   padding: "0.5rem 1.5rem",
+// };
+
 const buttonSx = {
-  backgroundColor: "blue",
+  backgroundColor: "#c9caa2",
   color: "white",
-  margin: "3% auto",
   display: "flex",
+  margin: "3% auto",
   fontWeight: 700,
   fontSize: 12,
   letterSpacing: 1,
@@ -126,7 +138,7 @@ const Activity: FC = () => {
   let bgColor: string;
   switch (activity.status) {
     case "Upcoming":
-      bgColor = "purple";
+      bgColor = "#84c4cb";
       break;
     case "Pending":
       bgColor = "gray";
