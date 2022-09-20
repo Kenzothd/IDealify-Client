@@ -37,8 +37,8 @@ const VendorUpdateProject: FC = () => {
   const [username, setUsername] = useState(0);
   const [clientId, setClientId] = useState("");
   const [clientName, setClientName] = useState("");
-
   const [offEditMode, setOffEditMode] = useState(true);
+
   const [project, setProject] = useState<IProjectTwo>({
     vendorId: "",
     clientId: "",
@@ -187,8 +187,6 @@ const VendorUpdateProject: FC = () => {
               .get(userUrl, config)
               .then((res) => {
                 setUsername(res.data.length);
-                // setClientId(res.data[0]._id);
-                console.log("get done");
               })
               .catch((err) => console.log(err));
             return username === 0 ? false : true;
@@ -198,32 +196,37 @@ const VendorUpdateProject: FC = () => {
       description: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      const url = urlcat(SERVER, `/projects/id/${projectid}`);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const body = {
-        vendorId: vendorid,
-        clientId: clientId,
-        projectName: values.projectName,
-        housingType: values.housingType,
-        projectStartDate: values.projectStartDate,
-        projectEndDate: values.projectEndDate,
-        projectStatus: values.projectStatus,
-        uploadedFiles: ["url", "url", "url"],
-        description: values.description,
-        designTheme: values.designTheme,
-      };
-
-      axios
-        .put(url, body, config)
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => console.log(err));
+      console.log("submit button clicked");
+      if (offEditMode) {
+        setOffEditMode(!offEditMode);
+      } else {
+        alert("data has been sent for update");
+        setOffEditMode(!offEditMode);
+        const url = urlcat(SERVER, `/projects/id/${projectid}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const body = {
+          vendorId: vendorid,
+          clientId: clientId,
+          projectName: values.projectName,
+          housingType: values.housingType,
+          projectStartDate: values.projectStartDate,
+          projectEndDate: values.projectEndDate,
+          projectStatus: values.projectStatus,
+          uploadedFiles: ["url", "url", "url"],
+          description: values.description,
+          designTheme: values.designTheme,
+        };
+        axios
+          .put(url, body, config)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => console.log(err));
+      }
     },
   });
 
