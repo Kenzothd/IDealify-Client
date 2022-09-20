@@ -42,6 +42,11 @@ function App() {
             path="/vendor/projects/:projectid/activity/:activityid"
             element={<Activity />}
           />
+          <Route
+            path="/vendor/projects/:projectid/activity/:activityid"
+            element={<Activity />}
+          />
+
         </Routes>
       </BrowserRouter>
     </TokenProvider>
