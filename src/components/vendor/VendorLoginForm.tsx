@@ -4,10 +4,12 @@ import urlcat from "urlcat";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-
+import { Box, Button, Container, Grid, TextField, Typography } from '@mui/material';
 
 const VendorLoginForm: FC = () => {
   const [error, setError] = useState<String>("");
+
+
 
   const SERVER = import.meta.env.VITE_SERVER;
   const url = urlcat(SERVER, "/vendors/login");
@@ -54,36 +56,72 @@ const VendorLoginForm: FC = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="username">User Name</label>
-      <input
-        id="username"
-        name="username"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.username}
-      />
-      {formik.touched.username && formik.errors.username ? (
-        <div>{formik.errors.username}</div>
-      ) : null}
+    <Box >
+      <form onSubmit={formik.handleSubmit}>
 
-      <label htmlFor="password">Password</label>
-      <input
-        id="password"
-        name="password"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.password}
-      />
-      {formik.touched.password && formik.errors.password ? (
-        <div>{formik.errors.password}</div>
-      ) : null}
+        <Grid container
+          sx={{
+            display: "flex"
+          }}
+        >
+          <Grid item xs={12}
+            sx={{ mb: '2rem' }}>
+            <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>USERNAME*</Typography>
+            <TextField
+              id="username"
+              autoComplete="off"
+              label="username"
+              name="username"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.username}
+              sx={{
+                width: "100%"
 
-      <button type="submit">Log In</button>
-      <span>{error}</span>
-    </form>
+              }}
+            />
+            {formik.touched.username &&
+              formik.errors.username ? (
+              <div>{formik.errors.username}</div>
+            ) : null}
+          </Grid>
+
+          <Grid item xs={12}
+            sx={{ mb: '2rem' }}>
+            <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>PASSWORD*</Typography>
+            <TextField
+
+              id="password"
+              autoComplete="off"
+              label="password"
+              name="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              sx={{ width: "100%" }}
+            />
+            {formik.touched.password && formik.errors.password ? (
+              <div>{formik.errors.password}</div>
+            ) : null}
+          </Grid>
+
+        </Grid>
+
+        <Button type="submit"
+          sx={{
+            background: '#254D71',
+            color: 'white',
+            width: "100%",
+            letterSpacing: '0.2rem',
+            mb: '0.5rem',
+            '&:hover': {
+              backgroundColor: '#254D71',
+            }
+          }}
+        >Log In</Button>
+        <Typography variant='body2' sx={{ color: 'red' }} >{error}</Typography>
+      </form>
+    </Box>
   );
 };
 

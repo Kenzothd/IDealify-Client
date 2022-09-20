@@ -21,6 +21,7 @@ import VendorDashboard from "./pages/VendorDashboard";
 import LoginRedirect from "./pages/LoginRedirect";
 import VendorUpdateProject from "./components/vendor/VendorUpdateProject";
 
+
 function App() {
   return (
     <TokenProvider>
@@ -30,12 +31,14 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login-redirect" element={<LoginRedirect />} />
 
+
           {/* client */}
           <Route path="/client/sign-up" element={<ClientSignUp />} />
 
           {/* vendor */}
           <Route path="/vendor/sign-up" element={<VendorSignUp />} />
           <Route path="/vendor/login" element={<VendorLogIn />} />
+
 
 
 

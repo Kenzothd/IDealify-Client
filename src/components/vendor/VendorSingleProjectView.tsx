@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 
 const VendorSingleProjectView: FC = () => {
+
   return (
     <>
       <Card sx={{ margin: "2%" }}>

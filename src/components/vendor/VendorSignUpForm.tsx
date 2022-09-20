@@ -130,7 +130,7 @@ const VendorSignUpForm: FC = () => {
                 value={formik.values.contactPersonName}
               />
               {formik.touched.contactPersonName &&
-              formik.errors.contactPersonName ? (
+                formik.errors.contactPersonName ? (
                 <div>{formik.errors.contactPersonName}</div>
               ) : null}
             </Grid>
@@ -251,7 +251,7 @@ const VendorSignUpForm: FC = () => {
                 value={formik.values.registrationNumber}
               />
               {formik.touched.registrationNumber &&
-              formik.errors.registrationNumber ? (
+                formik.errors.registrationNumber ? (
                 <div>{formik.errors.registrationNumber}</div>
               ) : null}
             </Grid>
@@ -278,7 +278,7 @@ const VendorSignUpForm: FC = () => {
                 value={formik.values.incorporationDate}
               />
               {formik.touched.incorporationDate &&
-              formik.errors.incorporationDate ? (
+                formik.errors.incorporationDate ? (
                 <div>{formik.errors.incorporationDate}</div>
               ) : null}
             </Grid>
@@ -301,7 +301,7 @@ const VendorSignUpForm: FC = () => {
                 value={formik.values.registeredOfficeAddress}
               />
               {formik.touched.registeredOfficeAddress &&
-              formik.errors.registeredOfficeAddress ? (
+                formik.errors.registeredOfficeAddress ? (
                 <div>{formik.errors.registeredOfficeAddress}</div>
               ) : null}
             </Grid>
