@@ -16,6 +16,7 @@ import axios from "axios";
 import format from "date-fns/format";
 import { useNavigate, useParams } from "react-router-dom";
 import { IProjectTwo } from "../../Interface";
+import sub from "date-fns/sub";
 
 const SERVER = import.meta.env.VITE_SERVER;
 const buttonSx = {
@@ -164,10 +165,10 @@ const VendorUpdateProject: FC = () => {
       projectEndDate: Yup.date()
         .default(new Date())
         .min(
-          new Date(),
-          `Date should not be later than ${new Date().toLocaleDateString()}`
+          sub(new Date(project.projectEndDate), { days: 1 }),
+          `End Date should not be before Start Date`
         )
-        .required("Project end date required"),
+        .required("Project End Date Required"),
       projectStatus: Yup.string().required("Required"),
       designTheme: Yup.string().required("Required"),
       // there is a bug here whereby it will show prev error message if re-entering, ask simon
@@ -177,7 +178,8 @@ const VendorUpdateProject: FC = () => {
           "value-name",
           "Client username does not exist",
           (name: any): boolean => {
-            const userUrl = urlcat(SERVER, `clients/findByName/${name}`);
+            console.log(clientName);
+            const userUrl = urlcat(SERVER, `clients/findByName/${clientName}`);
             const config = {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -208,6 +210,18 @@ const VendorUpdateProject: FC = () => {
             Authorization: `Bearer ${token}`,
           },
         };
+        //     vendorId: "",
+        // clientId: "",
+        // projectName: "",
+        // housingType: "",
+        // projectStartDate: new Date(),
+        // projectEndDate: new Date(),
+        // projectStatus: "",
+        // uploadedFiles: ["url", "url", "url"],
+        // description: "",
+        // designTheme: "",
+        // totalCosting: 0,
+        // comments: "",
         const body = {
           vendorId: vendorid,
           clientId: clientId,
@@ -219,6 +233,7 @@ const VendorUpdateProject: FC = () => {
           uploadedFiles: ["url", "url", "url"],
           description: values.description,
           designTheme: values.designTheme,
+          totalCosting: values.totalCosting,
         };
         axios
           .put(url, body, config)
@@ -238,263 +253,216 @@ const VendorUpdateProject: FC = () => {
     <>
       <h1>Edit Project</h1>
       <form onSubmit={formik.handleSubmit}>
-        <Grid
-          container
-          spacing={3}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+        <TextField
+          required
+          disabled={offEditMode}
+          id="projectName"
+          autoComplete="off"
+          variant="filled"
+          label="Project Name"
+          value={formik.values.projectName}
+          name="projectName"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          sx={{ width: "100%" }}
+        />
+        {formik.touched.projectName && formik.errors.projectName ? (
+          <div>{formik.errors.projectName}</div>
+        ) : null}
+
+        <TextField
+          required
+          disabled={offEditMode}
+          autoComplete="off"
+          variant="filled"
+          label="Client Username"
+          id="clientUsername"
+          name="clientUsername"
+          value={formik.values.clientUsername}
+          type="text"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          sx={{ width: "100%" }}
+        />
+        {formik.touched.clientUsername && formik.errors.clientUsername ? (
+          <div>{formik.errors.clientUsername}</div>
+        ) : null}
+
+        <FormControl
+          disabled={offEditMode}
+          variant="filled"
+          sx={{ width: "100%" }}
         >
-          <Grid item sm={12} md={12}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={4} md={4}>
-                <TextField
-                  required
-                  disabled={offEditMode}
-                  id="projectName"
-                  autoComplete="off"
-                  variant="filled"
-                  label="Project Name"
-                  value={formik.values.projectName}
-                  name="projectName"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  sx={{ width: "100%" }}
-                />
-                {formik.touched.projectName && formik.errors.projectName ? (
-                  <div>{formik.errors.projectName}</div>
-                ) : null}
-              </Grid>
-              <Grid item xs={12} sm={4} md={4}>
-                <TextField
-                  required
-                  disabled={offEditMode}
-                  autoComplete="off"
-                  variant="filled"
-                  label="Client Username"
-                  id="clientUsername"
-                  name="clientUsername"
-                  value={formik.values.clientUsername}
-                  type="text"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  sx={{ width: "100%" }}
-                />
-                {formik.touched.clientUsername &&
-                formik.errors.clientUsername ? (
-                  <div>{formik.errors.clientUsername}</div>
-                ) : null}
-              </Grid>
-              <Grid item xs={12} sm={3.9} md={3.9}>
-                <FormControl
-                  disabled={offEditMode}
-                  variant="filled"
-                  sx={{ width: "100%" }}
-                >
-                  <InputLabel required>Project Status</InputLabel>
-                  <Select
-                    // value={status}
-                    value={formik.values.projectStatus}
-                    label="Project Status"
-                    id="projectStatus"
-                    name="projectStatus"
-                    onChange={(e) => {
-                      handleStatusChange(e);
-                      formik.handleChange(e);
-                    }}
-                    onBlur={formik.handleBlur}
-                    sx={{ width: "100%" }}
-                  >
-                    {statusOptions.map((option, i) => (
-                      <MenuItem key={i} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                {formik.touched.projectStatus && formik.errors.projectStatus ? (
-                  <div>{formik.errors.projectStatus}</div>
-                ) : null}
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item sm={12} md={12}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={4} md={4}>
-                <FormControl
-                  disabled={offEditMode}
-                  variant="filled"
-                  sx={{ width: "100%" }}
-                >
-                  <InputLabel required>Design Theme</InputLabel>
-                  <Select
-                    // value={design}
-                    value={formik.values.designTheme}
-                    label="Design Theme"
-                    id="designTheme"
-                    name="designTheme"
-                    onChange={(e) => {
-                      handleDesignChange(e);
-                      formik.handleChange(e);
-                    }}
-                    onBlur={formik.handleBlur}
-                    sx={{ width: "100%" }}
-                  >
-                    {designOptions.map((option, i) => (
-                      <MenuItem key={i} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                {formik.touched.designTheme && formik.errors.designTheme ? (
-                  <div>{formik.errors.designTheme}</div>
-                ) : null}
-              </Grid>
-              <Grid item xs={12} sm={4} md={4}>
-                <FormControl
-                  disabled={offEditMode}
-                  variant="filled"
-                  sx={{ width: "100%" }}
-                >
-                  <InputLabel required>Housing Type</InputLabel>
-                  <Select
-                    // value={housingType}
-                    value={formik.values.housingType}
-                    label="Housing Type"
-                    id="housingType"
-                    name="housingType"
-                    onChange={(e) => {
-                      handleHousingChange(e);
-                      formik.handleChange(e);
-                    }}
-                    onBlur={formik.handleBlur}
-                    sx={{ width: "100%" }}
-                  >
-                    {housingOptions.map((option, i) => (
-                      <MenuItem key={i} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                {formik.touched.housingType && formik.errors.housingType ? (
-                  <div>{formik.errors.housingType}</div>
-                ) : null}
-              </Grid>
-              <Grid item xs={12} sm={4} md={4}>
-                <TextField
-                  required
-                  disabled={offEditMode}
-                  autoComplete="off"
-                  variant="filled"
-                  label="Total Costing"
-                  id="totalCosting"
-                  name="totalCosting"
-                  value={formik.values.totalCosting}
-                  type="text"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  sx={{ width: "100%" }}
-                />
-                {formik.touched.totalCosting && formik.errors.totalCosting ? (
-                  <div>{formik.errors.totalCosting}</div>
-                ) : null}
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item sm={12} md={12}>
-            <Grid container spacing={2}>
-              <Grid item xs={6} sm={6} md={6}>
-                <TextField
-                  required
-                  disabled={offEditMode}
-                  autoComplete="off"
-                  variant="filled"
-                  label="Project Start Date"
-                  value={formik.values.projectStartDate}
-                  type="date"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  id="projectStartDate"
-                  name="projectStartDate"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  sx={{ width: "100%" }}
-                />
-                {formik.touched.projectStartDate &&
-                formik.errors.projectStartDate ? (
-                  <div>{formik.errors.projectStartDate}</div>
-                ) : null}
-              </Grid>
-              <Grid item xs={6} sm={6} md={6}>
-                <TextField
-                  required
-                  disabled={offEditMode}
-                  autoComplete="off"
-                  variant="filled"
-                  label="Project End Date"
-                  value={formik.values.projectEndDate}
-                  type="date"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  id="projectEndDate"
-                  name="projectEndDate"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  sx={{ width: "100%" }}
-                />
-                {formik.touched.projectEndDate &&
-                formik.errors.projectEndDate ? (
-                  <div>{formik.errors.projectEndDate}</div>
-                ) : null}
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              required
-              disabled={offEditMode}
-              autoComplete="off"
-              variant="filled"
-              label="Description"
-              id="description"
-              name="description"
-              value={formik.values.description}
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              sx={{
-                width: "100%",
-                "& .MuiInputBase-root": {
-                  height: 200,
-                },
-              }}
-            />
-            {formik.touched.description && formik.errors.description ? (
-              <div>{formik.errors.description}</div>
-            ) : null}
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={12}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+          <InputLabel required>Project Status</InputLabel>
+          <Select
+            // value={status}
+            value={formik.values.projectStatus}
+            label="Project Status"
+            id="projectStatus"
+            name="projectStatus"
+            onChange={(e) => {
+              handleStatusChange(e);
+              formik.handleChange(e);
             }}
+            onBlur={formik.handleBlur}
+            sx={{ width: "100%" }}
           >
-            <Button type="submit" sx={buttonSx}>
-              {offEditMode ? "Edit" : "Submit Changes"}
-            </Button>
-          </Grid>
-        </Grid>
+            {statusOptions.map((option, i) => (
+              <MenuItem key={i} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {formik.touched.projectStatus && formik.errors.projectStatus ? (
+          <div>{formik.errors.projectStatus}</div>
+        ) : null}
+
+        <FormControl
+          disabled={offEditMode}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          <InputLabel required>Design Theme</InputLabel>
+          <Select
+            // value={design}
+            value={formik.values.designTheme}
+            label="Design Theme"
+            id="designTheme"
+            name="designTheme"
+            onChange={(e) => {
+              handleDesignChange(e);
+              formik.handleChange(e);
+            }}
+            onBlur={formik.handleBlur}
+            sx={{ width: "100%" }}
+          >
+            {designOptions.map((option, i) => (
+              <MenuItem key={i} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {formik.touched.designTheme && formik.errors.designTheme ? (
+          <div>{formik.errors.designTheme}</div>
+        ) : null}
+
+        <FormControl
+          disabled={offEditMode}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          <InputLabel required>Housing Type</InputLabel>
+          <Select
+            // value={housingType}
+            value={formik.values.housingType}
+            label="Housing Type"
+            id="housingType"
+            name="housingType"
+            onChange={(e) => {
+              handleHousingChange(e);
+              formik.handleChange(e);
+            }}
+            onBlur={formik.handleBlur}
+            sx={{ width: "100%" }}
+          >
+            {housingOptions.map((option, i) => (
+              <MenuItem key={i} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {formik.touched.housingType && formik.errors.housingType ? (
+          <div>{formik.errors.housingType}</div>
+        ) : null}
+
+        <TextField
+          required
+          disabled={offEditMode}
+          autoComplete="off"
+          variant="filled"
+          label="Total Costing"
+          id="totalCosting"
+          name="totalCosting"
+          value={formik.values.totalCosting}
+          type="text"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          sx={{ width: "100%" }}
+        />
+        {formik.touched.totalCosting && formik.errors.totalCosting ? (
+          <div>{formik.errors.totalCosting}</div>
+        ) : null}
+
+        <TextField
+          required
+          disabled={offEditMode}
+          autoComplete="off"
+          variant="filled"
+          label="Project Start Date"
+          value={formik.values.projectStartDate}
+          type="date"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          id="projectStartDate"
+          name="projectStartDate"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          sx={{ width: "100%" }}
+        />
+        {formik.touched.projectStartDate && formik.errors.projectStartDate ? (
+          <div>{formik.errors.projectStartDate}</div>
+        ) : null}
+
+        <TextField
+          required
+          disabled={offEditMode}
+          autoComplete="off"
+          variant="filled"
+          label="Project End Date"
+          value={formik.values.projectEndDate}
+          type="date"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          id="projectEndDate"
+          name="projectEndDate"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          sx={{ width: "100%" }}
+        />
+        {formik.touched.projectEndDate && formik.errors.projectEndDate ? (
+          <div>{formik.errors.projectEndDate}</div>
+        ) : null}
+
+        <TextField
+          required
+          disabled={offEditMode}
+          autoComplete="off"
+          variant="filled"
+          label="Description"
+          id="description"
+          name="description"
+          value={formik.values.description}
+          type="text"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          sx={{
+            width: "100%",
+            "& .MuiInputBase-root": {
+              height: 200,
+            },
+          }}
+        />
+        {formik.touched.description && formik.errors.description ? (
+          <div>{formik.errors.description}</div>
+        ) : null}
+        <Button type="submit" sx={buttonSx}>
+          {offEditMode ? "Edit" : "Submit Changes"}
+        </Button>
       </form>
       <Button sx={buttonSx} onClick={handleBackToProjectView}>
         Back to Project View
