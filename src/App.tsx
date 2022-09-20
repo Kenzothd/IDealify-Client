@@ -64,6 +64,7 @@ function App() {
               element={<Activity />}
             />
           </Route>
+          <Route path="/vendor/secret" element={<SecretPage />} />
         </Routes>
       </BrowserRouter>
     </TokenProvider>
