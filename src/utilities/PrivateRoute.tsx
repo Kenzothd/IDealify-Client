@@ -1,8 +1,5 @@
-// this private route has been deprecated
-
-
 import React, { FC } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, Route, RouteProps } from "react-router-dom";
 import differenceInMilliseconds from "date-fns/differenceInMilliseconds";
 
 // how the token payload looks:
@@ -29,13 +26,12 @@ const parseJwt = (token: string) => {
   return JSON.parse(jsonPayload);
 };
 
-const PrivateRoutes: FC = () => {
+interface IPrivateRouteProps {
+  outlet: JSX.Element;
+}
+const PrivateRoute = ({ outlet }: IPrivateRouteProps) => {
   const token: any = sessionStorage.getItem("token");
-  // checking if token is present in sessionStorage, if not present redirect to LandingPage
-  if (token === undefined) {
-    return <Navigate to="/" />;
-  } else {
-    // checking if token has expired , if expired redirect to please relogin page
+  if (token !== undefined) {
     const payload = parseJwt(token);
     const today = new Date();
     const expiryDate = new Date(payload.exp * 1000);
@@ -45,10 +41,12 @@ const PrivateRoutes: FC = () => {
     const diffInMilliseconds = differenceInMilliseconds(expiryDate, today);
     console.log(diffInMilliseconds);
     if (diffInMilliseconds < 0) {
-      return <Navigate to="/login-redirect" />
+      return <Navigate to="/login-redirect" />;
     } else {
-      return <Outlet />;
+      return outlet;
     }
+  } else {
+    return <Navigate to="/" />;
   }
 };
-export default PrivateRoutes;
+export default PrivateRoute;

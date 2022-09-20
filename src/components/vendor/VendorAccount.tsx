@@ -148,7 +148,7 @@ const VendorAccount: FC = () => {
           values
         );
 
-        const url = urlcat(SERVER, `vendors/id/6326ad9268fde94c3e6438d4`);
+        const url = urlcat(SERVER, `vendors/id/${vendorid}`);
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,

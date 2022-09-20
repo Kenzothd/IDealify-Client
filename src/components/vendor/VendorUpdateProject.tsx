@@ -17,7 +17,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const SERVER = import.meta.env.VITE_SERVER;
 
-const VendorCreateProduct: FC = () => {
+const VendorUpdateProject: FC = () => {
   const [design, setDesign] = React.useState("");
   const [housingType, setHousingType] = React.useState("");
   const [status, setStatus] = React.useState("");
@@ -418,4 +418,4 @@ const VendorCreateProduct: FC = () => {
   );
 };
 
-export default VendorCreateProduct;
+export default VendorUpdateProject;

@@ -2,14 +2,12 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
-import PrivateRoutes from "./utilities/PrivateRoutes";
+import PrivateRoute from "./utilities/PrivateRoute";
 
 import VendorAccount from "./components/vendor/VendorAccount";
 import VendorSignUp from "./pages/VendorSignUp";
 import ClientSignUp from "./pages/ClientSignUp";
 import Activity from "./components/activity/Activity";
-import VendorCreateProject from "./components/vendor/VendorCreateProject";
-
 import VendorLogIn from "./pages/VendorLogIn";
 import TokenProvider from "./contextStore/TokenProvider";
 import SecretPage from "./pages/SecretPage";
@@ -21,6 +19,7 @@ import LandingPage from "./pages/LandingPage";
 import ClientLogIn from "./pages/ClientLogIn";
 import VendorDashboard from "./pages/VendorDashboard";
 import LoginRedirect from "./pages/LoginRedirect";
+import VendorUpdateProject from "./components/vendor/VendorUpdateProject";
 
 function App() {
   return (
@@ -28,16 +27,16 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* for all */}
-
           <Route path="/" element={<LandingPage />} />
-          <Route path="/login-redirecr" element={<LandingPage />} />
+          <Route path="/login-redirect" element={<LoginRedirect />} />
+
           {/* client */}
           <Route path="/client/sign-up" element={<ClientSignUp />} />
-          <Route path="/login-redirect" element={<LoginRedirect />} />
 
           {/* vendor */}
           <Route path="/vendor/sign-up" element={<VendorSignUp />} />
           <Route path="/vendor/login" element={<VendorLogIn />} />
+<<<<<<< HEAD
           <Route element={<PrivateRoutes />}>
             <Route
               path="/vendor/:vendorid/create-project"
@@ -65,6 +64,37 @@ function App() {
             />
           </Route>
           <Route path="/vendor/secret" element={<SecretPage />} />
+=======
+
+          <Route
+            path="/vendor/:vendorid/create-project"
+            element={<PrivateRoute outlet={<VendorCreateProduct />} />}
+          />
+          <Route
+            path="/vendor/:vendorid/update-project"
+            element={<PrivateRoute outlet={<VendorUpdateProject />} />}
+          />
+          <Route
+            path="/vendor/:vendorid/account"
+            element={<PrivateRoute outlet={<VendorAccount />} />}
+          />
+          <Route
+            path="/vendor/:vendorid/dashboard"
+            element={<PrivateRoute outlet={<VendorDashboard />} />}
+          />
+          <Route
+            path="/vendor/:vendorid/projects/:projectid"
+            element={<PrivateRoute outlet={<VendorProjectTable />} />}
+          />
+          <Route
+            path="/vendor/:vendorid/projects/:projectid/add-activity"
+            element={<PrivateRoute outlet={<VendorAddActivity />} />}
+          />
+          <Route
+            path="/vendor/:vendorid/projects/:projectid/activity/:activityid"
+            element={<PrivateRoute outlet={<Activity />} />}
+          />
+>>>>>>> eb82b35b8abe1da42a96c97ec7d011c41bdb5353
         </Routes>
       </BrowserRouter>
     </TokenProvider>
