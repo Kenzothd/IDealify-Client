@@ -25,13 +25,25 @@ import EditIcon from "@mui/icons-material/Edit";
 const buttonSx = {
   backgroundColor: "#74ace4",
   color: "white",
-  margin: "3% 1%",
+  margin: "1% 1%",
   fontWeight: 700,
   fontSize: 12,
   letterSpacing: 1,
   borderRadius: 2,
   padding: "0.5rem 1.5rem",
 };
+
+const projectButtonSx = {
+  backgroundColor: "#74ace4",
+  color: "white",
+  margin: "1% 4%",
+  fontWeight: 700,
+  fontSize: 12,
+  letterSpacing: 1,
+  borderRadius: 2,
+  padding: "0.5rem 1.5rem",
+};
+
 const VendorSingleProjectView: FC = () => {
   const SERVER = import.meta.env.VITE_SERVER;
   const navigate = useNavigate();
@@ -105,7 +117,13 @@ const VendorSingleProjectView: FC = () => {
       <Box>
         <Grid container>
           <Grid item md={6}>
-            <Typography variant="h2">{projectInfo.projectName}</Typography>
+            <Grid container>
+              <Typography variant="h2">{projectInfo.projectName}</Typography>
+              <Button sx={projectButtonSx} onClick={handleViewProject}>
+                <EditIcon sx={{ paddingRight: "10px" }} />
+                Edit Project
+              </Button>
+            </Grid>
           </Grid>
           <Grid item md={6} sx={{ display: "flex", justifyContent: "right" }}>
             <Button sx={buttonSx} onClick={handleAddActivity}>
@@ -116,10 +134,6 @@ const VendorSingleProjectView: FC = () => {
             <Button sx={buttonSx} onClick={handleReturnToAllProjects}>
               <KeyboardReturnIcon sx={{ paddingRight: "10px" }} />
               All Projects
-            </Button>
-            <Button sx={buttonSx} onClick={handleReturnToAllProjects}>
-              <EditIcon sx={{ paddingRight: "10px" }} />
-              Project
             </Button>
           </Grid>
         </Grid>
@@ -175,10 +189,10 @@ const VendorSingleProjectView: FC = () => {
                 <Typography
                   sx={{
                     fontWeight: "bold",
-                    fontSize: "0.85rem",
-                    letterSpacing: "0.1rem",
+                    fontSize: "1.5rem",
+                    letterSpacing: "0.25rem",
                     color: "white",
-                    width: "100px",
+                    width: "auto",
                     textAlign: "center",
                     borderRadius: 8,
                     padding: "3px 10px",
@@ -188,19 +202,6 @@ const VendorSingleProjectView: FC = () => {
                 >
                   {projectInfo.projectStatus}
                 </Typography>
-              </Grid>
-
-              <Grid item md={12}>
-                <Button
-                  onClick={handleViewProject}
-                  sx={{
-                    color: "white",
-                    textDecoration: "underline",
-                    paddingTop: "10px",
-                  }}
-                >
-                  <Typography>view/edit</Typography>
-                </Button>
               </Grid>
             </Grid>
           </Grid>

@@ -143,18 +143,6 @@ const VendorCreateProduct: FC = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-
-      // {
-      //   projectName: "",
-      //   housingType: "",
-      //   projectStartDate: "",
-      //   projectEndDate: "",
-      //   projectStatus: "",
-      //   designTheme: "",
-      //   clientUsername: "",
-      //   totalCosting: "",
-      //   description: "",
-      // }
       const body = {
         vendorId: vendorid,
         clientId: clientId,
@@ -171,6 +159,7 @@ const VendorCreateProduct: FC = () => {
         .post(url, body, config)
         .then((res) => {
           console.log(res.data);
+          navigate(`/vendor/${vendorid}/dashboard`);
         })
         .catch((err) => console.log(err));
     },

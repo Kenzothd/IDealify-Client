@@ -9,16 +9,6 @@ import { IActivities } from "../../Interface";
 import VendorSingleProjectView from "./VendorSingleProjectView";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import RefreshIcon from "@mui/icons-material/Refresh";
-const buttonSx = {
-  backgroundColor: "#5b8368",
-  color: "white",
-  margin: "3% 1%",
-  fontWeight: 700,
-  fontSize: 12,
-  letterSpacing: 1,
-  borderRadius: 2,
-  padding: "0.5rem 1.5rem",
-};
 
 const SERVER = import.meta.env.VITE_SERVER;
 const VendorActivityTable: FC = () => {
@@ -54,54 +44,6 @@ const VendorActivityTable: FC = () => {
       headerAlign: "center",
       align: "center",
     },
-    // {
-    //   field: "status",
-    //   headerName: "Status",
-    //   width: 200,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   renderCell: (params) => {
-    //     let bgColor: string;
-    //     switch (params.row.status) {
-    //       case "Upcoming":
-    //         bgColor = "#84c4cb";
-    //         break;
-    //       case "Pending":
-    //         bgColor = "gray";
-    //         break;
-    //       case "In Progress":
-    //         bgColor = "orange";
-    //         break;
-    //       case "Completed":
-    //         bgColor = "green";
-    //         break;
-    //       case "Cancelled":
-    //         bgColor = "red";
-    //         break;
-    //       default:
-    //         bgColor = "gray";
-    //         break;
-    //     }
-    //     return (
-    //       <Typography
-    //         sx={{
-    //           fontWeight: "bold",
-    //           fontSize: "0.85rem",
-    //           letterSpacing: "0.1rem",
-    //           color: "white",
-    //           width: "100px",
-    //           textAlign: "center",
-    //           borderRadius: 8,
-    //           padding: "3px 10px",
-    //           display: "inline-block",
-    //           backgroundColor: bgColor,
-    //         }}
-    //       >
-    //         {params.row.status}
-    //       </Typography>
-    //     );
-    //   },
-    // },
     {
       field: "activityStartDate",
       headerName: "Start Date",
@@ -190,7 +132,7 @@ const VendorActivityTable: FC = () => {
             onClick={onClick}
             sx={{
               "&:hover": {
-                color: "#5b8368",
+                color: "#74ace4",
                 cursor: "pointer",
               },
             }}
