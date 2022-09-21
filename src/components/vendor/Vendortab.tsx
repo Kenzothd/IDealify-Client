@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { Container, Grid, Tab, Tabs, Typography } from "@mui/material";
 import {
   AccountCircle,
@@ -12,26 +12,32 @@ import {
 const VendorTab = () => {
   const [value, setValue] = useState("projects");
   const navigate = useNavigate();
+  const { vendorid } = useParams();
 
   const handleChange = (e: React.SyntheticEvent, value: string) => {
     setValue(value);
-    navigate(`/vendor/${value}`);
+    navigate(`/vendor/${vendorid}/${value}`);
 
     // switch (value) {
     //   case "account":
-    //     navigate("/vendor/account");
+    //     navigate(`/vendor/${vendorid}/${value}`);
     //     break;
     //   case "profile":
-    //     // code block
+    //     // disabled(KIV)
     //     break;
     //   case "inbox":
-    //     // code block
+    //     // disabled(KIV)
     //     break;
-    //   case "new-project":
+    //   case "dashboard":
     //     // code block
+    //     navigate(`/vendor/${vendorid}/${value}`);
+    //     break;
+    //   case "create-project":
+    //     // code block
+    //     navigate(`/vendor/${vendorid}/${value}`);
     //     break;
     //   default:
-    //   // code block
+    //     navigate(`/vendor/${vendorid}/dashboard`);
     // }
   };
   return (
@@ -60,7 +66,7 @@ const VendorTab = () => {
         <Tab
           icon={<TableRowsOutlined />}
           iconPosition="start"
-          value="projects"
+          value="dashboard"
           label="Project Tracker"
         />
         <Tab
