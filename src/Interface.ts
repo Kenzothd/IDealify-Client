@@ -59,3 +59,18 @@ export interface ITokenContext {
   token: String;
   setTokenState: (data: String) => void;
 }
+
+export interface IProjectTwo {
+  vendorId: string;
+  clientId: string;
+  projectName: string;
+  housingType: string;
+  projectStartDate: Date;
+  projectEndDate: Date;
+  projectStatus: string;
+  uploadedFiles: string[];
+  description: string;
+  designTheme: string;
+  totalCosting: number;
+  comments: string;
+}

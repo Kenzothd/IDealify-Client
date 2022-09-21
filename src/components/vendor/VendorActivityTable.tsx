@@ -1,12 +1,24 @@
 import React, { useContext, useEffect, useState, FC } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Button, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import urlcat from "urlcat";
 import format from "date-fns/format";
 import { IActivities } from "../../Interface";
 import VendorSingleProjectView from "./VendorSingleProjectView";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
+const buttonSx = {
+  backgroundColor: "#5b8368",
+  color: "white",
+  margin: "3% 1%",
+  fontWeight: 700,
+  fontSize: 12,
+  letterSpacing: 1,
+  borderRadius: 2,
+  padding: "0.5rem 1.5rem",
+};
 
 const SERVER = import.meta.env.VITE_SERVER;
 const VendorProjectTable: FC = () => {
@@ -16,6 +28,7 @@ const VendorProjectTable: FC = () => {
   const token: any = sessionStorage.getItem("token");
   const navigate = useNavigate();
   const { vendorid, projectid } = useParams();
+  const [offEditMode, setOffEditMode] = useState(true);
 
   useEffect(() => {
     const url = urlcat(SERVER, `/activities/projects?projectId=${projectid}`);
@@ -37,55 +50,58 @@ const VendorProjectTable: FC = () => {
     {
       field: "activityTitle",
       headerName: "Activity Title",
-      width: 450,
+      width: 500,
       headerAlign: "center",
       align: "center",
     },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 200,
-      headerAlign: "center",
-      align: "center",
-      renderCell: (params) => {
-        let bgColor: string;
-        switch (params.row.status) {
-          case "Upcoming":
-            bgColor = "purple";
-            break;
-          case "Pending":
-            bgColor = "gray";
-            break;
-          case "In Progress":
-            bgColor = "orange";
-            break;
-          case "Completed":
-            bgColor = "green";
-            break;
-          case "Cancelled":
-            bgColor = "red";
-            break;
-          default:
-            bgColor = "gray";
-            break;
-        }
-        return (
-          <Typography
-            sx={{
-              fontWeight: "bold",
-              fontSize: "0.75rem",
-              color: "white",
-              borderRadius: 8,
-              padding: "3px 10px",
-              display: "inline-block",
-              backgroundColor: bgColor,
-            }}
-          >
-            {params.row.status}
-          </Typography>
-        );
-      },
-    },
+    // {
+    //   field: "status",
+    //   headerName: "Status",
+    //   width: 200,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   renderCell: (params) => {
+    //     let bgColor: string;
+    //     switch (params.row.status) {
+    //       case "Upcoming":
+    //         bgColor = "#84c4cb";
+    //         break;
+    //       case "Pending":
+    //         bgColor = "gray";
+    //         break;
+    //       case "In Progress":
+    //         bgColor = "orange";
+    //         break;
+    //       case "Completed":
+    //         bgColor = "green";
+    //         break;
+    //       case "Cancelled":
+    //         bgColor = "red";
+    //         break;
+    //       default:
+    //         bgColor = "gray";
+    //         break;
+    //     }
+    //     return (
+    //       <Typography
+    //         sx={{
+    //           fontWeight: "bold",
+    //           fontSize: "0.85rem",
+    //           letterSpacing: "0.1rem",
+    //           color: "white",
+    //           width: "100px",
+    //           textAlign: "center",
+    //           borderRadius: 8,
+    //           padding: "3px 10px",
+    //           display: "inline-block",
+    //           backgroundColor: bgColor,
+    //         }}
+    //       >
+    //         {params.row.status}
+    //       </Typography>
+    //     );
+    //   },
+    // },
     {
       field: "activityStartDate",
       headerName: "Start Date",
@@ -108,6 +124,54 @@ const VendorProjectTable: FC = () => {
       align: "center",
     },
     {
+      field: "status",
+      headerName: "Status",
+      width: 200,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params) => {
+        let bgColor: string;
+        switch (params.row.status) {
+          case "Upcoming":
+            bgColor = "#84c4cb";
+            break;
+          case "Pending":
+            bgColor = "gray";
+            break;
+          case "In Progress":
+            bgColor = "orange";
+            break;
+          case "Completed":
+            bgColor = "green";
+            break;
+          case "Cancelled":
+            bgColor = "red";
+            break;
+          default:
+            bgColor = "gray";
+            break;
+        }
+        return (
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              fontSize: "0.85rem",
+              letterSpacing: "0.1rem",
+              color: "white",
+              width: "100px",
+              textAlign: "center",
+              borderRadius: 8,
+              padding: "3px 10px",
+              display: "inline-block",
+              backgroundColor: bgColor,
+            }}
+          >
+            {params.row.status}
+          </Typography>
+        );
+      },
+    },
+    {
       field: "action",
       headerName: "Click To View",
       sortable: false,
@@ -122,12 +186,15 @@ const VendorProjectTable: FC = () => {
           navigate(`/vendor/${vendorid}/projects/${projectid}/activity/${id}`);
         };
         return (
-          <Button
+          <VisibilityIcon
             onClick={onClick}
-            sx={{ backgroundColor: "yellow", color: "black", borderRadius: 8 }}
-          >
-            view
-          </Button>
+            sx={{
+              "&:hover": {
+                color: "#5b8368",
+                cursor: "pointer",
+              },
+            }}
+          />
         );
       },
     },
@@ -163,21 +230,40 @@ const VendorProjectTable: FC = () => {
     navigate(`/vendor/${vendorid}/projects/${projectid}/add-activity`);
   };
 
+  const handleEditProject = () => {
+    navigate(`/vendor/${vendorid}/projects/${projectid}/update-project`);
+  };
+
   return (
     <>
-      <VendorSingleProjectView />
-      <div style={{ height: 600, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[5]}
-        />
-        <Button onClick={refreshActivitiesHandler}>Refresh Activities</Button>
-        {/* <pre>{JSON.stringify(activities, null, 2)}</pre> */}
-        <button onClick={handleBackToDashboard}>Back to Dashboard</button>
-        <button onClick={handleAddActivity}>Add activity</button>
-      </div>
+      <Grid container spacing={2} sx={{ padding: "0% 5%", marginTop: "2%" }}>
+        <Grid item md={12}>
+          <VendorSingleProjectView />
+        </Grid>
+
+        <Grid item md={12}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[5]}
+            sx={{ height: "500px", width: "100%" }}
+          />
+          <Button sx={buttonSx} onClick={refreshActivitiesHandler}>
+            Refresh Activities
+          </Button>
+          {/* <pre>{JSON.stringify(activities, null, 2)}</pre> */}
+          <Button sx={buttonSx} onClick={handleBackToDashboard}>
+            Back to Dashboard
+          </Button>
+          <Button sx={buttonSx} onClick={handleAddActivity}>
+            Add activity
+          </Button>
+          <Button sx={buttonSx} onClick={handleEditProject}>
+            Edit Project
+          </Button>
+        </Grid>
+      </Grid>
     </>
   );
 };

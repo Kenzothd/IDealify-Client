@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
-import type {} from "@mui/x-date-pickers/themeAugmentation";
+import type { } from "@mui/x-date-pickers/themeAugmentation";
 import urlcat from "urlcat";
 import { IVendor } from "../Interface";
 import axios from "axios";

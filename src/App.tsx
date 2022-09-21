@@ -12,7 +12,7 @@ import VendorLogIn from "./pages/VendorLogIn";
 import TokenProvider from "./contextStore/TokenProvider";
 import SecretPage from "./pages/SecretPage";
 import VendorProjectTracker from "./components/vendor/VendorProjectTracker";
-import VendorProjectTable from "./components/vendor/VendorProjectTable";
+import VendorProjectTable from "./components/vendor/VendorActivityTable";
 import VendorCreateProduct from "./components/vendor/VendorCreateProject";
 import VendorAddActivity from "./components/vendor/VendorAddActivity";
 import LandingPage from "./pages/LandingPage";
@@ -36,15 +36,16 @@ function App() {
           {/* vendor */}
           <Route path="/vendor/sign-up" element={<VendorSignUp />} />
           <Route path="/vendor/login" element={<VendorLogIn />} />
-
+          <Route path="/vendor/secret" element={<SecretPage />} />
           <Route
             path="/vendor/:vendorid/create-project"
             element={<PrivateRoute outlet={<VendorCreateProduct />} />}
           />
           <Route
-            path="/vendor/:vendorid/update-project"
+            path="/vendor/:vendorid/projects/:projectid/update-project"
             element={<PrivateRoute outlet={<VendorUpdateProject />} />}
           />
+
           <Route
             path="/vendor/:vendorid/account"
             element={<PrivateRoute outlet={<VendorAccount />} />}
