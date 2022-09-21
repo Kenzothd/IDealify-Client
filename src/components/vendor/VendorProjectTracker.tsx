@@ -21,15 +21,17 @@ const VendorProjectTracker: FC = () => {
       vendorId: "",
       clientId: "",
       projectName: "",
-      housingType: [""],
+      housingType: "",
       projectStartDate: new Date(),
       projectEndDate: new Date(),
-      projectStatus: [""],
-      uploadedFiles: "",
+      projectStatus: "",
+      uploadedFiles: [""],
       description: "",
       projectProgress: "",
       // review:{type: mongoose.Schema.Types.ObjectId, ref: "Review" },
-      designTheme: [""],
+      designTheme: "",
+      totalCosting: undefined,
+      comments: "",
     },
   ]);
 
@@ -63,7 +65,7 @@ const VendorProjectTracker: FC = () => {
           .then((res) => {
             let clientNames = res.map((r: any) => r.data.fullName);
             let newProjects = projects.map((ele: IProject, i: number) => {
-              return { ...ele, clientId: clientNames[i] };
+              return { ...ele, clientName: clientNames[i] };
             });
             setRevampProjects(newProjects);
           })

@@ -12,6 +12,7 @@ const VendorDashboard: FC = () => {
     sessionStorage.removeItem("token");
     navigate(`/vendor/login`);
   };
+
   return (
     <>
       <button onClick={handleCreateProject}>Create New Project</button>

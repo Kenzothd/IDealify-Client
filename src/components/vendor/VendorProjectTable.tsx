@@ -61,9 +61,6 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
           case "Upcoming":
             bgColor = "#84c4cb";
             break;
-          case "Pending":
-            bgColor = "gray";
-            break;
           case "In Progress":
             bgColor = "orange";
             break;
@@ -130,7 +127,7 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
     return {
       id: project._id,
       projectName: project.projectName,
-      clientName: project.clientId,
+      clientName: project.clientName,
       status: project.projectStatus,
       view: "view",
     };
