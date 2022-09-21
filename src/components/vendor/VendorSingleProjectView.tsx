@@ -6,7 +6,8 @@ import urlcat from "urlcat";
 import format from "date-fns/format";
 import { IProjectTwo } from "../../Interface";
 import AddIcon from "@mui/icons-material/Add";
-
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import EditIcon from "@mui/icons-material/Edit";
 // interface IProject {
 //   vendorId: string;
 //   clientId: string;
@@ -22,7 +23,7 @@ import AddIcon from "@mui/icons-material/Add";
 //   comments: string;
 // }
 const buttonSx = {
-  backgroundColor: "#5b8368",
+  backgroundColor: "#74ace4",
   color: "white",
   margin: "3% 1%",
   fontWeight: 700,
@@ -77,6 +78,28 @@ const VendorSingleProjectView: FC = () => {
     navigate(`/vendor/${vendorid}/projects/${projectid}/update-project`);
   };
 
+  const handleReturnToAllProjects = () => {
+    navigate(`/vendor/${vendorid}/dashboard`);
+  };
+
+  let bgColor: string;
+  switch (projectInfo.projectStatus) {
+    case "Upcoming":
+      bgColor = "#84c4cb";
+      break;
+    case "In Progress":
+      bgColor = "orange";
+      break;
+    case "Completed":
+      bgColor = "green";
+      break;
+    case "Cancelled":
+      bgColor = "red";
+      break;
+    default:
+      bgColor = "gray";
+      break;
+  }
   return (
     <>
       <Box>
@@ -86,8 +109,17 @@ const VendorSingleProjectView: FC = () => {
           </Grid>
           <Grid item md={6} sx={{ display: "flex", justifyContent: "right" }}>
             <Button sx={buttonSx} onClick={handleAddActivity}>
-              <AddIcon />
+              <AddIcon sx={{ paddingRight: "10px" }} />
               Activity
+            </Button>
+
+            <Button sx={buttonSx} onClick={handleReturnToAllProjects}>
+              <KeyboardReturnIcon sx={{ paddingRight: "10px" }} />
+              All Projects
+            </Button>
+            <Button sx={buttonSx} onClick={handleReturnToAllProjects}>
+              <EditIcon sx={{ paddingRight: "10px" }} />
+              Project
             </Button>
           </Grid>
         </Grid>
@@ -140,15 +172,22 @@ const VendorSingleProjectView: FC = () => {
               }}
             >
               <Grid item>
-                <Card
+                <Typography
                   sx={{
-                    padding: "5px",
+                    fontWeight: "bold",
+                    fontSize: "0.85rem",
+                    letterSpacing: "0.1rem",
+                    color: "white",
+                    width: "100px",
                     textAlign: "center",
-                    width: "100%",
+                    borderRadius: 8,
+                    padding: "3px 10px",
+                    display: "inline-block",
+                    backgroundColor: bgColor,
                   }}
                 >
-                  <Typography>{projectInfo.projectStatus}</Typography>
-                </Card>
+                  {projectInfo.projectStatus}
+                </Typography>
               </Grid>
 
               <Grid item md={12}>
@@ -160,7 +199,7 @@ const VendorSingleProjectView: FC = () => {
                     paddingTop: "10px",
                   }}
                 >
-                  <Typography>View More</Typography>
+                  <Typography>view/edit</Typography>
                 </Button>
               </Grid>
             </Grid>

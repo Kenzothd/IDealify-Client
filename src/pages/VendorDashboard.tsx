@@ -14,12 +14,6 @@ const VendorDashboard: FC = () => {
   };
   return (
     <>
-      <h1>This is the vendor's dashboard</h1>
-      <div>
-        <a href={`/vendor/${vendorid}/account`}>Account</a>
-        <br />
-        <a>Favourites</a>
-      </div>
       <button onClick={handleCreateProject}>Create New Project</button>
       <button onClick={handleLogOut}>Log Out</button>
       <VendorProjectTracker />

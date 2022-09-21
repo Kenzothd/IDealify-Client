@@ -67,7 +67,7 @@ const VendorTab = () => {
           icon={<TableRowsOutlined />}
           iconPosition="start"
           value="dashboard"
-          label="Project Tracker"
+          label="Dashboard"
         />
         <Tab
           icon={<LibraryAddOutlined />}

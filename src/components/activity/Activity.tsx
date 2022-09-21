@@ -177,12 +177,12 @@ const Activity: FC = () => {
       >
         <Typography variant="h2">{activity.activityTitle}</Typography>
         <Typography
-          variant="h6"
+          variant="h5"
           sx={{
             margin: "0px 2%",
             borderRadius: 10,
             backgroundColor: bgColor,
-            padding: "1.5%",
+            padding: "1%",
             textAlign: "center",
             width: "10%",
           }}

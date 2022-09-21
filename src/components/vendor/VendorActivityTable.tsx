@@ -236,7 +236,7 @@ const VendorActivityTable: FC = () => {
 
   return (
     <>
-      <Grid container spacing={2} sx={{ padding: "0% 5%", marginTop: "2%" }}>
+      <Grid container spacing={2} sx={{ padding: "0% 5%" }}>
         <Grid item md={12}>
           <VendorSingleProjectView />
         </Grid>
