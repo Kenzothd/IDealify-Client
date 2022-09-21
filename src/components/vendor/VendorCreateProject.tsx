@@ -14,6 +14,7 @@ import {
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { IProject } from "../../Interface";
 
 const SERVER = import.meta.env.VITE_SERVER;
 
@@ -133,7 +134,9 @@ const VendorCreateProduct: FC = () => {
             return username === 0 ? false : true;
           }
         ),
-      totalCosting: Yup.string().required("Required"),
+      totalCosting: Yup.number()
+        .typeError("You must specify a number")
+        .required("Required"),
       description: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
@@ -143,17 +146,18 @@ const VendorCreateProduct: FC = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const body = {
+      const body: IProject = {
         vendorId: vendorid,
         clientId: clientId,
         projectName: values.projectName,
         housingType: values.housingType,
-        projectStartDate: values.projectStartDate,
-        projectEndDate: values.projectEndDate,
+        projectStartDate: new Date(values.projectStartDate),
+        projectEndDate: new Date(values.projectEndDate),
         projectStatus: values.projectStatus,
         uploadedFiles: ["url", "url", "url"],
         description: values.description,
         designTheme: values.designTheme,
+        totalCosting: Number(values.totalCosting),
       };
       axios
         .post(url, body, config)
@@ -214,7 +218,7 @@ const VendorCreateProduct: FC = () => {
                   sx={{ width: "100%" }}
                 />
                 {formik.touched.clientUsername &&
-                  formik.errors.clientUsername ? (
+                formik.errors.clientUsername ? (
                   <div>{formik.errors.clientUsername}</div>
                 ) : null}
               </Grid>
@@ -338,7 +342,7 @@ const VendorCreateProduct: FC = () => {
                   sx={{ width: "100%" }}
                 />
                 {formik.touched.projectStartDate &&
-                  formik.errors.projectStartDate ? (
+                formik.errors.projectStartDate ? (
                   <div>{formik.errors.projectStartDate}</div>
                 ) : null}
               </Grid>
@@ -359,7 +363,7 @@ const VendorCreateProduct: FC = () => {
                   sx={{ width: "100%" }}
                 />
                 {formik.touched.projectEndDate &&
-                  formik.errors.projectEndDate ? (
+                formik.errors.projectEndDate ? (
                   <div>{formik.errors.projectEndDate}</div>
                 ) : null}
               </Grid>

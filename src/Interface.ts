@@ -1,3 +1,5 @@
+import { string } from "yup";
+
 export interface IVendor {
   email: string;
   contactPersonName: string;
@@ -21,15 +23,18 @@ export interface IProject {
   vendorId?: string;
   clientId?: string;
   projectName: string;
-  housingType: string[];
+  housingType: string;
   projectStartDate: Date;
   projectEndDate: Date;
-  projectStatus: string[];
-  uploadedFiles: string;
+  projectStatus: string;
+  uploadedFiles: string[];
   description?: string;
   projectProgress?: string;
   // review:{type: mongoose.Schema.Types.ObjectId, ref: "Review" },
-  designTheme: string[];
+  designTheme: string;
+  clientName?: string;
+  totalCosting?: number;
+  comments?: string;
 }
 
 export interface IClient {

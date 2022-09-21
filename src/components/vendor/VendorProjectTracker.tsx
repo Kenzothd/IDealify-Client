@@ -63,7 +63,7 @@ const VendorProjectTracker: FC = () => {
           .then((res) => {
             let clientNames = res.map((r: any) => r.data.fullName);
             let newProjects = projects.map((ele: IProject, i: number) => {
-              return { ...ele, clientId: clientNames[i] };
+              return { ...ele, clientName: clientNames[i] };
             });
             setRevampProjects(newProjects);
           })
