@@ -143,8 +143,8 @@ const VendorAddActivity: FC = () => {
                   onBlur={formik.handleBlur}
                   sx={{ width: "100%" }}
                 />
-                {formik.touched.activityName && formik.errors.activityName ? (
-                  <div>{formik.errors.activityName}</div>
+                {formik.touched.activityTitle && formik.errors.activityTitle ? (
+                  <div>{formik.errors.activityTitle}</div>
                 ) : null}
               </Grid>
               <Grid item sm={12} md={12}>
@@ -171,9 +171,8 @@ const VendorAddActivity: FC = () => {
                         ))}
                       </Select>
                     </FormControl>
-                    {formik.touched.activityStatus &&
-                    formik.errors.activityStatus ? (
-                      <div>{formik.errors.activityStatus}</div>
+                    {formik.touched.status && formik.errors.status ? (
+                      <div>{formik.errors.status}</div>
                     ) : null}
                   </Grid>
 
@@ -261,8 +260,9 @@ const VendorAddActivity: FC = () => {
                     },
                   }}
                 />
-                {formik.touched.description && formik.errors.description ? (
-                  <div>{formik.errors.description}</div>
+                {formik.touched.activityDescription &&
+                formik.errors.activityDescription ? (
+                  <div>{formik.errors.activityDescription}</div>
                 ) : null}
               </Grid>
               <Grid
