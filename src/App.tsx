@@ -20,6 +20,7 @@ import ClientLogIn from "./pages/ClientLogIn";
 import VendorDashboard from "./pages/VendorDashboard";
 import LoginRedirect from "./pages/LoginRedirect";
 import VendorUpdateProject from "./components/vendor/VendorUpdateProject";
+import Testing from "./pages/Testing";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           {/* vendor */}
           <Route path="/vendor/sign-up" element={<VendorSignUp />} />
           <Route path="/vendor/login" element={<VendorLogIn />} />
+          <Route path="/vendor/upload" element={<Testing />} />
 
 
 
