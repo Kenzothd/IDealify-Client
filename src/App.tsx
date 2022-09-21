@@ -12,7 +12,7 @@ import VendorLogIn from "./pages/VendorLogIn";
 import TokenProvider from "./contextStore/TokenProvider";
 import SecretPage from "./pages/SecretPage";
 import VendorProjectTracker from "./components/vendor/VendorProjectTracker";
-import VendorProjectTable from "./components/vendor/VendorProjectTable";
+import VendorProjectTable from "./components/vendor/VendorActivityTable";
 import VendorCreateProduct from "./components/vendor/VendorCreateProject";
 import VendorAddActivity from "./components/vendor/VendorAddActivity";
 import LandingPage from "./pages/LandingPage";

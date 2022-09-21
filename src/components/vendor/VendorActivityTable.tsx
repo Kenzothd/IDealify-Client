@@ -7,6 +7,7 @@ import urlcat from "urlcat";
 import format from "date-fns/format";
 import { IActivities } from "../../Interface";
 import VendorSingleProjectView from "./VendorSingleProjectView";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const buttonSx = {
   backgroundColor: "#5b8368",
@@ -49,7 +50,7 @@ const VendorProjectTable: FC = () => {
     {
       field: "activityTitle",
       headerName: "Activity Title",
-      width: "550",
+      width: 500,
       headerAlign: "center",
       align: "center",
     },
@@ -185,18 +186,15 @@ const VendorProjectTable: FC = () => {
           navigate(`/vendor/${vendorid}/projects/${projectid}/activity/${id}`);
         };
         return (
-          <Button
+          <VisibilityIcon
             onClick={onClick}
             sx={{
-              backgroundColor: "#d1d1b5",
-              color: "white",
-              borderRadius: 8,
-              width: "150px",
-              padding: "1px",
+              "&:hover": {
+                color: "#5b8368",
+                cursor: "pointer",
+              },
             }}
-          >
-            view
-          </Button>
+          />
         );
       },
     },
