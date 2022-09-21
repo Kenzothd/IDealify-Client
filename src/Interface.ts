@@ -18,8 +18,8 @@ export interface IVendor {
 
 export interface IProject {
   _id?: string;
-  vendorID?: string;
-  clientID?: string;
+  vendorId?: string;
+  clientId?: string;
   projectName: string;
   housingType: string[];
   projectStartDate: Date;
