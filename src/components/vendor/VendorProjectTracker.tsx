@@ -91,7 +91,7 @@ const VendorProjectTracker: FC = () => {
         </div>
       ))}
 
-      <VendorProjectTable projects={projects} />
+      {/* <VendorProjectTable projects={projects} /> */}
     </>
   );
 };
