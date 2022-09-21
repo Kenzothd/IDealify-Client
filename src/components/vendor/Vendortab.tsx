@@ -77,7 +77,7 @@ const VendorTab = () => {
           icon={<TableRowsOutlined />}
           iconPosition="start"
           value="dashboard"
-          label="Dashboard"
+          label="Projects"
           sx={{ color: 'black', borderBottom: 1, }}
         />
         <Tab
