@@ -4,6 +4,7 @@ import urlcat from "urlcat";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Grid, Tab, Tabs, Typography } from "@mui/material";
+import VendorProjectTable from "./VendorProjectTable";
 
 // import TokenContext from "../../contextStore/token-context";
 // import { ITokenContext } from "../../Interface";
@@ -18,8 +19,8 @@ const VendorProjectTracker: FC = () => {
   const [projects, setProjects] = useState<IProject[]>([
     {
       _id: "",
-      vendorID: "",
-      clientID: "",
+      vendorId: "",
+      clientId: "",
       projectName: "",
       housingType: [""],
       projectStartDate: new Date(),
@@ -55,7 +56,8 @@ const VendorProjectTracker: FC = () => {
     },
   };
 
-  console.log("projects", projects);
+  //   console.log("token", token);
+  //   console.log("projects", projects);
 
   useEffect(() => {
     //Fetch Project
@@ -88,6 +90,8 @@ const VendorProjectTracker: FC = () => {
           </button>
         </div>
       ))}
+
+      <VendorProjectTable projects={projects} />
     </>
   );
 };
