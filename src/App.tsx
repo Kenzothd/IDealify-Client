@@ -36,35 +36,6 @@ function App() {
           {/* vendor */}
           <Route path="/vendor/sign-up" element={<VendorSignUp />} />
           <Route path="/vendor/login" element={<VendorLogIn />} />
-<<<<<<< HEAD
-          <Route element={<PrivateRoutes />}>
-            <Route
-              path="/vendor/:vendorid/create-project"
-              element={<VendorCreateProduct />}
-            />
-            <Route
-              path="/vendor/:vendorid/account"
-              element={<VendorAccount />}
-            />
-            <Route
-              path="/vendor/:vendorid/dashboard"
-              element={<VendorDashboard />}
-            />
-            <Route
-              path="/vendor/:vendorid/projects/:projectid"
-              element={<VendorProjectTable />}
-            />
-            <Route
-              path="/vendor/:vendorid/projects/:projectid/add-activity"
-              element={<VendorAddActivity />}
-            />
-            <Route
-              path="/vendor/:vendorid/projects/:projectid/activity/:activityid"
-              element={<Activity />}
-            />
-          </Route>
-          <Route path="/vendor/secret" element={<SecretPage />} />
-=======
 
           <Route
             path="/vendor/:vendorid/create-project"
@@ -94,7 +65,6 @@ function App() {
             path="/vendor/:vendorid/projects/:projectid/activity/:activityid"
             element={<PrivateRoute outlet={<Activity />} />}
           />
->>>>>>> eb82b35b8abe1da42a96c97ec7d011c41bdb5353
         </Routes>
       </BrowserRouter>
     </TokenProvider>
