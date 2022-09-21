@@ -30,7 +30,7 @@ const buttonSx = {
   padding: "0.5rem 1.5rem",
 };
 const VendorAddActivity: FC = () => {
-  const [activity, setActivity] = React.useState("");
+  const [activity, setActivity] = useState("");
   const token: any = sessionStorage.getItem("token");
 
   const activityStatusOptions = [
