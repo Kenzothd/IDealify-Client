@@ -71,7 +71,6 @@ const VendorLoginForm: FC = () => {
             <TextField
               id="username"
               autoComplete="off"
-              label="username"
               name="username"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -94,7 +93,6 @@ const VendorLoginForm: FC = () => {
 
               id="password"
               autoComplete="off"
-              label="password"
               name="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -121,6 +119,7 @@ const VendorLoginForm: FC = () => {
           }}
         >Log In</Button>
         <Typography variant='body2' sx={{ color: 'red' }} >{error}</Typography>
+
       </form>
     </Box>
   );
