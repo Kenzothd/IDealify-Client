@@ -21,7 +21,7 @@ const buttonSx = {
 };
 
 const SERVER = import.meta.env.VITE_SERVER;
-const VendorProjectTable: FC = () => {
+const VendorActivityTable: FC = () => {
   // we can also leave it uninitialized but add in <IActivities[] | undefined>
   const [activities, setActivities] = useState<IActivities[]>([]);
   const [refreshActivities, setRefreshActivities] = useState<boolean>(false);
@@ -255,18 +255,10 @@ const VendorProjectTable: FC = () => {
             <RefreshIcon sx={{ marginRight: "10px" }} />
             Refresh Activities
           </Button>
-
-          {/* <Button sx={buttonSx} onClick={handleBackToDashboard}>
-            Back to Dashboard
-          </Button> */}
-
-          {/* <Button sx={buttonSx} onClick={handleEditProject}>
-            Edit Project
-          </Button> */}
         </Grid>
       </Grid>
     </>
   );
 };
 
-export default VendorProjectTable;
+export default VendorActivityTable;
