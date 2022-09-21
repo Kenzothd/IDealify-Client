@@ -150,11 +150,11 @@ const VendorActivityTable: FC = () => {
       status: activity.status,
       activityStartDate: format(
         new Date(activity.activityStartDate),
-        "dd/MM, hh:mm a"
+        "dd LLL yyyy"
       ),
       activityEndDate: format(
         new Date(activity.activityEndDate),
-        "dd/MM, hh:mm a"
+        "dd LLL yyyy"
       ),
       personInCharge: activity.personInCharge,
     };

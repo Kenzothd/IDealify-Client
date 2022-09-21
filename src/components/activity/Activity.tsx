@@ -139,7 +139,10 @@ const Activity: FC = () => {
         console.log(body);
         axios
           .put(url, body, config)
-          .then((res) => setActivity(res.data))
+          .then((res) => {
+            setActivity(res.data);
+            navigate(`/vendor/${vendorid}/projects/${projectid}`);
+          })
           .catch((err) => console.log(err));
       }
     },
