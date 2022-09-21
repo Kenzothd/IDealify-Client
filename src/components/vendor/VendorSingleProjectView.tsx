@@ -116,25 +116,33 @@ const VendorSingleProjectView: FC = () => {
     <>
       <Box>
         <Grid container>
-          <Grid item md={6}>
+          <Grid item md={8}>
             <Grid container>
               <Typography variant="h2">{projectInfo.projectName}</Typography>
+
               <Button sx={projectButtonSx} onClick={handleViewProject}>
                 <EditIcon sx={{ paddingRight: "10px" }} />
                 Edit Project
               </Button>
             </Grid>
           </Grid>
-          <Grid item md={6} sx={{ display: "flex", justifyContent: "right" }}>
-            <Button sx={buttonSx} onClick={handleAddActivity}>
-              <AddIcon sx={{ paddingRight: "10px" }} />
-              Activity
-            </Button>
-
-            <Button sx={buttonSx} onClick={handleReturnToAllProjects}>
-              <KeyboardReturnIcon sx={{ paddingRight: "10px" }} />
-              All Projects
-            </Button>
+          <Grid item md={4}>
+            <Grid
+              container
+              sx={{
+                display: "flex",
+                justifyContent: "right",
+              }}
+            >
+              <Button sx={projectButtonSx} onClick={handleAddActivity}>
+                <AddIcon sx={{ paddingRight: "10px" }} />
+                Activity
+              </Button>
+              <Button sx={projectButtonSx} onClick={handleReturnToAllProjects}>
+                <KeyboardReturnIcon sx={{ paddingRight: "10px" }} />
+                All Projects
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
         <Card

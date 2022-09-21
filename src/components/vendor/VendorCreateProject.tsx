@@ -98,7 +98,7 @@ const VendorCreateProduct: FC = () => {
       description: "",
     },
     validationSchema: Yup.object({
-      projectName: Yup.string().required("Required"),
+      projectName: Yup.string().max(35).required("Required"),
       housingType: Yup.string().required("Required"),
       projectStartDate: Yup.date().default(new Date()),
       projectEndDate: Yup.date()
