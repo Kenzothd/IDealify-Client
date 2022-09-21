@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FC, useContext } from "react";
-import { IProject } from "../../Interface";
+import { IClient, IProject } from "../../Interface";
 import urlcat from "urlcat";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,7 +15,6 @@ const VendorProjectTracker: FC = () => {
   const navigate = useNavigate();
   const { vendorid } = useParams();
   const token: any = sessionStorage.getItem("token");
-  const projectUrl = urlcat(SERVER, "projects");
   const [projects, setProjects] = useState<IProject[]>([
     {
       _id: "",
@@ -34,36 +33,42 @@ const VendorProjectTracker: FC = () => {
     },
   ]);
 
-  //   const [vendor, setVendor] = useState({});
-  //   const vendorUrl = urlcat(SERVER, "vendors/verify");
-  // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI0ODc2NTc5Nzk2NGEyNjk5NjhmZTgiLCJ1c2VybmFtZSI6ImNsb2NsbyIsImlhdCI6MTY2MzQwODE4NCwiZXhwIjoxNjYzNDA5OTg0fQ.xcW6Tf8b0paHmEhz8d5o85cRfk3we3GbJDIZym-GzA0"
-  //   const { token } = useContext(TokenContext) as ITokenContext;
+  const [revampProjects, setRevampProjects] = useState<IProject[]>([]);
 
-  //   useEffect(() => {
-  //     const url = urlcat(
-  //       SERVER,
-  //       `/projects/id/6326ad9268fde94c3e6438d4` // vendor Project ID used here
-  //     );
-  //     axios
-  //       .get(url)
-  //       .then((res) => setProjects([...res.data]))
-  //       .catch((err) => console.log(err));
-  //   }, []);
-
+  const projectUrl = urlcat(SERVER, "projects");
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
 
+  console.log("projects", projects);
+  console.log("Revamp projects", revampProjects);
+
   //   console.log("token", token);
-  //   console.log("projects", projects);
 
   useEffect(() => {
     //Fetch Project
     axios
       .get(projectUrl, config)
-      .then((res) => setProjects(res.data))
+      .then((res) => {
+        setProjects(res.data);
+        const projects = res.data;
+        let requests: [] = res.data.map((project: IProject) => {
+          const url = urlcat(SERVER, `/clients/id/${project.clientId}`);
+          return axios.get(url, config);
+        });
+        //Fetch Client Names
+        Promise.all(requests)
+          .then((res) => {
+            let clientNames = res.map((r: any) => r.data.fullName);
+            let newProjects = projects.map((ele: IProject, i: number) => {
+              return { ...ele, clientId: clientNames[i] };
+            });
+            setRevampProjects(newProjects);
+          })
+          .catch((err) => console.log(err));
+      })
       .catch((error) => console.log({ Error: error.response.data.error }));
   }, []);
 
@@ -74,24 +79,8 @@ const VendorProjectTracker: FC = () => {
 
   return (
     <>
-      <button>Back to Inbox</button>
-      <Typography variant="h4" component="h1">
-        Projects Overview
-      </Typography>
-
-      {projects.map((project) => (
-        <div key={project._id}>
-          <div>
-            <p>{project.projectName}</p>
-            <p>{project.projectStatus}</p>
-          </div>
-          <button id={project._id} onClick={handleProjectView}>
-            View Project
-          </button>
-        </div>
-      ))}
-
-      <VendorProjectTable projects={projects} />
+      <h1>Projects Overview</h1>
+      <VendorProjectTable revampProjects={revampProjects} />
     </>
   );
 };

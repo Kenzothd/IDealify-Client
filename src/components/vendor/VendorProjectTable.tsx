@@ -23,36 +23,16 @@ const buttonSx = {
 };
 
 type Props = {
-  projects: IProject[];
+  revampProjects: IProject[];
 };
 
 const SERVER = import.meta.env.VITE_SERVER;
-const VendorProjectTable = ({ projects }: Props) => {
-  // we can also leave it uninitialized but add in <IActivities[] | undefined>
-  const [activities, setActivities] = useState<IActivities[]>([]);
+const VendorProjectTable = ({ revampProjects }: Props) => {
   const [refreshActivities, setRefreshActivities] = useState<boolean>(false);
   const token: any = sessionStorage.getItem("token");
   const navigate = useNavigate();
   const { vendorid, projectid } = useParams();
   const [offEditMode, setOffEditMode] = useState(true);
-
-  console.log("table ", projects);
-
-  // useEffect(() => {
-  //   const url = urlcat(SERVER, `/activities/projects?projectId=${projectid}`);
-  //   const config = {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   };
-  //   axios
-  //     .get(url, config)
-  //     .then((res) => {
-  //       setActivities(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [refreshActivities]);
 
   const columns: GridColDef[] = [
     {
@@ -129,7 +109,7 @@ const VendorProjectTable = ({ projects }: Props) => {
         const onClick = (e: React.MouseEvent) => {
           console.log(e.target);
           const id = params.row.id;
-          navigate(`/vendor/${vendorid}/projects/${projectid}/activity/${id}`);
+          navigate(`/vendor/${vendorid}/projects/${id}`);
         };
         return (
           <VisibilityIcon
@@ -146,8 +126,9 @@ const VendorProjectTable = ({ projects }: Props) => {
     },
   ];
 
-  const rows = projects.map((project) => {
+  const rows = revampProjects.map((project, i) => {
     return {
+      id: project._id,
       projectName: project.projectName,
       clientName: project.clientId,
       status: project.projectStatus,
@@ -155,21 +136,9 @@ const VendorProjectTable = ({ projects }: Props) => {
     };
   });
 
-  const refreshActivitiesHandler = (): void => {
-    setRefreshActivities(!refreshActivities);
-  };
-
-  const handleBackToDashboard = () => {
-    navigate(`/vendor/${vendorid}/dashboard`);
-  };
-
-  const handleAddActivity = () => {
-    navigate(`/vendor/${vendorid}/projects/${projectid}/add-activity`);
-  };
-
-  const handleEditProject = () => {
-    navigate(`/vendor/${vendorid}/projects/${projectid}/update-project`);
-  };
+  // const refreshActivitiesHandler = (): void => {
+  //   setRefreshActivities(!refreshActivities);
+  // };
 
   return (
     <>
@@ -183,12 +152,12 @@ const VendorProjectTable = ({ projects }: Props) => {
             sx={{ height: "500px", width: "100%" }}
           />
         </Grid>
-        <Grid item md={12} sx={{ display: "flex", justifyContent: "right" }}>
+        {/* <Grid item md={12} sx={{ display: "flex", justifyContent: "right" }}>
           <Button onClick={refreshActivitiesHandler}>
             <RefreshIcon sx={{ marginRight: "10px" }} />
             Refresh Activities
           </Button>
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );
