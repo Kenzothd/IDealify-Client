@@ -3,8 +3,9 @@ import React, { FC, useContext, useState } from "react";
 import urlcat from "urlcat";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@emotion/react";
 
 const VendorSignUpForm: FC = () => {
   const token: any = sessionStorage.getItem("token");
@@ -15,6 +16,7 @@ const VendorSignUpForm: FC = () => {
   const SERVER = import.meta.env.VITE_SERVER;
 
   const navigateToProjects = useNavigate();
+
 
   const formik = useFormik({
     initialValues: {
@@ -127,236 +129,251 @@ const VendorSignUpForm: FC = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <Grid
-        container
-        spacing={3}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Grid item sm={12} md={12}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                required
-                id="contactPersonName"
-                autoComplete="off"
-                variant="filled"
-                label="Person In-Charge"
-                name="contactPersonName"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                sx={{ width: "100%" }}
-                value={formik.values.contactPersonName}
-              />
-              {formik.touched.contactPersonName &&
-                formik.errors.contactPersonName ? (
-                <div>{formik.errors.contactPersonName}</div>
-              ) : null}
-            </Grid>
+    <Grid item xs={12}>
+      <form onSubmit={formik.handleSubmit}>
+        <Grid
+          container
+          spacing={5}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Grid item sm={12}>
+            <Grid container spacing={5}>
+              <Grid item xs={12} sm={6}>
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>CONTACT PERSON</Typography>
 
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                required
-                id="username"
-                autoComplete="off"
-                variant="filled"
-                label="Username"
-                name="username"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                sx={{ width: "100%" }}
-                value={formik.values.username}
-              />
-              {formik.touched.username && formik.errors.username ? (
-                <div>{formik.errors.username}</div>
-              ) : null}
-            </Grid>
-          </Grid>
-        </Grid>
+                <TextField
+                  required
+                  id="contactPersonName"
+                  autoComplete="off"
+                  name="contactPersonName"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  sx={{ width: "100%" }}
+                  value={formik.values.contactPersonName}
+                />
+                {formik.touched.contactPersonName &&
+                  formik.errors.contactPersonName ? (
+                  <div>{formik.errors.contactPersonName}</div>
+                ) : null}
+              </Grid>
 
-        <Grid item sm={12} md={12}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                required
-                id="email"
-                autoComplete="off"
-                variant="filled"
-                label="Email"
-                name="email"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                sx={{ width: "100%" }}
-                value={formik.values.email}
-              />
-              {formik.touched.email && formik.errors.email ? (
-                <div>{formik.errors.email}</div>
-              ) : null}
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                required
-                id="password"
-                autoComplete="off"
-                variant="filled"
-                label="Password"
-                name="password"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                sx={{ width: "100%" }}
-                value={formik.values.password}
-              />
-              {formik.touched.password && formik.errors.password ? (
-                <div>{formik.errors.password}</div>
-              ) : null}
+              <Grid item xs={12} sm={6}>
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>USERNAME</Typography>
+                <TextField
+                  required
+                  id="username"
+                  autoComplete="off"
+                  name="username"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  sx={{ width: "100%" }}
+                  value={formik.values.username}
+                />
+                {formik.touched.username && formik.errors.username ? (
+                  <div>{formik.errors.username}</div>
+                ) : null}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
 
-        <Grid item sm={12} md={12}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                required
-                id="contractNumber"
-                autoComplete="off"
-                variant="filled"
-                label="Contact Number"
-                name="contactNumber"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                sx={{ width: "100%" }}
-                value={formik.values.contactNumber}
-              />
-              {formik.touched.contactNumber && formik.errors.contactNumber ? (
-                <div>{formik.errors.contactNumber}</div>
-              ) : null}
-            </Grid>
+          <Grid item sm={12} >
+            <Grid container spacing={5}>
+              <Grid item xs={12} sm={6}>
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>EMAIL</Typography>
+                <TextField
+                  required
+                  id="email"
+                  autoComplete="off"
+                  name="email"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  sx={{ width: "100%" }}
+                  value={formik.values.email}
+                />
+                {formik.touched.email && formik.errors.email ? (
+                  <div>{formik.errors.email}</div>
+                ) : null}
+              </Grid>
 
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                required
-                id="companyName"
-                autoComplete="off"
-                variant="filled"
-                label="Company Name"
-                name="companyName"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                sx={{ width: "100%" }}
-                value={formik.values.companyName}
-              />
-              {formik.touched.companyName && formik.errors.companyName ? (
-                <div>{formik.errors.companyName}</div>
-              ) : null}
-            </Grid>
-          </Grid>
-        </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>PASSWORD</Typography>
 
-        <Grid item sm={12} md={12}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                required
-                id="registrationNumber"
-                autoComplete="off"
-                variant="filled"
-                label="Registration Number"
-                name="registrationNumber"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                sx={{ width: "100%" }}
-                value={formik.values.registrationNumber}
-              />
-              {formik.touched.registrationNumber &&
-                formik.errors.registrationNumber ? (
-                <div>{formik.errors.registrationNumber}</div>
-              ) : null}
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                required
-                id="incorporationDate"
-                autoComplete="off"
-                variant="filled"
-                label="Incorporation Date"
-                name="incorporationDate"
-                type="date"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                sx={{ width: "100%" }}
-                // value={format(
-                //   new Date(formik.values.incorporationDate),
-                //   "yyyy-MM-dd"
-                // )}
-                value={formik.values.incorporationDate}
-              />
-              {formik.touched.incorporationDate &&
-                formik.errors.incorporationDate ? (
-                <div>{formik.errors.incorporationDate}</div>
-              ) : null}
+                <TextField
+                  required
+                  id="password"
+                  autoComplete="off"
+                  name="password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  sx={{ width: "100%" }}
+                  value={formik.values.password}
+                />
+                {formik.touched.password && formik.errors.password ? (
+                  <div>{formik.errors.password}</div>
+                ) : null}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
 
-        <Grid item sm={12} md={12}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                required
-                id="registeredOfficeAddress"
-                autoComplete="off"
-                variant="filled"
-                label="Registered Office Address"
-                name="registeredOfficeAddress"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                sx={{ width: "100%" }}
-                value={formik.values.registeredOfficeAddress}
-              />
-              {formik.touched.registeredOfficeAddress &&
-                formik.errors.registeredOfficeAddress ? (
-                <div>{formik.errors.registeredOfficeAddress}</div>
-              ) : null}
-            </Grid>
+          <Grid item sm={12}>
+            <Grid container spacing={5}>
+              <Grid item xs={12} sm={6}>
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>CONTACT NUMBER</Typography>
+                <TextField
+                  required
+                  id="contractNumber"
+                  autoComplete="off"
+                  name="contactNumber"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  sx={{ width: "100%" }}
+                  value={formik.values.contactNumber}
+                />
+                {formik.touched.contactNumber && formik.errors.contactNumber ? (
+                  <div>{formik.errors.contactNumber}</div>
+                ) : null}
+              </Grid>
 
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                id="uploadedFiles"
-                label="Upload Files"
-                name="uploadedFiles"
-                inputProps={{
-                  multiple: true
-                }}
-                type="file"
-                onChange={(event: any) => {
-                  formik.setFieldValue(
-                    "uploadedFiles",
-                    event.currentTarget.files
-                  );
-                }}
-                onBlur={formik.handleBlur}
-                hidden
-              />
-              {formik.touched.uploadedFiles && formik.errors.uploadedFiles ? (
-                <div>{formik.errors.uploadedFiles}</div>
-              ) : null}
+              <Grid item xs={12} sm={6}>
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>COMPANY NAME</Typography>
+
+                <TextField
+                  required
+                  id="companyName"
+                  autoComplete="off"
+                  name="companyName"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  sx={{ width: "100%" }}
+                  value={formik.values.companyName}
+                />
+                {formik.touched.companyName && formik.errors.companyName ? (
+                  <div>{formik.errors.companyName}</div>
+                ) : null}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
 
-        <Button type="submit">Submit</Button>
-      </Grid>
-    </form>
+          <Grid item sm={12}>
+            <Grid container spacing={5}>
+              <Grid item xs={12} sm={6}>
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>REGISTRATION NUMBER</Typography>
+
+                <TextField
+                  required
+                  id="registrationNumber"
+                  autoComplete="off"
+                  name="registrationNumber"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  sx={{ width: "100%" }}
+                  value={formik.values.registrationNumber}
+                />
+                {formik.touched.registrationNumber &&
+                  formik.errors.registrationNumber ? (
+                  <div>{formik.errors.registrationNumber}</div>
+                ) : null}
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>INCORPORATION DATE</Typography>
+
+                <TextField
+                  required
+                  id="incorporationDate"
+                  autoComplete="off"
+                  name="incorporationDate"
+                  type="date"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  sx={{ width: "100%" }}
+                  // value={format(
+                  //   new Date(formik.values.incorporationDate),
+                  //   "yyyy-MM-dd"
+                  // )}
+                  value={formik.values.incorporationDate}
+                />
+                {formik.touched.incorporationDate &&
+                  formik.errors.incorporationDate ? (
+                  <div>{formik.errors.incorporationDate}</div>
+                ) : null}
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item sm={12}>
+            <Grid container spacing={5}>
+              <Grid item xs={12} sm={6}>
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>REGISTERED OFFICE ADDRESS</Typography>
+
+                <TextField
+                  required
+                  id="registeredOfficeAddress"
+                  autoComplete="off"
+                  name="registeredOfficeAddress"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  sx={{ width: "100%" }}
+                  value={formik.values.registeredOfficeAddress}
+                />
+                {formik.touched.registeredOfficeAddress &&
+                  formik.errors.registeredOfficeAddress ? (
+                  <div>{formik.errors.registeredOfficeAddress}</div>
+                ) : null}
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>UPLOAD FILES</Typography>
+
+                <TextField
+                  id="uploadedFiles"
+                  name="uploadedFiles"
+                  inputProps={{
+                    multiple: true
+                  }}
+                  type="file"
+                  onChange={(event: any) => {
+                    formik.setFieldValue(
+                      "uploadedFiles",
+                      event.currentTarget.files
+                    );
+                  }}
+                  onBlur={formik.handleBlur}
+                  sx={{ width: "100%" }}
+                  hidden
+                />
+                {formik.touched.uploadedFiles && formik.errors.uploadedFiles ? (
+                  <div>{formik.errors.uploadedFiles}</div>
+                ) : null}
+              </Grid>
+            </Grid>
+          </Grid>
+
+        </Grid>
+        <Grid item sx={{ textAlign: 'center' }}>
+          <Button type="submit" sx={{
+            background: '#254D71',
+            color: 'white',
+            letterSpacing: '0.2rem',
+            mt: '3rem',
+            pl: '6rem',
+            pr: '6rem',
+            '&:hover': {
+              backgroundColor: '#254D71',
+            }
+          }}>
+            Submit</Button>
+        </Grid>
+      </form>
+
+    </Grid>
   );
 };
 

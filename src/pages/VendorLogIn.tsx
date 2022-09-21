@@ -1,6 +1,7 @@
 import { Container, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { FC } from "react";
+import { Link } from "react-router-dom";
 import VendorLoginForm from "../components/vendor/VendorLoginForm";
 
 const VendorLogIn: FC = () => {
@@ -26,14 +27,15 @@ const VendorLogIn: FC = () => {
         >
           <Box sx={{ mb: '3rem' }}>
             <Typography variant='h2'>Hello</Typography>
-            <Typography variant='h3'>Hello</Typography>
-            <Typography variant='h4'>Hello</Typography>
-            <Typography variant='h5'>Hello</Typography>
-            <Typography variant='body1'>Hello</Typography>
-            <Typography variant='body2'>Hello</Typography>
             <Typography variant='h2'>Interior Designers,</Typography>
           </Box>
           <VendorLoginForm />
+          <Box>
+            <Typography variant='body2' sx={{ mt: '1rem' }}>Not a member yet?
+              <Link to='/vendor/sign-up' >
+                SIGN UP</Link></Typography>
+          </Box>
+
         </Grid>
       </Grid>
 

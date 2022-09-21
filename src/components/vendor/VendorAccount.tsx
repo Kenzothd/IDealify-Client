@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import type {} from "@mui/x-date-pickers/themeAugmentation";
+import type { } from "@mui/x-date-pickers/themeAugmentation";
 import urlcat from "urlcat";
 import { IVendor } from "../../Interface";
 import axios from "axios";
@@ -12,19 +12,19 @@ import format from "date-fns/format";
 import Button from "@mui/material/Button";
 import { render } from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
-import { Grid, Paper } from "@mui/material";
+import { Container, Grid, Paper, Typography } from "@mui/material";
 
-const buttonSx = {
-  backgroundColor: "blue",
-  color: "white",
-  margin: "3% auto",
-  display: "flex",
-  fontWeight: 700,
-  fontSize: 12,
-  letterSpacing: 1,
-  borderRadius: 2,
-  padding: "0.5rem 1.5rem",
-};
+// const buttonSx = {
+//   backgroundColor: "blue",
+//   color: "white",
+//   margin: "3% auto",
+//   display: "flex",
+//   fontWeight: 700,
+//   fontSize: 12,
+//   letterSpacing: 1,
+//   borderRadius: 2,
+//   padding: "0.5rem 1.5rem",
+// };
 
 const SERVER = import.meta.env.VITE_SERVER;
 
@@ -59,12 +59,12 @@ const VendorAccount: FC = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-        //get vendor account details
-        const vendorURL = urlcat(SERVER, `/vendors/id/${vendorid}`);
-        axios
-          .get(vendorURL, config)
-          .then((res) => setVendorAccount(res.data))
-          .catch((err) => console.log(err));
+    //get vendor account details
+    const vendorURL = urlcat(SERVER, `/vendors/id/${vendorid}`);
+    axios
+      .get(vendorURL, config)
+      .then((res) => setVendorAccount(res.data))
+      .catch((err) => console.log(err));
 
   }, []);
 
@@ -88,7 +88,7 @@ const VendorAccount: FC = () => {
       registrationNumber: vendorAccount.registrationNumber,
       incorporationDate: vendorAccount.incorporationDate,
       registeredOfficeAddress: vendorAccount.registeredOfficeAddress,
-      //   uploadedFiles: null,
+      uploadedFiles: vendorAccount.uploadedFiles,
     },
     validationSchema: Yup.object().shape({
       contactPersonName: Yup.string().required("Required"),
@@ -124,7 +124,7 @@ const VendorAccount: FC = () => {
         )
         .required("End Date required"),
       registeredOfficeAddress: Yup.string().required("Required"),
-      //   uploadedFiles: Yup.mixed().required("A file is required"),
+      uploadedFiles: Yup.mixed()
       // .test(
       //   "fileSize",
       //   "File too large",
@@ -143,250 +143,287 @@ const VendorAccount: FC = () => {
         setOffEditMode(!offEditMode);
       } else {
         setOffEditMode(!offEditMode);
-        console.log(
-          // {
-          //   fileName: values.uploadedFiles.name,
-          //   type: values.uploadedFiles.type,
-          //   size: `${values.uploadedFiles.size} bytes`,
-          // },
-          // null,
-          // 2,
-          // values.uploadedFiles,
-          values
-        );
+        // console.log('seehere',
+        // {
+        //   fileName: values.uploadedFiles.name,
+        //   type: values.uploadedFiles.type,
+        //   size: `${values.uploadedFiles.size} bytes`,
+        // },
+        // null,
+        // 2,
+        // values.uploadedFiles,
+        //   values
+        // );
 
         const url = urlcat(SERVER, `vendors/id/${vendorid}`);
+        const uploadImgUrl = urlcat(SERVER, '/upload-images');
+
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         };
-        //form update
+        const configForImg = {
+          headers: {
+            // Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        };
+
+        const formData = new FormData()
+        for (let i = 0; i < values.uploadedFiles.length; i++) {
+          formData.append("uploadedFiles", values.uploadedFiles[i])
+        }
+
         axios
-          .put(url, values, config)
+          .post(uploadImgUrl, formData, configForImg)
+          .then((res) => {
+            values.uploadedFiles = res.data.imageLinks
+            console.log('check values', values)
+            return axios.put(url, values, config)
+          })
           .then((res) => setVendorAccount(res.data))
           .catch((error) => console.log(error));
       }
     },
   });
-  const handleReturnToDashboard = () => {
-    navigate(`/vendor/${vendorid}/dashboard`);
-  };
+
   return (
-    <>
-      <h1>Account</h1>
-      <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={4}>
-          <Grid item xs={6} sm={6} md={6}>
-            <label htmlFor="contactPersonName">Person In-Charge</label>
-            <TextField
-              required
-              disabled={offEditMode}
-              id="contactPersonName"
-              name="contactPersonName"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.contactPersonName}
-              sx={{ width: "100%" }}
-            />
-            {formik.touched.contactPersonName &&
-            formik.errors.contactPersonName ? (
-              <div>{formik.errors.contactPersonName}</div>
-            ) : null}
-          </Grid>
+    <Container maxWidth='md' sx={{
+      mb: '5rem',
+      pr: '2rem',
+      pl: '2rem'
 
-          <Grid item xs={6} sm={6} md={6}>
-            <label htmlFor="companyName">Company Name</label>
-            <TextField
-              required
-              disabled={offEditMode}
-              id="companyName"
-              name="companyName"
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.companyName}
-              sx={{ width: "100%" }}
-            />
-            {formik.touched.companyName && formik.errors.companyName ? (
-              <div>{formik.errors.companyName}</div>
-            ) : null}
-          </Grid>
+    }}>
+      <Grid container>
 
-          <Grid item xs={6} sm={6} md={6}>
-            <label htmlFor="contactNumber">Contact Number</label>
-            <TextField
-              required
-              disabled={offEditMode}
-              id="contactNumber"
-              name="contactNumber"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.contactNumber}
-              sx={{ width: "100%" }}
-            />
-            {formik.touched.contactNumber && formik.errors.contactNumber ? (
-              <div>{formik.errors.contactNumber}</div>
-            ) : null}
-          </Grid>
+        <Grid item xs={12} sx={{ mb: '3rem' }}>
+          <Typography variant='h3'>Account</Typography>
+        </Grid>
 
-          <Grid item xs={6} sm={6} md={6}>
-            <label htmlFor="registrationNumber">Registration Number</label>
-            <TextField
-              required
-              disabled={offEditMode}
-              id="registrationNumber"
-              name="registrationNumber"
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.registrationNumber}
-              sx={{ width: "100%" }}
-            />
-            {formik.touched.registrationNumber &&
-            formik.errors.registrationNumber ? (
-              <div>{formik.errors.registrationNumber}</div>
-            ) : null}
-          </Grid>
 
-          <Grid item xs={6} sm={6} md={6}>
-            <label htmlFor="email">Email</label>
-            <TextField
-              required
-              disabled={offEditMode}
-              id="email"
-              name="email"
-              type="email"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
-              sx={{ width: "100%" }}
-            />
-            {formik.touched.email && formik.errors.email ? (
-              <div>{formik.errors.email}</div>
-            ) : null}
-          </Grid>
+        <form onSubmit={formik.handleSubmit}>
+          <Grid container spacing={4}>
+            <Grid item xs={12} sm={6}>
+              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>PERSON-IN-CHARGE</Typography>
 
-          <Grid item xs={6} sm={6} md={6}>
-            <label htmlFor="incorporationDate">Incorporation Date</label>
-            <TextField
-              required
-              disabled={offEditMode}
-              type="date"
-              id="incorporationDate"
-              name="incorporationDate"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={format(
-                new Date(formik.values.incorporationDate),
-                "yyyy-MM-dd"
-              )}
-              sx={{ width: "100%" }}
-            />
-            {formik.touched.incorporationDate &&
-            formik.errors.incorporationDate ? (
-              <div>{formik.errors.incorporationDate}</div>
-            ) : null}
-          </Grid>
+              <TextField
+                required
+                disabled={offEditMode}
+                id="contactPersonName"
+                name="contactPersonName"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.contactPersonName}
+                sx={{ width: "100%" }}
+              />
+              {formik.touched.contactPersonName &&
+                formik.errors.contactPersonName ? (
+                <div>{formik.errors.contactPersonName}</div>
+              ) : null}
+            </Grid>
 
-          <Grid item xs={6} sm={6} md={6}>
-            <label htmlFor="username">Username</label>
-            <TextField
-              required
-              disabled={offEditMode}
-              id="username"
-              name="username"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.username}
-              sx={{ width: "100%" }}
-            />
-            {formik.touched.username && formik.errors.username ? (
-              <div>{formik.errors.username}</div>
-            ) : null}
-          </Grid>
+            <Grid item xs={12} sm={6}>
+              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>Company Name</Typography>
 
-          <Grid item xs={6} sm={6} md={6}>
-            <label htmlFor="registeredOfficeAddress">
-              Registered Office Address
-            </label>
-            <TextField
-              required
-              disabled={offEditMode}
-              id="registeredOfficeAddress"
-              name="registeredOfficeAddress"
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.registeredOfficeAddress}
-              sx={{ width: "100%" }}
-            />
-            {formik.touched.registeredOfficeAddress &&
-            formik.errors.registeredOfficeAddress ? (
-              <div>{formik.errors.registeredOfficeAddress}</div>
-            ) : null}
-          </Grid>
+              <TextField
+                required
+                disabled={offEditMode}
+                id="companyName"
+                name="companyName"
+                type="text"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.companyName}
+                sx={{ width: "100%" }}
+              />
+              {formik.touched.companyName && formik.errors.companyName ? (
+                <div>{formik.errors.companyName}</div>
+              ) : null}
+            </Grid>
 
-          <Grid item xs={6} sm={6} md={6}>
-            <label htmlFor="password">password</label>
-            <TextField
-              required
-              disabled={offEditMode}
-              id="password"
-              name="password"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
-              sx={{ width: "100%" }}
-            />
-            {formik.touched.password && formik.errors.password ? (
-              <div>{formik.errors.password}</div>
-            ) : null}
-          </Grid>
+            <Grid item xs={12} sm={6}>
+              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>CONTACT NUMBER</Typography>
 
-          {/* <Grid item xs={6} sm={6} md={6}>
-            <Button variant="contained" component="label">
-              Upload Files
+              <TextField
+                required
+                disabled={offEditMode}
+                id="contactNumber"
+                name="contactNumber"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.contactNumber}
+                sx={{ width: "100%" }}
+              />
+              {formik.touched.contactNumber && formik.errors.contactNumber ? (
+                <div>{formik.errors.contactNumber}</div>
+              ) : null}
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>REGISTRATION NUMBER</Typography>
+              <TextField
+                required
+                disabled={offEditMode}
+                id="registrationNumber"
+                name="registrationNumber"
+                type="text"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.registrationNumber}
+                sx={{ width: "100%" }}
+              />
+              {formik.touched.registrationNumber &&
+                formik.errors.registrationNumber ? (
+                <div>{formik.errors.registrationNumber}</div>
+              ) : null}
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>EMAIL</Typography>
+
+              <TextField
+                required
+                disabled={offEditMode}
+                id="email"
+                name="email"
+                type="email"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                sx={{ width: "100%" }}
+              />
+              {formik.touched.email && formik.errors.email ? (
+                <div>{formik.errors.email}</div>
+              ) : null}
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>INCORPORATION DATE</Typography>
+              <TextField
+                required
+                disabled={offEditMode}
+                type="date"
+                id="incorporationDate"
+                name="incorporationDate"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={format(
+                  new Date(formik.values.incorporationDate),
+                  "yyyy-MM-dd"
+                )}
+                sx={{ width: "100%" }}
+              />
+              {formik.touched.incorporationDate &&
+                formik.errors.incorporationDate ? (
+                <div>{formik.errors.incorporationDate}</div>
+              ) : null}
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>USERNAME</Typography>
+
+              <TextField
+                required
+                disabled={offEditMode}
+                id="username"
+                name="username"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.username}
+                sx={{ width: "100%" }}
+              />
+              {formik.touched.username && formik.errors.username ? (
+                <div>{formik.errors.username}</div>
+              ) : null}
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>REGISTERTED OFFICE ADDRESS</Typography>
+
+              <TextField
+                required
+                disabled={offEditMode}
+                id="registeredOfficeAddress"
+                name="registeredOfficeAddress"
+                type="text"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.registeredOfficeAddress}
+                sx={{ width: "100%" }}
+              />
+              {formik.touched.registeredOfficeAddress &&
+                formik.errors.registeredOfficeAddress ? (
+                <div>{formik.errors.registeredOfficeAddress}</div>
+              ) : null}
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>PASSWORD</Typography>
+
+              <TextField
+                required
+                disabled={offEditMode}
+                id="password"
+                name="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                sx={{ width: "100%" }}
+              />
+              {formik.touched.password && formik.errors.password ? (
+                <div>{formik.errors.password}</div>
+              ) : null}
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>UPLOAD FILES</Typography>
+
+
+
               <TextField
                 disabled={offEditMode}
                 id="uploadedFiles"
                 name="uploadedFiles"
+                inputProps={{
+                  multiple: true
+                }}
                 type="file"
                 onChange={(event: any) => {
                   formik.setFieldValue(
                     "uploadedFiles",
-                    event.currentTarget.files[0]
+                    event.currentTarget.files
                   );
                 }}
                 onBlur={formik.handleBlur}
-                hidden
                 sx={{ width: "100%" }}
+                hidden
               />
               {formik.touched.uploadedFiles && formik.errors.uploadedFiles ? (
                 <div>{formik.errors.uploadedFiles}</div>
               ) : null}
-            </Button>
-          </Grid> */}
 
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={12}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Button type="submit" sx={buttonSx}>
-              {offEditMode ? "Edit" : "Submit Changes"}
+            </Grid>
+
+
+          </Grid>
+          <Grid item sx={{ textAlign: 'center' }}>
+            <Button type="submit" sx={{
+              background: '#254D71',
+              color: 'white',
+              letterSpacing: '0.2rem',
+              mt: '3rem',
+              pl: '6rem',
+              pr: '6rem',
+              '&:hover': {
+                backgroundColor: '#254D71',
+              }
+            }}> {offEditMode ? "Edit" : "Submit Changes"}
             </Button>
           </Grid>
-        </Grid>
-      </form>
-      <button onClick={handleReturnToDashboard}>Return to Dashboard</button>
-    </>
+        </form>
+      </Grid>
+    </Container>
   );
 };
 
