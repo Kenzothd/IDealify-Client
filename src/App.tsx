@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 import PrivateRoute from "./utilities/PrivateRoute";
-
 import VendorAccount from "./components/vendor/VendorAccount";
 import VendorSignUp from "./pages/VendorSignUp";
 import ClientSignUp from "./pages/ClientSignUp";
@@ -11,8 +10,6 @@ import Activity from "./components/activity/Activity";
 import VendorLogIn from "./pages/VendorLogIn";
 import TokenProvider from "./contextStore/TokenProvider";
 import SecretPage from "./pages/SecretPage";
-import VendorProjectTracker from "./components/vendor/VendorProjectTracker";
-import VendorProjectTable from "./components/vendor/VendorActivityTable";
 import VendorCreateProduct from "./components/vendor/VendorCreateProject";
 import VendorAddActivity from "./components/vendor/VendorAddActivity";
 import LandingPage from "./pages/LandingPage";
@@ -21,6 +18,7 @@ import VendorDashboard from "./pages/VendorDashboard";
 import LoginRedirect from "./pages/LoginRedirect";
 import VendorUpdateProject from "./components/vendor/VendorUpdateProject";
 import VendorTab from "./components/vendor/Vendortab";
+import VendorActivityTable from "./components/vendor/VendorActivityTable";
 
 function App() {
   return (
@@ -56,7 +54,7 @@ function App() {
             />
             <Route
               path="/vendor/:vendorid/projects/:projectid"
-              element={<PrivateRoute outlet={<VendorProjectTable />} />}
+              element={<PrivateRoute outlet={<VendorActivityTable />} />}
             />
             <Route
               path="/vendor/:vendorid/projects/:projectid/add-activity"
