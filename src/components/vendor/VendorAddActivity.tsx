@@ -56,13 +56,9 @@ const VendorAddActivity: FC = () => {
     },
     validationSchema: Yup.object({
       activityTitle: Yup.string().required("Required"),
-      activityStartDate: Yup.date().default(new Date()),
+      activityStartDate: Yup.date(),
       activityEndDate: Yup.date()
-        .default(new Date())
-        .min(
-          new Date(),
-          `Date should not be later than ${new Date().toLocaleDateString()}`
-        )
+        .min(Yup.ref("projectStartDate"), "end date can't be before start date")
         .required("Project end date required"),
       status: Yup.string().required("Required"),
       personInCharge: Yup.string().required("Required"),

@@ -101,13 +101,9 @@ const VendorCreateProduct: FC = () => {
     validationSchema: Yup.object({
       projectName: Yup.string().max(35).required("Required"),
       housingType: Yup.string().required("Required"),
-      projectStartDate: Yup.date().default(new Date()),
+      projectStartDate: Yup.date(),
       projectEndDate: Yup.date()
-        .default(new Date())
-        .min(
-          new Date(),
-          `Date should not be later than ${new Date().toLocaleDateString()}`
-        )
+        .min(Yup.ref("projectStartDate"), "end date can't be before start date")
         .required("Project end date required"),
       projectStatus: Yup.string().required("Required"),
       designTheme: Yup.string().required("Required"),
