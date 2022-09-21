@@ -20,6 +20,7 @@ import ClientLogIn from "./pages/ClientLogIn";
 import VendorDashboard from "./pages/VendorDashboard";
 import LoginRedirect from "./pages/LoginRedirect";
 import VendorUpdateProject from "./components/vendor/VendorUpdateProject";
+import VendorTab from "./components/vendor/Vendortab";
 
 function App() {
   return (
@@ -29,43 +30,43 @@ function App() {
           {/* for all */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login-redirect" element={<LoginRedirect />} />
-
           {/* client */}
           <Route path="/client/sign-up" element={<ClientSignUp />} />
-
           {/* vendor */}
           <Route path="/vendor/sign-up" element={<VendorSignUp />} />
           <Route path="/vendor/login" element={<VendorLogIn />} />
           <Route path="/vendor/secret" element={<SecretPage />} />
-          <Route
-            path="/vendor/:vendorid/create-project"
-            element={<PrivateRoute outlet={<VendorCreateProduct />} />}
-          />
-          <Route
-            path="/vendor/:vendorid/projects/:projectid/update-project"
-            element={<PrivateRoute outlet={<VendorUpdateProject />} />}
-          />
 
-          <Route
-            path="/vendor/:vendorid/account"
-            element={<PrivateRoute outlet={<VendorAccount />} />}
-          />
-          <Route
-            path="/vendor/:vendorid/dashboard"
-            element={<PrivateRoute outlet={<VendorDashboard />} />}
-          />
-          <Route
-            path="/vendor/:vendorid/projects/:projectid"
-            element={<PrivateRoute outlet={<VendorProjectTable />} />}
-          />
-          <Route
-            path="/vendor/:vendorid/projects/:projectid/add-activity"
-            element={<PrivateRoute outlet={<VendorAddActivity />} />}
-          />
-          <Route
-            path="/vendor/:vendorid/projects/:projectid/activity/:activityid"
-            element={<PrivateRoute outlet={<Activity />} />}
-          />
+          <Route path="/vendor" element={<VendorTab />}>
+            <Route
+              path="/vendor/:vendorid/create-project"
+              element={<PrivateRoute outlet={<VendorCreateProduct />} />}
+            />
+            <Route
+              path="/vendor/:vendorid/projects/:projectid/update-project"
+              element={<PrivateRoute outlet={<VendorUpdateProject />} />}
+            />
+            <Route
+              path="/vendor/:vendorid/account"
+              element={<PrivateRoute outlet={<VendorAccount />} />}
+            />
+            <Route
+              path="/vendor/:vendorid/dashboard"
+              element={<PrivateRoute outlet={<VendorDashboard />} />}
+            />
+            <Route
+              path="/vendor/:vendorid/projects/:projectid"
+              element={<PrivateRoute outlet={<VendorProjectTable />} />}
+            />
+            <Route
+              path="/vendor/:vendorid/projects/:projectid/add-activity"
+              element={<PrivateRoute outlet={<VendorAddActivity />} />}
+            />
+            <Route
+              path="/vendor/:vendorid/projects/:projectid/activity/:activityid"
+              element={<PrivateRoute outlet={<Activity />} />}
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
     </TokenProvider>

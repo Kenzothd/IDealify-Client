@@ -53,6 +53,7 @@ const VendorSingleProjectView: FC = () => {
 
   useEffect(() => {
     const url = urlcat(SERVER, `/projects/id/${projectid}`);
+    console.log(url);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
