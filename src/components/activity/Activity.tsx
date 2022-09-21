@@ -20,17 +20,7 @@ import sub from "date-fns/sub";
 import { useNavigate, useParams } from "react-router-dom";
 import { IActivities } from "../../Interface";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-const buttonSx = {
-  backgroundColor: "#c9caa2",
-  color: "white",
-  display: "flex",
-  margin: "3% auto",
-  fontWeight: 700,
-  fontSize: 12,
-  letterSpacing: 1,
-  borderRadius: 2,
-  padding: "0.5rem 1.5rem",
-};
+
 const projectButtonSx = {
   backgroundColor: "#74ace4",
   color: "white",
@@ -41,6 +31,28 @@ const projectButtonSx = {
   borderRadius: 2,
   padding: "0.5rem 1.5rem",
 };
+const buttonSx = {
+  backgroundColor: "#74ace4",
+  color: "white",
+  margin: "1% 1%",
+  fontWeight: 700,
+  fontSize: 12,
+  letterSpacing: 1,
+  borderRadius: 2,
+  padding: "0.5rem 1.5rem",
+};
+
+const buttonDeleteSx = {
+  backgroundColor: "red",
+  color: "white",
+  margin: "1% 1%",
+  fontWeight: 700,
+  fontSize: 12,
+  letterSpacing: 1,
+  borderRadius: 2,
+  padding: "0.5rem 1.5rem",
+};
+
 const Activity: FC = () => {
   const { vendorid, projectid, activityid } = useParams();
   const token: any = sessionStorage.getItem("token");
@@ -160,6 +172,23 @@ const Activity: FC = () => {
   };
   const handleStatusChange = (event: SelectChangeEvent) => {
     setActivity({ ...activity, status: event.target.value });
+  };
+
+  const handleDeleteActivity = () => {
+    console.log("handle delete activity");
+    const deleteUrl = urlcat(SERVER, `/activities/id/${activityid}`);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .delete(deleteUrl, config)
+      .then((res) => {
+        console.log(res.data);
+        navigate(`/vendor/${vendorid}/projects/${projectid}`);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -312,9 +341,38 @@ const Activity: FC = () => {
             formik.errors.activityDescription ? (
               <div>{formik.errors.activityDescription}</div>
             ) : null}
-            <Button type="submit" sx={buttonSx}>
-              {offEditMode ? "Edit" : "Submit Changes"}
-            </Button>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button type="submit" sx={buttonSx}>
+                {offEditMode ? "Edit" : "Submit Changes"}
+              </Button>
+              {!offEditMode && (
+                <Button
+                  sx={buttonSx}
+                  onClick={() => {
+                    setOffEditMode(!offEditMode);
+                  }}
+                >
+                  Cancel Edit
+                </Button>
+              )}
+              <Button
+                disabled={!offEditMode}
+                sx={buttonDeleteSx}
+                onClick={handleDeleteActivity}
+              >
+                Delete Activity
+              </Button>
+            </Grid>
           </form>
         </Grid>
       </Grid>
