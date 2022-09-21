@@ -15,6 +15,7 @@ import { date } from "yup/lib/locale";
 import format from "date-fns/format";
 import Button from "@mui/material/Button";
 import { render } from "react-dom";
+import { Grid, Paper } from "@mui/material";
 
 const buttonSx = {
   backgroundColor: "blue",
@@ -33,7 +34,7 @@ const SERVER = import.meta.env.VITE_SERVER;
 const VendorAccount: FC = () => {
   const token: any = sessionStorage.getItem("token");
   const [offEditMode, setOffEditMode] = useState<boolean>(true);
-
+  const [vendorId, setVendorId] = useState("");
   const [vendorAccount, setVendorAccount] = useState<IVendor>({
     email: "",
     contactPersonName: "",
@@ -49,18 +50,31 @@ const VendorAccount: FC = () => {
     brandSummary: "",
   });
 
-  //   console.log(vendorAccount);
+  console.log(offEditMode);
+
+  console.log(token);
 
   useEffect(() => {
-    const url = urlcat(SERVER, "/vendors/id/6326ad9268fde94c3e6438d4");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
+
+    //verify and get vendor id from payload
+    const verifyURL = urlcat(SERVER, "/vendors/verify");
     axios
-      .get(url, config)
-      .then((res) => setVendorAccount(res.data))
+      .post(verifyURL, { data: "hello" }, config)
+      .then((res) => {
+        const vendorID = res.data._id;
+        setVendorId(vendorID);
+        //get vendor account details
+        const vendorURL = urlcat(SERVER, `/vendors/id/${vendorID}`);
+        axios
+          .get(vendorURL, config)
+          .then((res) => setVendorAccount(res.data))
+          .catch((err) => console.log(err));
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -134,6 +148,7 @@ const VendorAccount: FC = () => {
     }),
 
     onSubmit: (values: any) => {
+      console.log("submit button");
       if (offEditMode) {
         setOffEditMode(!offEditMode);
       } else {
@@ -150,12 +165,13 @@ const VendorAccount: FC = () => {
           values
         );
 
-        const url = urlcat(SERVER, `vendors/id/6326ad9268fde94c3e6438d4`);
+        const url = urlcat(SERVER, `vendors/id/${vendorId}`);
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         };
+        //form update
         axios
           .put(url, values, config)
           .then((res) => setVendorAccount(res.data))
@@ -168,153 +184,182 @@ const VendorAccount: FC = () => {
     <>
       <h1>Account</h1>
       <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="contactPersonName">Person In-Charge</label>
-        <TextField
-          required
-          disabled={offEditMode}
-          id="contactPersonName"
-          name="contactPersonName"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.contactPersonName}
-        />
-        {formik.touched.contactPersonName && formik.errors.contactPersonName ? (
-          <div>{formik.errors.contactPersonName}</div>
-        ) : null}
-
-        <label htmlFor="username">Username</label>
-        <TextField
-          required
-          disabled={offEditMode}
-          id="username"
-          name="username"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.username}
-        />
-        {formik.touched.username && formik.errors.username ? (
-          <div>{formik.errors.username}</div>
-        ) : null}
-
-        <label htmlFor="email">email</label>
-        <TextField
-          required
-          disabled={offEditMode}
-          id="email"
-          name="email"
-          type="email"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.email}
-        />
-        {formik.touched.email && formik.errors.email ? (
-          <div>{formik.errors.email}</div>
-        ) : null}
-
-        <label htmlFor="password">password</label>
-        <TextField
-          required
-          disabled={offEditMode}
-          id="password"
-          name="password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-        />
-        {formik.touched.password && formik.errors.password ? (
-          <div>{formik.errors.password}</div>
-        ) : null}
-
-        <label htmlFor="contactNumber">Contact Number</label>
-        <TextField
-          required
-          disabled={offEditMode}
-          id="contactNumber"
-          name="contactNumber"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.contactNumber}
-        />
-        {formik.touched.contactNumber && formik.errors.contactNumber ? (
-          <div>{formik.errors.contactNumber}</div>
-        ) : null}
-
-        <label htmlFor="companyName">Company Name</label>
-        <TextField
-          required
-          disabled={offEditMode}
-          id="companyName"
-          name="companyName"
-          type="text"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.companyName}
-        />
-        {formik.touched.companyName && formik.errors.companyName ? (
-          <div>{formik.errors.companyName}</div>
-        ) : null}
-
-        <label htmlFor="registrationNumber">Registration Number</label>
-        <TextField
-          required
-          disabled={offEditMode}
-          id="registrationNumber"
-          name="registrationNumber"
-          type="text"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.registrationNumber}
-        />
-        {formik.touched.registrationNumber &&
-        formik.errors.registrationNumber ? (
-          <div>{formik.errors.registrationNumber}</div>
-        ) : null}
-
-        <label htmlFor="incorporationDate">Incorporation Date</label>
-        <TextField
-          required
-          disabled={offEditMode}
-          type="date"
-          id="incorporationDate"
-          name="incorporationDate"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={format(
-            new Date(formik.values.incorporationDate),
-            "yyyy-MM-dd"
-          )}
-        />
-        {formik.touched.incorporationDate && formik.errors.incorporationDate ? (
-          <div>{formik.errors.incorporationDate}</div>
-        ) : null}
-
-        <label htmlFor="registeredOfficeAddress">
-          Registered Office Address
-        </label>
-        <TextField
-          required
-          disabled={offEditMode}
-          id="registeredOfficeAddress"
-          name="registeredOfficeAddress"
-          type="text"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.registeredOfficeAddress}
-        />
-        {formik.touched.registeredOfficeAddress &&
-        formik.errors.registeredOfficeAddress ? (
-          <div>{formik.errors.registeredOfficeAddress}</div>
-        ) : null}
-
-        {/* <label htmlFor="uploadedFiles">Upload Files</label>
-            <Button variant="contained" component="label">
-              Upload File
-              <TextField
+        <Grid container spacing={4}>
+          <Grid item xs={6} sm={6} md={6}>
+            <label htmlFor="contactPersonName">Person In-Charge</label>
+            <TextField
+              required
               disabled={offEditMode}
+              id="contactPersonName"
+              name="contactPersonName"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.contactPersonName}
+              sx={{ width: "100%" }}
+            />
+            {formik.touched.contactPersonName &&
+            formik.errors.contactPersonName ? (
+              <div>{formik.errors.contactPersonName}</div>
+            ) : null}
+          </Grid>
+
+          <Grid item xs={6} sm={6} md={6}>
+            <label htmlFor="companyName">Company Name</label>
+            <TextField
+              required
+              disabled={offEditMode}
+              id="companyName"
+              name="companyName"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.companyName}
+              sx={{ width: "100%" }}
+            />
+            {formik.touched.companyName && formik.errors.companyName ? (
+              <div>{formik.errors.companyName}</div>
+            ) : null}
+          </Grid>
+
+          <Grid item xs={6} sm={6} md={6}>
+            <label htmlFor="contactNumber">Contact Number</label>
+            <TextField
+              required
+              disabled={offEditMode}
+              id="contactNumber"
+              name="contactNumber"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.contactNumber}
+              sx={{ width: "100%" }}
+            />
+            {formik.touched.contactNumber && formik.errors.contactNumber ? (
+              <div>{formik.errors.contactNumber}</div>
+            ) : null}
+          </Grid>
+
+          <Grid item xs={6} sm={6} md={6}>
+            <label htmlFor="registrationNumber">Registration Number</label>
+            <TextField
+              required
+              disabled={offEditMode}
+              id="registrationNumber"
+              name="registrationNumber"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.registrationNumber}
+              sx={{ width: "100%" }}
+            />
+            {formik.touched.registrationNumber &&
+            formik.errors.registrationNumber ? (
+              <div>{formik.errors.registrationNumber}</div>
+            ) : null}
+          </Grid>
+
+          <Grid item xs={6} sm={6} md={6}>
+            <label htmlFor="email">Email</label>
+            <TextField
+              required
+              disabled={offEditMode}
+              id="email"
+              name="email"
+              type="email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+              sx={{ width: "100%" }}
+            />
+            {formik.touched.email && formik.errors.email ? (
+              <div>{formik.errors.email}</div>
+            ) : null}
+          </Grid>
+
+          <Grid item xs={6} sm={6} md={6}>
+            <label htmlFor="incorporationDate">Incorporation Date</label>
+            <TextField
+              required
+              disabled={offEditMode}
+              type="date"
+              id="incorporationDate"
+              name="incorporationDate"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={format(
+                new Date(formik.values.incorporationDate),
+                "yyyy-MM-dd"
+              )}
+              sx={{ width: "100%" }}
+            />
+            {formik.touched.incorporationDate &&
+            formik.errors.incorporationDate ? (
+              <div>{formik.errors.incorporationDate}</div>
+            ) : null}
+          </Grid>
+
+          <Grid item xs={6} sm={6} md={6}>
+            <label htmlFor="username">Username</label>
+            <TextField
+              required
+              disabled={offEditMode}
+              id="username"
+              name="username"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.username}
+              sx={{ width: "100%" }}
+            />
+            {formik.touched.username && formik.errors.username ? (
+              <div>{formik.errors.username}</div>
+            ) : null}
+          </Grid>
+
+          <Grid item xs={6} sm={6} md={6}>
+            <label htmlFor="registeredOfficeAddress">
+              Registered Office Address
+            </label>
+            <TextField
+              required
+              disabled={offEditMode}
+              id="registeredOfficeAddress"
+              name="registeredOfficeAddress"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.registeredOfficeAddress}
+              sx={{ width: "100%" }}
+            />
+            {formik.touched.registeredOfficeAddress &&
+            formik.errors.registeredOfficeAddress ? (
+              <div>{formik.errors.registeredOfficeAddress}</div>
+            ) : null}
+          </Grid>
+
+          <Grid item xs={6} sm={6} md={6}>
+            <label htmlFor="password">password</label>
+            <TextField
+              required
+              disabled={offEditMode}
+              id="password"
+              name="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              sx={{ width: "100%" }}
+            />
+            {formik.touched.password && formik.errors.password ? (
+              <div>{formik.errors.password}</div>
+            ) : null}
+          </Grid>
+
+          {/* <Grid item xs={6} sm={6} md={6}>
+            <Button variant="contained" component="label">
+              Upload Files
+              <TextField
+                disabled={offEditMode}
                 id="uploadedFiles"
                 name="uploadedFiles"
                 type="file"
-                accept="image/*"
                 onChange={(event: any) => {
                   formik.setFieldValue(
                     "uploadedFiles",
@@ -323,15 +368,30 @@ const VendorAccount: FC = () => {
                 }}
                 onBlur={formik.handleBlur}
                 hidden
+                sx={{ width: "100%" }}
               />
               {formik.touched.uploadedFiles && formik.errors.uploadedFiles ? (
                 <div>{formik.errors.uploadedFiles}</div>
               ) : null}
-            </Button> */}
+            </Button>
+          </Grid> */}
 
-        <Button type="submit" sx={buttonSx}>
-          {offEditMode ? "Edit" : "Submit Changes"}
-        </Button>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button type="submit" sx={buttonSx}>
+              {offEditMode ? "Edit" : "Submit Changes"}
+            </Button>
+          </Grid>
+        </Grid>
       </form>
     </>
   );

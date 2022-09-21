@@ -3,6 +3,7 @@ import { IProject } from "../../Interface";
 import urlcat from "urlcat";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Container, Grid, Tab, Tabs, Typography } from "@mui/material";
 // import TokenContext from "../../contextStore/token-context";
 // import { ITokenContext } from "../../Interface";
 
@@ -27,6 +28,7 @@ const VendorProjectTracker: FC = () => {
     },
   ]);
   const [vendor, setVendor] = useState({});
+
   const navigate = useNavigate();
 
   // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI0ODc2NTc5Nzk2NGEyNjk5NjhmZTgiLCJ1c2VybmFtZSI6ImNsb2NsbyIsImlhdCI6MTY2MzQwODE4NCwiZXhwIjoxNjYzNDA5OTg0fQ.xcW6Tf8b0paHmEhz8d5o85cRfk3we3GbJDIZym-GzA0"
@@ -57,21 +59,11 @@ const VendorProjectTracker: FC = () => {
   console.log("projects", projects);
 
   useEffect(() => {
-    // Verify Vendor
+    //Fetch Project
     axios
-      .post(vendorUrl, {}, config)
-      .then((res) => setVendor(res.data))
-      .then((res) => {
-        // Get Projects
-        axios
-          .get(projectUrl, config)
-          .then((res) => setProjects(res.data))
-          .catch((error) => console.log({ Error: error.response.data.error }));
-      })
-      .catch((error) => {
-        console.log({ Error: error.response.data.error });
-        navigate("/vendor/login");
-      });
+      .get(projectUrl, config)
+      .then((res) => setProjects(res.data))
+      .catch((error) => console.log({ Error: error.response.data.error }));
   }, []);
 
   const handlerViewProj = (e: any) => {
@@ -85,15 +77,12 @@ const VendorProjectTracker: FC = () => {
 
   return (
     <>
-      <ul>
-        <li>Account</li>
-        <li>Favourites</li>
-        <li>Inbox</li>
-        <li>Project Tracker</li>
-      </ul>
       <button>Back to Inbox</button>
       <button onClick={handlerAddProj}>Add Projects</button>
-      <h1>Projects</h1>
+      <Typography variant="h4" component="h1">
+        Projects Overview
+      </Typography>
+
       {projects.map((ele) => (
         <div key={ele._id}>
           <div>
