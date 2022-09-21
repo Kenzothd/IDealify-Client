@@ -1,20 +1,11 @@
 import React, { FC, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import {
-  Button,
-  Card,
-  TextField,
-  Typography,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Box,
-} from "@mui/material";
+import { useParams, useNavigate } from "react-router-dom";
+import { Button, Card, Typography, Grid, Box } from "@mui/material";
 import axios from "axios";
 import urlcat from "urlcat";
 import format from "date-fns/format";
 import { IProjectTwo } from "../../Interface";
+import AddIcon from "@mui/icons-material/Add";
 
 // interface IProject {
 //   vendorId: string;
@@ -30,11 +21,21 @@ import { IProjectTwo } from "../../Interface";
 //   totalCosting: number;
 //   comments: string;
 // }
-
+const buttonSx = {
+  backgroundColor: "#5b8368",
+  color: "white",
+  margin: "3% 1%",
+  fontWeight: 700,
+  fontSize: 12,
+  letterSpacing: 1,
+  borderRadius: 2,
+  padding: "0.5rem 1.5rem",
+};
 const VendorSingleProjectView: FC = () => {
   const SERVER = import.meta.env.VITE_SERVER;
+  const navigate = useNavigate();
   const token: any = sessionStorage.getItem("token");
-  const { projectid } = useParams();
+  const { vendorid, projectid } = useParams();
   let dollarUSLocale = Intl.NumberFormat("en-US");
   const [projectInfo, setProjectInfo] = useState<IProjectTwo>({
     vendorId: "",
@@ -67,10 +68,28 @@ const VendorSingleProjectView: FC = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  const handleAddActivity = () => {
+    navigate(`/vendor/${vendorid}/projects/${projectid}/add-activity`);
+  };
+
+  const handleViewProject = () => {
+    navigate(`/vendor/${vendorid}/projects/${projectid}/update-project`);
+  };
+
   return (
     <>
       <Box>
-        <Typography variant="h2">{projectInfo.projectName}</Typography>
+        <Grid container>
+          <Grid item md={6}>
+            <Typography variant="h2">{projectInfo.projectName}</Typography>
+          </Grid>
+          <Grid item md={6} sx={{ display: "flex", justifyContent: "right" }}>
+            <Button sx={buttonSx} onClick={handleAddActivity}>
+              <AddIcon />
+              Activity
+            </Button>
+          </Grid>
+        </Grid>
         <Card
           sx={{
             padding: "20px",
@@ -116,18 +135,33 @@ const VendorSingleProjectView: FC = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                flexDirection: "column",
               }}
             >
-              <Card
-                sx={{
-                  padding: "5px",
-                  textAlign: "center",
-                  width: "50%",
-                  fontSize: "20px",
-                }}
-              >
-                {projectInfo.projectStatus}
-              </Card>
+              <Grid item>
+                <Card
+                  sx={{
+                    padding: "5px",
+                    textAlign: "center",
+                    width: "100%",
+                  }}
+                >
+                  <Typography>{projectInfo.projectStatus}</Typography>
+                </Card>
+              </Grid>
+
+              <Grid item md={12}>
+                <Button
+                  onClick={handleViewProject}
+                  sx={{
+                    color: "white",
+                    textDecoration: "underline",
+                    paddingTop: "10px",
+                  }}
+                >
+                  <Typography>View More</Typography>
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Card>

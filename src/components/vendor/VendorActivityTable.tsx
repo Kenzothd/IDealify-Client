@@ -8,7 +8,7 @@ import format from "date-fns/format";
 import { IActivities } from "../../Interface";
 import VendorSingleProjectView from "./VendorSingleProjectView";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
+import RefreshIcon from "@mui/icons-material/Refresh";
 const buttonSx = {
   backgroundColor: "#5b8368",
   color: "white",
@@ -249,19 +249,20 @@ const VendorProjectTable: FC = () => {
             rowsPerPageOptions={[5]}
             sx={{ height: "500px", width: "100%" }}
           />
-          <Button sx={buttonSx} onClick={refreshActivitiesHandler}>
+        </Grid>
+        <Grid item md={12} sx={{ display: "flex", justifyContent: "right" }}>
+          <Button onClick={refreshActivitiesHandler}>
+            <RefreshIcon sx={{ marginRight: "10px" }} />
             Refresh Activities
           </Button>
-          {/* <pre>{JSON.stringify(activities, null, 2)}</pre> */}
-          <Button sx={buttonSx} onClick={handleBackToDashboard}>
+
+          {/* <Button sx={buttonSx} onClick={handleBackToDashboard}>
             Back to Dashboard
-          </Button>
-          <Button sx={buttonSx} onClick={handleAddActivity}>
-            Add activity
-          </Button>
-          <Button sx={buttonSx} onClick={handleEditProject}>
+          </Button> */}
+
+          {/* <Button sx={buttonSx} onClick={handleEditProject}>
             Edit Project
-          </Button>
+          </Button> */}
         </Grid>
       </Grid>
     </>
