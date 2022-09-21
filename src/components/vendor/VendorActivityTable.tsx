@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, FC } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Button, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import urlcat from "urlcat";
 import format from "date-fns/format";
@@ -49,7 +49,76 @@ const VendorProjectTable: FC = () => {
     {
       field: "activityTitle",
       headerName: "Activity Title",
-      width: 450,
+      width: "550",
+      headerAlign: "center",
+      align: "center",
+    },
+    // {
+    //   field: "status",
+    //   headerName: "Status",
+    //   width: 200,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   renderCell: (params) => {
+    //     let bgColor: string;
+    //     switch (params.row.status) {
+    //       case "Upcoming":
+    //         bgColor = "#84c4cb";
+    //         break;
+    //       case "Pending":
+    //         bgColor = "gray";
+    //         break;
+    //       case "In Progress":
+    //         bgColor = "orange";
+    //         break;
+    //       case "Completed":
+    //         bgColor = "green";
+    //         break;
+    //       case "Cancelled":
+    //         bgColor = "red";
+    //         break;
+    //       default:
+    //         bgColor = "gray";
+    //         break;
+    //     }
+    //     return (
+    //       <Typography
+    //         sx={{
+    //           fontWeight: "bold",
+    //           fontSize: "0.85rem",
+    //           letterSpacing: "0.1rem",
+    //           color: "white",
+    //           width: "100px",
+    //           textAlign: "center",
+    //           borderRadius: 8,
+    //           padding: "3px 10px",
+    //           display: "inline-block",
+    //           backgroundColor: bgColor,
+    //         }}
+    //       >
+    //         {params.row.status}
+    //       </Typography>
+    //     );
+    //   },
+    // },
+    {
+      field: "activityStartDate",
+      headerName: "Start Date",
+      width: 200,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "activityEndDate",
+      headerName: "End Date",
+      width: 200,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "personInCharge",
+      headerName: "Person In Charge",
+      width: 200,
       headerAlign: "center",
       align: "center",
     },
@@ -100,27 +169,6 @@ const VendorProjectTable: FC = () => {
           </Typography>
         );
       },
-    },
-    {
-      field: "activityStartDate",
-      headerName: "Start Date",
-      width: 200,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "activityEndDate",
-      headerName: "End Date",
-      width: 200,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "personInCharge",
-      headerName: "Person In Charge",
-      width: 200,
-      headerAlign: "center",
-      align: "center",
     },
     {
       field: "action",
@@ -190,28 +238,34 @@ const VendorProjectTable: FC = () => {
 
   return (
     <>
-      <VendorSingleProjectView />
+      <Grid container spacing={2} sx={{ padding: "0% 5%", marginTop: "2%" }}>
+        <Grid item md={12}>
+          <VendorSingleProjectView />
+        </Grid>
 
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[5]}
-        sx={{ height: "500px", width: "100%" }}
-      />
-      <Button sx={buttonSx} onClick={refreshActivitiesHandler}>
-        Refresh Activities
-      </Button>
-      {/* <pre>{JSON.stringify(activities, null, 2)}</pre> */}
-      <Button sx={buttonSx} onClick={handleBackToDashboard}>
-        Back to Dashboard
-      </Button>
-      <Button sx={buttonSx} onClick={handleAddActivity}>
-        Add activity
-      </Button>
-      <Button sx={buttonSx} onClick={handleEditProject}>
-        Edit Project
-      </Button>
+        <Grid item md={12}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[5]}
+            sx={{ height: "500px", width: "100%" }}
+          />
+          <Button sx={buttonSx} onClick={refreshActivitiesHandler}>
+            Refresh Activities
+          </Button>
+          {/* <pre>{JSON.stringify(activities, null, 2)}</pre> */}
+          <Button sx={buttonSx} onClick={handleBackToDashboard}>
+            Back to Dashboard
+          </Button>
+          <Button sx={buttonSx} onClick={handleAddActivity}>
+            Add activity
+          </Button>
+          <Button sx={buttonSx} onClick={handleEditProject}>
+            Edit Project
+          </Button>
+        </Grid>
+      </Grid>
     </>
   );
 };

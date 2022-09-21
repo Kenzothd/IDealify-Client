@@ -70,7 +70,7 @@ const VendorSingleProjectView: FC = () => {
   return (
     <>
       <Box>
-        <Typography variant="h3">{projectInfo.projectName}</Typography>
+        <Typography variant="h2">{projectInfo.projectName}</Typography>
         <Card
           sx={{
             padding: "20px",
