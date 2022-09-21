@@ -10,7 +10,7 @@ import {
 } from "@mui/icons-material";
 
 const VendorTab = () => {
-  const [value, setValue] = useState("projects");
+  const [value, setValue] = useState("dashboard");
   const navigate = useNavigate();
   const { vendorid } = useParams();
 
