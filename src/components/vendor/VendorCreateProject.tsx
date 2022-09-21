@@ -214,7 +214,7 @@ const VendorCreateProduct: FC = () => {
                   sx={{ width: "100%" }}
                 />
                 {formik.touched.clientUsername &&
-                formik.errors.clientUsername ? (
+                  formik.errors.clientUsername ? (
                   <div>{formik.errors.clientUsername}</div>
                 ) : null}
               </Grid>
@@ -338,7 +338,7 @@ const VendorCreateProduct: FC = () => {
                   sx={{ width: "100%" }}
                 />
                 {formik.touched.projectStartDate &&
-                formik.errors.projectStartDate ? (
+                  formik.errors.projectStartDate ? (
                   <div>{formik.errors.projectStartDate}</div>
                 ) : null}
               </Grid>
@@ -359,7 +359,7 @@ const VendorCreateProduct: FC = () => {
                   sx={{ width: "100%" }}
                 />
                 {formik.touched.projectEndDate &&
-                formik.errors.projectEndDate ? (
+                  formik.errors.projectEndDate ? (
                   <div>{formik.errors.projectEndDate}</div>
                 ) : null}
               </Grid>

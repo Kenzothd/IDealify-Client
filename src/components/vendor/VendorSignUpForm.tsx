@@ -11,8 +11,9 @@ const VendorSignUpForm: FC = () => {
 
   const [username, setUsername] = useState(0);
   const [regNum, setRegNum] = useState(0);
+  const [userData, setUserData] = useState({})
   const SERVER = import.meta.env.VITE_SERVER;
-  const url = urlcat(SERVER, "/vendors");
+
   const navigateToProjects = useNavigate();
 
   const formik = useFormik({
@@ -26,7 +27,7 @@ const VendorSignUpForm: FC = () => {
       registrationNumber: "",
       incorporationDate: "",
       registeredOfficeAddress: "",
-      // uploadedFiles: null,
+      uploadedFiles: null,
     },
     validationSchema: Yup.object().shape({
       contactPersonName: Yup.string().required("Required"),
@@ -37,13 +38,8 @@ const VendorSignUpForm: FC = () => {
           "Vendor username is in used",
           (name: any): boolean => {
             const userUrl = urlcat(SERVER, `vendors/findByName/${name}`);
-            const config = {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            };
             axios
-              .get(userUrl, config)
+              .get(userUrl)
               .then((res) => setUsername(res.data.length))
               .catch((err) => console.log(err));
             return username === 0 ? true : false;
@@ -69,13 +65,8 @@ const VendorSignUpForm: FC = () => {
               SERVER,
               `vendors/findByRegistrationNum/${num}`
             );
-            const config = {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            };
             axios
-              .get(userUrl, config)
+              .get(userUrl)
               .then((res) => setRegNum(res.data.length))
               .catch((err) => console.log(err));
             return regNum === 0 ? true : false;
@@ -89,17 +80,49 @@ const VendorSignUpForm: FC = () => {
         )
         .required("Required"),
       registeredOfficeAddress: Yup.string().required("Required"),
-      // uploadedFiles: Yup.mixed().required("A file is required"),
+      uploadedFiles: Yup.mixed().required("A file is required"),
     }),
     onSubmit: (values: any) => {
-      // console.log(values);
+      console.log(values);
+      console.log(values.uploadedFiles)
+
+
+      const formData = new FormData()
+      for (let i = 0; i < values.uploadedFiles.length; i++) {
+        formData.append("uploadedFiles", values.uploadedFiles[i])
+      }
+      const uploadImgUrl = urlcat(SERVER, '/upload-images');
+      const createVendorUrl = urlcat(SERVER, "/vendors");
+      const config = {
+        headers: {
+          // Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      };
       axios
-        .post(url, values)
+        .post(uploadImgUrl, formData, config)
+        .then((res) => {
+          values.uploadedFiles = res.data.imageLinks
+          console.log('Check this out', values)
+          return axios.post(createVendorUrl, values)
+        })
         .then((res) => {
           sessionStorage.setItem("token", res.data.token);
           navigateToProjects("/vendor/projects");
         })
         .catch((error) => console.log(error.response.data.error));
+
+
+
+
+
+      // axios
+      //   .post(url, values)
+      //   .then((res) => {
+      //     sessionStorage.setItem("token", res.data.token);
+      //     // navigateToProjects("/vendor/projects");
+      //   })
+      //   .catch((error) => console.log(error.response.data.error));
     },
   });
 
@@ -306,23 +329,28 @@ const VendorSignUpForm: FC = () => {
               ) : null}
             </Grid>
 
-            {/* <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6} md={6}>
               <TextField
-                required
                 id="uploadedFiles"
-                autoComplete="off"
-                variant="filled"
                 label="Upload Files"
                 name="uploadedFiles"
-                onChange={formik.handleChange}
+                inputProps={{
+                  multiple: true
+                }}
+                type="file"
+                onChange={(event: any) => {
+                  formik.setFieldValue(
+                    "uploadedFiles",
+                    event.currentTarget.files
+                  );
+                }}
                 onBlur={formik.handleBlur}
-                sx={{ width: "100%" }}
-              // value={formik.values.username}
+                hidden
               />
               {formik.touched.uploadedFiles && formik.errors.uploadedFiles ? (
                 <div>{formik.errors.uploadedFiles}</div>
               ) : null}
-            </Grid> */}
+            </Grid>
           </Grid>
         </Grid>
 
