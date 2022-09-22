@@ -109,14 +109,14 @@ const ClientTab = () => {
                 label="New Project"
                 sx={{ color: 'black' }}
               /> */}
-              <Tab
+              {/* <Tab
                 disabled
                 icon={<AccountCircle />}
                 iconPosition="start"
                 value="profile"
                 label="Profile"
                 sx={{ color: "black" }}
-              />
+              /> */}
               <Tab
                 disabled
                 icon={<MoveToInbox />}

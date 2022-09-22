@@ -27,7 +27,7 @@ import ClientLoginForm from "./components/client/ClientLoginForm";
 import ClientTab from "./components/client/Clienttab";
 import ClientActivityTable from "./components/client/ClientActivityTable";
 import ClientAccount from "./components/client/ClientAccount";
-
+import VendorProfile from "./components/vendor/VendorProfile";
 
 function App() {
   return (
@@ -48,7 +48,6 @@ function App() {
               element={<PrivateRoute outlet={<ClientDashboard />} />}
             />
             <Route
-
               path="/client/:clientid/projects/:projectid"
               element={<PrivateRoute outlet={<ClientActivityTable />} />}
             />
@@ -78,6 +77,10 @@ function App() {
             <Route
               path="/vendor/:vendorid/account"
               element={<PrivateRoute outlet={<VendorAccount />} />}
+            />
+            <Route
+              path="/vendor/:vendorid/profile"
+              element={<PrivateRoute outlet={<VendorProfile />} />}
             />
             <Route
               path="/vendor/:vendorid/dashboard"
