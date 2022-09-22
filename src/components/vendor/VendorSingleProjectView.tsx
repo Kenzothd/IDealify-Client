@@ -115,25 +115,27 @@ const VendorSingleProjectView: FC = () => {
   }
   return (
     <>
-      <Box
-        sx={{
-          display: "inline-block",
-          mb: "1.5rem",
-          cursor: "pointer",
-          border: 1,
-          p: "0.3rem",
-          borderRadius: "1rem",
-        }}
-      >
-        <Typography
-          variant="body1"
-          sx={{ alignItems: "center" }}
-          onClick={handleReturnToAllProjects}
+      <Grid sx={{ display: "flex", justifyContent: "right" }}>
+        <Box
+          sx={{
+            display: "inline-block",
+            mb: "1.5rem",
+            cursor: "pointer",
+            border: 1,
+            p: "0.3rem",
+            borderRadius: "1rem",
+          }}
         >
-          <KeyboardReturnIcon sx={{ pr: "0.3rem", fontSize: "0.8rem" }} />
-          All Projects
-        </Typography>
-      </Box>
+          <Typography
+            variant="body1"
+            sx={{ alignItems: "center", right: "1px" }}
+            onClick={handleReturnToAllProjects}
+          >
+            <KeyboardReturnIcon sx={{ pr: "0.3rem", fontSize: "0.8rem" }} />
+            All Projects
+          </Typography>
+        </Box>
+      </Grid>
 
       <Grid container sx={{ mb: "1rem" }}>
         <Grid item xs={12} sm={7}>
