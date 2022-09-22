@@ -40,9 +40,10 @@ const VendorActivityTable: FC = () => {
     {
       field: "activityTitle",
       headerName: "Activity Title",
-      width: 320,
-      headerAlign: "center",
-      align: "center",
+      width: 310,
+      headerAlign: "left",
+      align: "left",
+
     },
     {
       field: "activityStartDate",
@@ -128,8 +129,10 @@ const VendorActivityTable: FC = () => {
           <VisibilityIcon
             onClick={onClick}
             sx={{
+              color: '#444444',
+              fontSize: '1rem',
               "&:hover": {
-                color: "#74ace4",
+                color: "#254D71",
                 cursor: "pointer",
               },
             }}
@@ -187,7 +190,7 @@ const VendorActivityTable: FC = () => {
 
         <Grid item md={12} sx={{ display: "flex", justifyContent: "right" }}>
           <Button onClick={refreshActivitiesHandler}>
-            <RefreshIcon sx={{ marginRight: "10px" }} />
+            <RefreshIcon sx={{ marginRight: "10px", fontSize: '1rem' }} />
             Refresh
           </Button>
         </Grid>

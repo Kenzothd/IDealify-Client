@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
-import { Box, Container, Grid, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Tab, Tabs, Typography } from "@mui/material";
 import {
   AccountCircle,
   LibraryAddOutlined,
@@ -8,6 +8,18 @@ import {
   SettingsOutlined,
   TableRowsOutlined,
 } from "@mui/icons-material";
+import { borderBottom, borderBottomColor } from "@mui/system";
+
+const projectButtonSx = {
+  backgroundColor: "#D9DFE4",
+  color: "#444444",
+  letterSpacing: '0.1rem',
+  pl: '0.75rem',
+  pr: '0.75rem',
+  '&:hover': {
+    backgroundColor: '#D9DFE4',
+  },
+};
 
 const VendorTab = () => {
   const [value, setValue] = useState("dashboard");
@@ -40,56 +52,86 @@ const VendorTab = () => {
     //     navigate(`/vendor/${vendorid}/dashboard`);
     // }
   };
+
+
+
+  const handleLogOut = () => {
+    sessionStorage.removeItem("token");
+    navigate(`/vendor/login`);
+  };
+
+
   return (
     <Box>
-      <Tabs value={value} onChange={handleChange} sx={{ mt: '3rem', mb: '5rem' }} centered>
-        <Tab
-          icon={<SettingsOutlined />}
-          iconPosition="start"
-          value="account"
-          label="Account"
-          sx={{
-            color: 'black',
-            borderBottom: 1,
-            '&:hover': {
-              color: '#254D71',
-            },
-          }}
+      <Container>
+        <Grid container sx={{
+          display: 'flex',
+          alignItems: 'center',
+          mt: '5rem',
+          mb: '3rem',
+          borderBottom: 1,
+          borderBottomColor: '#444444'
+        }}>
+          <Grid item xs={8}  >
+            <Tabs value={value} onChange={handleChange} >
+              <Tab
+                icon={<SettingsOutlined />}
+                iconPosition="start"
+                value="account"
+                label="Account"
+                sx={{
+                  color: 'black',
+                  '&:hover': {
+                    color: '#254D71',
+                  },
 
-        />
-        <Tab
-          disabled
-          icon={<AccountCircle />}
-          iconPosition="start"
-          value="profile"
-          label="Profile"
-          sx={{ color: 'black', borderBottom: 1, }}
-        />
-        <Tab
-          disabled
-          icon={<MoveToInbox />}
-          iconPosition="start"
-          value="inbox"
-          label="Inbox"
-          sx={{ color: 'black', borderBottom: 1, }}
-        />
-        <Tab
-          icon={<TableRowsOutlined />}
-          iconPosition="start"
-          value="dashboard"
-          label="Projects"
-          sx={{ color: 'black', borderBottom: 1, }}
-        />
-        <Tab
-          icon={<LibraryAddOutlined />}
-          iconPosition="start"
-          value="create-project"
-          label="New Project"
-          sx={{ color: 'black', borderBottom: 1, }}
-        />
+                }}
 
-      </Tabs>
+              />
+
+
+              <Tab
+                icon={<TableRowsOutlined />}
+                iconPosition="start"
+                value="dashboard"
+                label="Projects"
+                sx={{ color: 'black' }}
+              />
+              {/* <Tab
+                icon={<LibraryAddOutlined />}
+                iconPosition="start"
+                value="create-project"
+                label="New Project"
+                sx={{ color: 'black' }}
+              /> */}
+              <Tab
+                disabled
+                icon={<AccountCircle />}
+                iconPosition="start"
+                value="profile"
+                label="Profile"
+                sx={{ color: 'black' }}
+              />
+              <Tab
+                disabled
+                icon={<MoveToInbox />}
+                iconPosition="start"
+                value="inbox"
+                label="Inbox"
+                sx={{ color: 'black' }}
+              />
+            </Tabs>
+          </Grid>
+          <Grid item xs={4} sx={{ textAlign: 'right' }} >
+            <Button sx={projectButtonSx} onClick={handleLogOut}>Log Out</Button>
+          </Grid>
+        </Grid>
+      </Container>
+
+
       <Outlet />
+
+
     </Box>
   );
 };

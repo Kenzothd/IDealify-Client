@@ -115,13 +115,20 @@ const VendorSingleProjectView: FC = () => {
   return (
 
     <>
+      <Box sx={{ display: 'inline-block', mb: '1.5rem', cursor: 'pointer', border: 1, p: '0.3rem', borderRadius: '1rem' }}>
+        <Typography variant='body1' sx={{ alignItems: 'center' }} onClick={handleReturnToAllProjects}>
+          <KeyboardReturnIcon sx={{ pr: "0.3rem", fontSize: '0.8rem' }} />
+          All Projects
+        </Typography>
+
+      </Box>
       <Grid container sx={{ mb: '1rem' }}>
         <Grid item xs={12} sm={7}>
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Typography variant="h3">{projectInfo.projectName}</Typography>
 
             <Button sx={projectButtonSx} onClick={handleViewProject}>
-              <EditIcon sx={{ paddingRight: "10px" }} />
+              <EditIcon sx={{ paddingRight: "10px", fontSize: '1rem' }} />
               Edit
             </Button>
           </Box>
@@ -141,14 +148,11 @@ const VendorSingleProjectView: FC = () => {
           >
 
             <Button sx={projectButtonSx} onClick={handleAddActivity}>
-              <AddIcon sx={{ paddingRight: "10px" }} />
+              <AddIcon sx={{ paddingRight: "10px", fontSize: '1rem' }} />
               Activity
             </Button>
 
-            <Button sx={projectButtonSx} onClick={handleReturnToAllProjects}>
-              <KeyboardReturnIcon sx={{ paddingRight: "10px" }} />
-              All Projects
-            </Button>
+
 
           </Grid>
         </Grid>

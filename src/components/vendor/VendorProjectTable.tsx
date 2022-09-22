@@ -38,21 +38,36 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
     {
       field: "projectName",
       headerName: "Project Name",
-      width: 400,
-      headerAlign: "center",
-      align: "center",
+      width: 310,
+      headerAlign: "left",
+      align: "left",
+
     },
     {
       field: "clientName",
       headerName: "Client Name",
+      width: 150,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "housingType",
+      headerName: "Housing Type",
       width: 200,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "totalCosting",
+      headerName: "Total Cost",
+      width: 150,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "status",
       headerName: "Status",
-      width: 300,
+      width: 200,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
@@ -95,7 +110,7 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
       field: "action",
       headerName: "View",
       sortable: false,
-      width: 200,
+      width: 150,
       headerAlign: "center",
       align: "center",
       filterable: false,
@@ -109,8 +124,10 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
           <VisibilityIcon
             onClick={onClick}
             sx={{
+              color: '#444444',
+              fontSize: '1rem',
               "&:hover": {
-                color: "#5b8368",
+                color: "#254D71",
                 cursor: "pointer",
               },
             }}
@@ -125,6 +142,8 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
       id: project._id,
       projectName: project.projectName,
       clientName: project.clientName,
+      housingType: project.housingType,
+      totalCosting: project.totalCosting ? `$${project.totalCosting}` : '$0',
       status: project.projectStatus,
       view: "view",
     };
@@ -135,30 +154,25 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
   // };
 
   return (
-    <Container maxWidth='lg' sx={{
-      mb: '5rem',
-      pr: '2rem',
-      pl: '2rem'
 
-    }}>
-      <Grid container >
-        <Grid item md={12}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[5]}
-            sx={{ height: "30rem" }}
-          />
-        </Grid>
-        {/* <Grid item md={12} sx={{ display: "flex", justifyContent: "right" }}>
+    <Grid container sx={{ mt: '2rem' }}>
+      <Grid item md={12}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[5]}
+          sx={{ height: "30rem" }}
+        />
+      </Grid>
+      {/* <Grid item md={12} sx={{ display: "flex", justifyContent: "right" }}>
           <Button onClick={refreshActivitiesHandler}>
             <RefreshIcon sx={{ marginRight: "10px" }} />
             Refresh Activities
           </Button>
         </Grid> */}
-      </Grid>
-    </Container>
+    </Grid>
+
   );
 };
 
