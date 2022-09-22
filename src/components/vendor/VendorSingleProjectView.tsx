@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, Card, Typography, Grid, Box } from "@mui/material";
+import { Button, Card, Typography, Grid, Box, Container } from "@mui/material";
 import axios from "axios";
 import urlcat from "urlcat";
 import format from "date-fns/format";
@@ -34,14 +34,14 @@ const buttonSx = {
 };
 
 const projectButtonSx = {
-  backgroundColor: "#74ace4",
-  color: "white",
-  margin: "1% 4%",
-  fontWeight: 700,
-  fontSize: 12,
-  letterSpacing: 1,
-  borderRadius: 2,
-  padding: "0.5rem 1.5rem",
+  backgroundColor: "#D9DFE4",
+  color: "#444444",
+  letterSpacing: "0.1rem",
+  pl: "0.75rem",
+  pr: "0.75rem",
+  "&:hover": {
+    backgroundColor: "#D9DFE4",
+  },
 };
 
 const VendorSingleProjectView: FC = () => {
@@ -97,124 +97,124 @@ const VendorSingleProjectView: FC = () => {
   let bgColor: string;
   switch (projectInfo.projectStatus) {
     case "Upcoming":
-      bgColor = "#84c4cb";
+      bgColor = "#6AA6D1";
       break;
     case "In Progress":
-      bgColor = "orange";
+      bgColor = "#FDC22B";
       break;
     case "Completed":
-      bgColor = "green";
+      bgColor = "#6FA585";
       break;
     case "Cancelled":
-      bgColor = "red";
+      bgColor = "#E96755";
       break;
     default:
-      bgColor = "gray";
+      bgColor = "CACACA";
       break;
   }
   return (
     <>
-      <Box>
-        <Grid container>
-          <Grid item md={8}>
-            <Grid container>
-              <Typography variant="h2">{projectInfo.projectName}</Typography>
+      <Grid container sx={{ mb: "1rem" }}>
+        <Grid item xs={12} sm={7}>
+          <Box sx={{ display: "flex", gap: "1rem" }}>
+            <Typography variant="h3">{projectInfo.projectName}</Typography>
 
-              <Button sx={projectButtonSx} onClick={handleViewProject}>
-                <EditIcon sx={{ paddingRight: "10px" }} />
-                Edit Project
-              </Button>
-            </Grid>
+            <Button sx={projectButtonSx} onClick={handleViewProject}>
+              <EditIcon sx={{ paddingRight: "10px" }} />
+              Edit
+            </Button>
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} sm={5}>
+          <Grid
+            container
+            sx={{
+              display: "flex",
+              justifyContent: { sm: "right" },
+              gap: "1rem",
+            }}
+          >
+            <Button sx={projectButtonSx} onClick={handleAddActivity}>
+              <AddIcon sx={{ paddingRight: "10px" }} />
+              Activity
+            </Button>
+
+            <Button sx={projectButtonSx} onClick={handleReturnToAllProjects}>
+              <KeyboardReturnIcon sx={{ paddingRight: "10px" }} />
+              All Projects
+            </Button>
           </Grid>
-          <Grid item md={4}>
-            <Grid
-              container
-              sx={{
-                display: "flex",
-                justifyContent: "right",
-              }}
-            >
-              <Button sx={projectButtonSx} onClick={handleAddActivity}>
-                <AddIcon sx={{ paddingRight: "10px" }} />
-                Activity
-              </Button>
-              <Button sx={projectButtonSx} onClick={handleReturnToAllProjects}>
-                <KeyboardReturnIcon sx={{ paddingRight: "10px" }} />
-                All Projects
-              </Button>
+        </Grid>
+      </Grid>
+      <Card
+        sx={{
+          padding: "20px",
+          backgroundColor: "#5b8368",
+          margin: "10px 0px",
+        }}
+      >
+        <Grid container spacing={2} sx={{ textAlign: "center" }}>
+          <Grid item xs={12} md={3} sx={{ textAlign: "left" }}>
+            <Typography sx={{ padding: "5px", color: "white" }}>
+              <span style={{ fontWeight: "bold" }}>Housing Type: </span>
+              {projectInfo.housingType}
+            </Typography>
+            <Typography sx={{ padding: "5px", color: "white" }}>
+              <span style={{ fontWeight: "bold" }}>Client:</span> Mr Tan Ah Ah
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} md={3} sx={{ textAlign: "left" }}>
+            <Typography sx={{ padding: "5px", color: "white" }}>
+              <span style={{ fontWeight: "bold" }}>Start Date:</span>{" "}
+              {format(new Date(projectInfo.projectStartDate), "dd LLL yyyy")}
+            </Typography>
+            <Typography sx={{ padding: "5px", color: "white" }}>
+              <span style={{ fontWeight: "bold" }}>End Date:</span>{" "}
+              {format(new Date(projectInfo.projectEndDate), "dd LLL yyyy")}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} md={3} sx={{ textAlign: "left" }}>
+            <Typography sx={{ padding: "5px", color: "white" }}>
+              <span style={{ fontWeight: "bold" }}>Design Theme:</span>{" "}
+              {projectInfo.designTheme}
+            </Typography>
+            <Typography sx={{ padding: "5px", color: "white" }}>
+              <span style={{ fontWeight: "bold" }}>Total Costing:</span> $
+              {dollarUSLocale.format(projectInfo.totalCosting)}
+            </Typography>
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={3}
+            sx={{
+              textAlign: "right",
+            }}
+          >
+            <Grid item>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontWeight: "600",
+                  color: "#444444",
+                  textAlign: "center",
+                  borderRadius: 8,
+                  padding: "0.5rem 1rem 0.5rem 1rem",
+                  display: "inline-block",
+                  backgroundColor: bgColor,
+                  textTransform: "uppercase",
+                }}
+              >
+                {projectInfo.projectStatus}
+              </Typography>
             </Grid>
           </Grid>
         </Grid>
-        <Card
-          sx={{
-            padding: "20px",
-            backgroundColor: "#5b8368",
-            margin: "10px 0px",
-          }}
-        >
-          <Grid container spacing={2} sx={{ textAlign: "center" }}>
-            <Grid item xs={12} md={3}>
-              <Typography sx={{ padding: "5px", color: "white" }}>
-                <span style={{ fontWeight: "bold" }}>Housing Type: </span>
-                {projectInfo.housingType}
-              </Typography>
-              <Typography sx={{ padding: "5px", color: "white" }}>
-                <span style={{ fontWeight: "bold" }}>Client:</span> Mr Tan Ah Ah
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <Typography sx={{ padding: "5px", color: "white" }}>
-                <span style={{ fontWeight: "bold" }}>Start Date:</span>{" "}
-                {format(new Date(projectInfo.projectStartDate), "dd LLL yyyy")}
-              </Typography>
-              <Typography sx={{ padding: "5px", color: "white" }}>
-                <span style={{ fontWeight: "bold" }}>End Date:</span>{" "}
-                {format(new Date(projectInfo.projectEndDate), "dd LLL yyyy")}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <Typography sx={{ padding: "5px", color: "white" }}>
-                <span style={{ fontWeight: "bold" }}>Design Theme:</span>{" "}
-                {projectInfo.designTheme}
-              </Typography>
-              <Typography sx={{ padding: "5px", color: "white" }}>
-                <span style={{ fontWeight: "bold" }}>Total Costing:</span> $
-                {dollarUSLocale.format(projectInfo.totalCosting)}
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={3}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column",
-              }}
-            >
-              <Grid item>
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "1.5rem",
-                    letterSpacing: "0.25rem",
-                    color: "white",
-                    width: "auto",
-                    textAlign: "center",
-                    borderRadius: 8,
-                    padding: "3px 10px",
-                    display: "inline-block",
-                    backgroundColor: bgColor,
-                  }}
-                >
-                  {projectInfo.projectStatus}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Card>
-      </Box>
+      </Card>
     </>
   );
 };

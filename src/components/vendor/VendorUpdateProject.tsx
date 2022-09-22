@@ -93,7 +93,7 @@ const VendorUpdateProject: FC = () => {
           .then((res) => setClientName(res.data.username));
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [offEditMode]);
 
   const designOptions = [
     "Modern",
@@ -485,7 +485,9 @@ const VendorUpdateProject: FC = () => {
                 <Button
                   sx={buttonSx}
                   onClick={() => {
+                    console.log("cancel edit button");
                     setOffEditMode(!offEditMode);
+                    setProject({ ...project, projectName: "" }); // to rerender the state
                   }}
                 >
                   Cancel Edit
