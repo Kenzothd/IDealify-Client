@@ -92,7 +92,7 @@ const Activity: FC = () => {
       .get(url, config)
       .then((res) => setActivity(res.data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [offEditMode]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -363,6 +363,10 @@ const Activity: FC = () => {
                   sx={buttonSx}
                   onClick={() => {
                     setOffEditMode(!offEditMode);
+                    setActivity({
+                      ...activity,
+                      activityDescription: "rerender initial state",
+                    });
                   }}
                 >
                   Cancel Edit

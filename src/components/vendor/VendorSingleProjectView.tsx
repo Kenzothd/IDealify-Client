@@ -86,7 +86,7 @@ const VendorSingleProjectView: FC = () => {
     navigate(`/vendor/${vendorid}/projects/${projectid}/add-activity`);
   };
 
-  const handleEditProject = () => {
+  const handleViewProject = () => {
     navigate(`/vendor/${vendorid}/projects/${projectid}/update-project`);
   };
 
@@ -119,7 +119,7 @@ const VendorSingleProjectView: FC = () => {
           <Box sx={{ display: "flex", gap: "1rem" }}>
             <Typography variant="h3">{projectInfo.projectName}</Typography>
 
-            <Button sx={projectButtonSx} onClick={handleEditProject}>
+            <Button sx={projectButtonSx} onClick={handleViewProject}>
               <EditIcon sx={{ paddingRight: "10px" }} />
               Edit
             </Button>
