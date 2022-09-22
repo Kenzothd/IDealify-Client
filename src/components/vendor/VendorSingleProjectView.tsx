@@ -8,20 +8,7 @@ import { IProjectTwo } from "../../Interface";
 import AddIcon from "@mui/icons-material/Add";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import EditIcon from "@mui/icons-material/Edit";
-// interface IProject {
-//   vendorId: string;
-//   clientId: string;
-//   projectName: string;
-//   housingType: string;
-//   projectStartDate: Date;
-//   projectEndDate: Date;
-//   projectStatus: string;
-//   uploadedFiles: string[];
-//   description: string;
-//   designTheme: string;
-//   totalCosting: number;
-//   comments: string;
-// }
+
 const buttonSx = {
   backgroundColor: "#74ace4",
   color: "white",
@@ -49,6 +36,8 @@ const VendorSingleProjectView: FC = () => {
   const navigate = useNavigate();
   const token: any = sessionStorage.getItem("token");
   const { vendorid, projectid } = useParams();
+  const [clientName, setClientName] = useState("");
+
   let dollarUSLocale = Intl.NumberFormat("en-US");
   const [projectInfo, setProjectInfo] = useState<IProjectTwo>({
     vendorId: "",
@@ -73,11 +62,23 @@ const VendorSingleProjectView: FC = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-    console.log(token);
     axios
       .get(url, config)
       .then((res) => {
         setProjectInfo(res.data[0]);
+        const clientNameUrl = urlcat(
+          SERVER,
+          `/clients/id/${res.data[0].clientId}`
+        );
+        axios
+          .get(clientNameUrl, config)
+          .then((res) => {
+            console.log(res.data.fullName);
+            setClientName(res.data.fullName);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => console.log(err));
   }, []);
@@ -114,22 +115,33 @@ const VendorSingleProjectView: FC = () => {
   }
   return (
     <>
-
-      <Box sx={{ display: 'inline-block', mb: '1.5rem', cursor: 'pointer', border: 1, p: '0.3rem', borderRadius: '1rem' }}>
-        <Typography variant='body1' sx={{ alignItems: 'center' }} onClick={handleReturnToAllProjects}>
-          <KeyboardReturnIcon sx={{ pr: "0.3rem", fontSize: '0.8rem' }} />
+      <Box
+        sx={{
+          display: "inline-block",
+          mb: "1.5rem",
+          cursor: "pointer",
+          border: 1,
+          p: "0.3rem",
+          borderRadius: "1rem",
+        }}
+      >
+        <Typography
+          variant="body1"
+          sx={{ alignItems: "center" }}
+          onClick={handleReturnToAllProjects}
+        >
+          <KeyboardReturnIcon sx={{ pr: "0.3rem", fontSize: "0.8rem" }} />
           All Projects
         </Typography>
       </Box>
 
       <Grid container sx={{ mb: "1rem" }}>
-
         <Grid item xs={12} sm={7}>
           <Box sx={{ display: "flex", gap: "1rem" }}>
             <Typography variant="h3">{projectInfo.projectName}</Typography>
 
             <Button sx={projectButtonSx} onClick={handleViewProject}>
-              <EditIcon sx={{ paddingRight: "10px", fontSize: '1rem' }} />
+              <EditIcon sx={{ paddingRight: "10px", fontSize: "1rem" }} />
               Edit
             </Button>
           </Box>
@@ -145,10 +157,9 @@ const VendorSingleProjectView: FC = () => {
             }}
           >
             <Button sx={projectButtonSx} onClick={handleAddActivity}>
-              <AddIcon sx={{ paddingRight: "10px", fontSize: '1rem' }} />
+              <AddIcon sx={{ paddingRight: "10px", fontSize: "1rem" }} />
               Activity
             </Button>
-
           </Grid>
         </Grid>
       </Grid>
@@ -166,7 +177,7 @@ const VendorSingleProjectView: FC = () => {
               {projectInfo.housingType}
             </Typography>
             <Typography sx={{ padding: "5px", color: "white" }}>
-              <span style={{ fontWeight: "bold" }}>Client:</span> Mr Tan Ah Ah
+              <span style={{ fontWeight: "bold" }}>Client:</span> {clientName}
             </Typography>
           </Grid>
 
