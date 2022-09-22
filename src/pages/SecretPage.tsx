@@ -3,16 +3,16 @@ import { useFormik } from "formik";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as Yup from "yup";
-import Box from "@mui/material/Box";
 import type { } from "@mui/x-date-pickers/themeAugmentation";
 import urlcat from "urlcat";
 import { IVendor } from "../Interface";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
+
 const SecretPage = () => {
 
-
+  const [images, setImages] = useState([])
   const token: any = sessionStorage.getItem("token");
 
   const SERVER = import.meta.env.VITE_SERVER;
@@ -24,6 +24,23 @@ const SecretPage = () => {
       Authorization: `Bearer ${token}`,
     },
   };
+
+  const imageUrl = urlcat(SERVER, "/getimages");
+
+  useEffect(() => {
+    axios
+      .get(imageUrl)
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
+
+  }, [])
+
+
+
+
+
+
+
 
 
   const formik = useFormik({
@@ -59,6 +76,8 @@ const SecretPage = () => {
 
   return (
     <>
+      <h1>Images</h1>
+
       <h1>Secret</h1>
       <form onSubmit={formik.handleSubmit}>
         <label htmlFor="uploadedFiles">Upload Files</label>
