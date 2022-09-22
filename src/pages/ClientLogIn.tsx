@@ -32,7 +32,7 @@ const ClientLogIn: FC = () => {
           <ClientLoginForm />
           <Box>
             <Typography variant='body2' sx={{ mt: '1rem' }}>Not a member yet?
-              <Link to='/vendor/sign-up' >
+              <Link to='/client/sign-up' >
                 SIGN UP</Link></Typography>
           </Box>
 

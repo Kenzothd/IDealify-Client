@@ -173,7 +173,7 @@ const VendorCreateProduct: FC = () => {
       pl: '2rem'
 
     }}>
-      <Grid container sx={{ mt: '5rem' }}>
+      <Grid container >
         <Grid item xs={12} sx={{ mb: '3rem' }}>
           <Typography variant='h3'  >New Project</Typography>
         </Grid>

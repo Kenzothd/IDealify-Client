@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import { render } from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Grid, Paper, Typography } from "@mui/material";
+import { Email } from "@mui/icons-material";
 
 // const buttonSx = {
 //   backgroundColor: "blue",
@@ -33,6 +34,9 @@ const VendorAccount: FC = () => {
   const [offEditMode, setOffEditMode] = useState<boolean>(true);
   const { vendorid } = useParams();
   const navigate = useNavigate();
+  const [userName, setUsername] = useState('');
+  const [userEmail, setUserEmail] = useState('')
+  const [userRegNum, setUserRegNum] = useState('')
   const [vendorAccount, setVendorAccount] = useState<IVendor>({
     email: "",
     contactPersonName: "",
@@ -93,13 +97,40 @@ const VendorAccount: FC = () => {
     validationSchema: Yup.object().shape({
       contactPersonName: Yup.string().required("Required"),
       username: Yup.string()
+        .required("Required")
+        .min(3, "Must be 3 characters or more")
+        .max(20, "Must be 20 characters or less")
+        .required("Required")
         .test(
           "value-name",
-          "username must not have spacing",
-          (username: any) => !username.includes(" ")
-        )
-        .required("Required"),
-      email: Yup.string().email("Invalid email address").required("Required"),
+          "Username is in used",
+          (name: any): boolean => {
+            const clientUrl = urlcat(SERVER, `vendors/findByName/${name}`);
+            axios
+              .get(clientUrl)
+              .then((res) => setUsername(res.data.length === 0 ? '' : res.data[0].username))
+              .catch((err) => console.log(err));
+            return userName === '' || userName === vendorAccount.username ? true : false;
+          }
+        ),
+      // .test(
+      //   "value-name",
+      //   "username must not have spacing",
+      //   (username: any) => !username.includes(" ")
+      // )
+      email: Yup.string().email("Invalid email address").required("Required")
+        .test(
+          "email-name",
+          "Email is in used",
+          (email: any): boolean => {
+            const clientUrl = urlcat(SERVER, `vendors/findByEmail/${email}`);
+            axios
+              .get(clientUrl)
+              .then((res) => setUserEmail(res.data.length === 0 ? '' : res.data[0].email))
+              .catch((err) => console.log(err));
+            return userEmail === '' || userEmail === vendorAccount.email ? true : false;
+          }
+        ),
       password: Yup.string()
         .matches(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
@@ -112,10 +143,22 @@ const VendorAccount: FC = () => {
         .min(9, "Must be 9 characters or more")
         .required("Required")
         .test(
-          "value-name",
-          "Registration Number must not have spacing",
-          (username: any) => !username.includes(" ")
+          "regis-name",
+          "Registration number is in used",
+          (regNum: any): boolean => {
+            const clientUrl = urlcat(SERVER, `vendors/findByRegistrationNum/${regNum}`);
+            axios
+              .get(clientUrl)
+              .then((res) => setUserRegNum(res.data.length === 0 ? '' : res.data[0].registrationNumber))
+              .catch((err) => console.log(err));
+            return userRegNum === '' || userRegNum === vendorAccount.registrationNumber ? true : false;
+          }
         ),
+      // .test(
+      //   "value-name",
+      //   "Registration Number must not have spacing",
+      //   (username: any) => !username.includes(" ")
+      // ),
       incorporationDate: Yup.date()
         .default(new Date())
         .max(
