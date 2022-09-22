@@ -22,7 +22,9 @@ import VendorTab from "./components/vendor/Vendortab";
 import VendorActivityTable from "./components/vendor/VendorActivityTable";
 
 import Testing from "./pages/Testing";
-
+import ClientDashboard from "./pages/ClientDashboard";
+import ClientLoginForm from "./components/client/ClientLoginForm";
+import ClientTab from "./components/client/Clienttab";
 
 function App() {
   return (
@@ -32,16 +34,23 @@ function App() {
           {/* for all */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login-redirect" element={<LoginRedirect />} />
+
           {/* client */}
           <Route path="/client/sign-up" element={<ClientSignUp />} />
+          <Route path="/client/login" element={<ClientLogIn />} />
+
+          <Route path="/client" element={<ClientTab />}>
+            <Route
+              path="/client/:clientid/dashboard"
+              element={<PrivateRoute outlet={<ClientDashboard />} />}
+            />
+          </Route>
+
           {/* vendor */}
           <Route path="/vendor/sign-up" element={<VendorSignUp />} />
           <Route path="/vendor/login" element={<VendorLogIn />} />
 
           <Route path="/vendor/upload" element={<Testing />} />
-
-
-
 
           <Route path="/vendor/secret" element={<SecretPage />} />
 

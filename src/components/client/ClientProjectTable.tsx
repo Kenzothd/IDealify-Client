@@ -1,8 +1,13 @@
 import React, { useContext, useEffect, useState, FC } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Grid, Typography } from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
+import axios from "axios";
+import urlcat from "urlcat";
+import format from "date-fns/format";
+import { IActivities } from "../../Interface";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import { IProject } from "../../Interface";
 
 const buttonSx = {
@@ -21,7 +26,7 @@ type Props = {
 };
 
 const SERVER = import.meta.env.VITE_SERVER;
-const VendorProjectTable = ({ revampProjects }: Props) => {
+const ClientProjectTable = ({ revampProjects }: Props) => {
   const [refreshActivities, setRefreshActivities] = useState<boolean>(false);
   const token: any = sessionStorage.getItem("token");
   const navigate = useNavigate();
@@ -168,4 +173,4 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
   );
 };
 
-export default VendorProjectTable;
+export default ClientProjectTable;
