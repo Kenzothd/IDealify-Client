@@ -11,12 +11,27 @@ const VendorSignUpForm: FC = () => {
   const token: any = sessionStorage.getItem("token");
 
   const [username, setUsername] = useState(0);
+  const [userEmail, setUserEmail] = useState(0);
   const [regNum, setRegNum] = useState(0);
   const [userData, setUserData] = useState({})
   const SERVER = import.meta.env.VITE_SERVER;
 
   const navigateToProjects = useNavigate();
 
+  const parseJwt = (token: string) => {
+    var base64Url = token.split(".")[1];
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -38,7 +53,7 @@ const VendorSignUpForm: FC = () => {
         .required("Required")
         .test(
           "value-name",
-          "Vendor username is in used",
+          "Username is in used",
           (name: any): boolean => {
             const userUrl = urlcat(SERVER, `vendors/findByName/${name}`);
             axios
@@ -49,7 +64,19 @@ const VendorSignUpForm: FC = () => {
           }
         )
       ,
-      email: Yup.string().email("Invalid email address").required("Required"),
+      email: Yup.string().email("Invalid email address").required("Required")
+        .test(
+          "value-email",
+          "Email is in used",
+          (email: any): boolean => {
+            const clientUrl = urlcat(SERVER, `vendors/findByEmail/${email}`);
+            axios
+              .get(clientUrl)
+              .then((res) => setUserEmail(res.data.length))
+              .catch((err) => console.log(err));
+            return userEmail === 0 ? true : false;
+          }
+        ),
       password: Yup.string()
         .matches(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
@@ -112,7 +139,9 @@ const VendorSignUpForm: FC = () => {
         })
         .then((res) => {
           sessionStorage.setItem("token", res.data.token);
-          navigateToProjects("/vendor/projects");
+          const payload = parseJwt(res.data.token);
+          console.log(payload.userId);
+          navigateToProjects(`/vendor/${payload.userId}/dashboard`);
         })
         .catch((error) => console.log(error.response.data.error));
 

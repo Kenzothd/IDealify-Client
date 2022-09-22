@@ -172,6 +172,7 @@ const VendorCreateProduct: FC = () => {
     navigate(`/vendor/${vendorid}/dashboard`);
   };
 
+
   return (
     <Container
       maxWidth="md"
@@ -181,7 +182,7 @@ const VendorCreateProduct: FC = () => {
         pl: "2rem",
       }}
     >
-      <Grid container sx={{ mt: "5rem" }}>
+      <Grid container >
         <Grid
           item
           xs={12}
@@ -207,6 +208,9 @@ const VendorCreateProduct: FC = () => {
             </Typography>
           </Box>
         </Grid>
+
+
+
         <form onSubmit={formik.handleSubmit}>
           <Grid
             container
@@ -258,7 +262,7 @@ const VendorCreateProduct: FC = () => {
                     sx={{ width: "100%" }}
                   />
                   {formik.touched.clientUsername &&
-                  formik.errors.clientUsername ? (
+                    formik.errors.clientUsername ? (
                     <div>{formik.errors.clientUsername}</div>
                   ) : null}
                 </Grid>
@@ -290,7 +294,7 @@ const VendorCreateProduct: FC = () => {
                     </Select>
                   </FormControl>
                   {formik.touched.projectStatus &&
-                  formik.errors.projectStatus ? (
+                    formik.errors.projectStatus ? (
                     <div>{formik.errors.projectStatus}</div>
                   ) : null}
                 </Grid>
@@ -406,7 +410,7 @@ const VendorCreateProduct: FC = () => {
                     sx={{ width: "100%" }}
                   />
                   {formik.touched.projectStartDate &&
-                  formik.errors.projectStartDate ? (
+                    formik.errors.projectStartDate ? (
                     <div>{formik.errors.projectStartDate}</div>
                   ) : null}
                 </Grid>
@@ -432,7 +436,7 @@ const VendorCreateProduct: FC = () => {
                     sx={{ width: "100%" }}
                   />
                   {formik.touched.projectEndDate &&
-                  formik.errors.projectEndDate ? (
+                    formik.errors.projectEndDate ? (
                     <div>{formik.errors.projectEndDate}</div>
                   ) : null}
                 </Grid>
