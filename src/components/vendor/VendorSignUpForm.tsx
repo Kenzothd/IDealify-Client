@@ -34,6 +34,7 @@ const VendorSignUpForm: FC = () => {
     validationSchema: Yup.object({
       contactPersonName: Yup.string().required("Required"),
       username: Yup.string()
+        .min(3, "Must be 3 characters or more")
         .required("Required")
         .test(
           "value-name",
@@ -107,7 +108,6 @@ const VendorSignUpForm: FC = () => {
         .post(uploadImgUrl, formData, config)
         .then((res) => {
           values.uploadedFiles = res.data.imageLinks
-          console.log('Check this out', values)
           return axios.post(createVendorUrl, values)
         })
         .then((res) => {
@@ -185,7 +185,7 @@ const VendorSignUpForm: FC = () => {
           <Grid item sm={12} >
             <Grid container spacing={5}>
               <Grid item xs={12} sm={6}>
-                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>EMAIL</Typography>
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>EMAIL ADDRESS</Typography>
                 <TextField
                   required
                   id="email"

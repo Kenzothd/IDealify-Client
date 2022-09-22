@@ -4,6 +4,7 @@ import urlcat from "urlcat";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { Grid, TextField, Typography } from "@mui/material";
 
 
 const ClientSignUpForm: FC = () => {
@@ -36,25 +37,19 @@ const ClientSignUpForm: FC = () => {
       username: Yup.string()
         .min(3, "Must be 3 characters or more")
         .max(20, "Must be 20 characters or less")
-        .required("Required"),
-      // .test('testing', 'Username is in used', function (value): boolean {
-      //     const foundUserTest = currentUsers.map((user: IUsers) => user.username).some((name) => name?.toLowerCase() === value?.toLowerCase())
-      //     console.log(`this is input: ${value}, this is ${foundUserTest}`)
-      //     return !foundUserTest
-      // })
-      // .test('testing', 'Username is in used', function (value): boolean {
-      //     const user = { username: value }
-      //     console.log(user)
-      //     setTimeout(() => {
-      //         axios.post(url, user)
-      //             .then(res => console.log(res.data))
-      //             .catch(error => setError(error.response.data.error))
-      //     }, 2000)
-
-      //     const a = error === '' ? true : false
-
-      //     return a
-      // })
+        .required("Required")
+        .test(
+          "value-name",
+          "Vendor username is in used",
+          (name: any): boolean => {
+            const clientUrl = urlcat(SERVER, `clients/findByName/${name}`);
+            axios
+              .get(clientUrl)
+              .then((res) => setUsername(res.data.length))
+              .catch((err) => console.log(err));
+            return username === 0 ? true : false;
+          }
+        ),
       password: Yup.string()
         .matches(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
@@ -64,79 +59,103 @@ const ClientSignUpForm: FC = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const url = urlcat(SERVER, "/clients");
-      const findNameUrl = urlcat(SERVER, "/clients/name");
-
+      const createClientUrl = urlcat(SERVER, "/clients");
 
       axios
-        .post(url, values, config)
-        .then((res) => console.log(res.data))
+        .post(createClientUrl, values)
+        .then((res) => {
+          sessionStorage.setItem("token", res.data.token);
+          navigateToProjects("/client/projects");
+        })
         .catch((error) => console.log(error.response.data.error));
     },
   });
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="email">Email Address</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.email}
-      />
-      {formik.touched.email && formik.errors.email ? (
-        <div>{formik.errors.email}</div>
-      ) : null}
+    <Grid item xs={12}>
+      <form onSubmit={formik.handleSubmit}>
+        <Grid
+          container
+          spacing={5}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Grid item xs={12}>
+            <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>EMAIL ADDRESS</Typography>
+            <TextField
+              required
+              id="email"
+              autoComplete="off"
+              name="email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              sx={{ width: "100%" }}
+              value={formik.values.email}
+            />
+            {formik.touched.email && formik.errors.email ? (
+              <div>{formik.errors.email}</div>
+            ) : null}
+          </Grid>
 
-      <label htmlFor="fullName">Full Name</label>
-      <input
-        id="fullName"
-        name="fullName"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.fullName}
-      />
-      {formik.touched.fullName && formik.errors.fullName ? (
-        <div>{formik.errors.fullName}</div>
-      ) : null}
+          <Grid item xs={12}>
+            <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>USERNAME</Typography>
+            <TextField
+              required
+              id="username"
+              autoComplete="off"
+              name="username"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              sx={{ width: "100%" }}
+              value={formik.values.username}
+            />
+            {formik.touched.username && formik.errors.username ? (
+              <div>{formik.errors.username}</div>
+            ) : null}
+          </Grid>
 
-      <label htmlFor="username">User Name</label>
-      <input
-        id="username"
-        name="username"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.username}
-      />
-      {formik.touched.username && formik.errors.username ? (
-        <div>{formik.errors.username}</div>
-      ) : null}
+          <Grid item xs={12}>
+            <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>CONTACT PERSON</Typography>
 
-      <label htmlFor="password">Password</label>
-      <input
-        id="password"
-        name="password"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.password}
-      />
-      {formik.touched.password && formik.errors.password ? (
-        <div>{formik.errors.password}</div>
-      ) : null}
+            <TextField
+              required
+              id="contactPersonName"
+              autoComplete="off"
+              name="contactPersonName"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              sx={{ width: "100%" }}
+              value={formik.values.fullName}
+            />
+            {formik.touched.fullName &&
+              formik.errors.fullName ? (
+              <div>{formik.errors.fullName}</div>
+            ) : null}
+          </Grid>
 
-      <button type="submit">Sign Up</button>
+          <Grid item xs={12}>
+            <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>PASSWORD</Typography>
 
-    </form>
+            <TextField
+              required
+              id="password"
+              autoComplete="off"
+              name="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              sx={{ width: "100%" }}
+              value={formik.values.password}
+            />
+            {formik.touched.password && formik.errors.password ? (
+              <div>{formik.errors.password}</div>
+            ) : null}
+          </Grid>
+
+        </Grid>
+      </form>
+    </Grid>
   );
 };
 
