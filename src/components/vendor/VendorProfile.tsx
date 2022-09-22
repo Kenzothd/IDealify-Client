@@ -6,12 +6,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import Divider from "@mui/material/Divider";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
+import axios from "axios";
+import urlcat from "urlcat";
+import { IVendor } from "../../Interface";
 
 const style = {
   width: "100%",
@@ -28,10 +31,68 @@ const projectButtonSx = {
     backgroundColor: "#D9DFE4",
   },
 };
+
+const SERVER = import.meta.env.VITE_SERVER;
+
 const VendorProfile: FC = () => {
-  const [value, setValue] = React.useState(
-    "Goddard Littlefair is a London-based, luxury interior design studio, established in 2012 by Martin Goddard and Jo Littlefair. The company’s talented, international team works on multi-award-winning hotel, hospitality and spa projects across the globe, as well as high-end residential schemes."
-  );
+  const [vendorAccount, setVendorAccount] = useState<IVendor>({
+    email: "",
+    contactPersonName: "",
+    username: "",
+    password: "",
+    contactNumber: 0,
+    companyName: "",
+    registrationNumber: "",
+    incorporationDate: new Date(),
+    registeredOfficeAddress: "",
+    uploadedFiles: [""],
+    trackedProjects: [""],
+    brandSummary: "",
+  });
+  const [value, setValue] = React.useState("");
+  const [offEditMode, setOffEditMode] = useState(true);
+  const token: any = sessionStorage.getItem("token");
+  const { vendorid } = useParams();
+  useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    //get vendor account details
+    const vendorURL = urlcat(SERVER, `/vendors/id/${vendorid}`);
+    axios
+      .get(vendorURL, config)
+      .then((res) => {
+        setVendorAccount(res.data);
+        setValue(res.data.brandSummary);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [offEditMode]);
+
+  const handleEdit = () => {
+    if (offEditMode) {
+      setOffEditMode(!offEditMode);
+    } else {
+      alert("Your Brand Story has been updated!");
+      setOffEditMode(!offEditMode);
+      const url = urlcat(SERVER, `/vendors/id/${vendorid}`);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const body = { ...vendorAccount, brandSummary: value };
+      console.log(body);
+      axios
+        .put(url, body, config)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
@@ -48,7 +109,7 @@ const VendorProfile: FC = () => {
         <Grid container sx={{ mb: "1rem" }}>
           <Grid item xs={12} sm={7}>
             <Box sx={{ display: "flex", gap: "1rem" }}>
-              <Typography variant="h3">Goddard Littlefair</Typography>
+              <Typography variant="h3">Brand Story</Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={5}>
@@ -60,15 +121,33 @@ const VendorProfile: FC = () => {
                 gap: "1rem",
               }}
             >
-              <Button sx={projectButtonSx}>To Edit</Button>
+              <Button sx={projectButtonSx} onClick={handleEdit}>
+                {offEditMode ? "Edit" : "Submit Changes"}
+              </Button>
+              {!offEditMode && (
+                <Button
+                  sx={projectButtonSx}
+                  onClick={() => {
+                    setVendorAccount({
+                      ...vendorAccount,
+                      username: "rerender initial state",
+                    });
+                    setOffEditMode(!offEditMode);
+                  }}
+                >
+                  Cancel Edit
+                </Button>
+              )}
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <TextField
+            disabled={offEditMode}
             sx={{ mb: "0.5rem", color: "#444444", width: "100%" }}
             multiline
             rows={10}
+            placeholder="Please input your brand story here!"
             value={value}
             onChange={handleChange}
           />
