@@ -113,6 +113,7 @@ const VendorSingleProjectView: FC = () => {
       bgColor = "CACACA";
       break;
   }
+
   return (
     <>
       <Grid sx={{ display: "flex", justifyContent: "right" }}>
