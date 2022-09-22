@@ -362,11 +362,11 @@ const Activity: FC = () => {
                 <Button
                   sx={buttonSx}
                   onClick={() => {
-                    setOffEditMode(!offEditMode);
                     setActivity({
                       ...activity,
                       activityDescription: "rerender initial state",
                     });
+                    setOffEditMode(!offEditMode);
                   }}
                 >
                   Cancel Edit
