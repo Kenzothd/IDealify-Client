@@ -56,6 +56,8 @@ const VendorProfile: FC = () => {
     portfolio: [""],
   });
 
+  console.log(images);
+
   useEffect(() => {
     const config = {
       headers: {
@@ -69,6 +71,7 @@ const VendorProfile: FC = () => {
       .then((res) => {
         setVendorAccount(res.data);
         setValue(res.data.brandSummary);
+        setImages(res.data.portfolio);
       })
       .catch((err) => console.log(err));
   }, [offEditMode]);
