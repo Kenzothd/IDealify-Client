@@ -165,18 +165,6 @@ const ClientActivityTable: FC = () => {
     setRefreshActivities(!refreshActivities);
   };
 
-  const handleBackToDashboard = () => {
-    navigate(`/client/${clientid}/dashboard`);
-  };
-
-  const handleAddActivity = () => {
-    navigate(`/client/${clientid}/projects/${projectid}/add-activity`);
-  };
-
-  const handleEditProject = () => {
-    navigate(`/client/${clientid}/projects/${projectid}/update-project`);
-  };
-
   return (
     <Container
       maxWidth="lg"
