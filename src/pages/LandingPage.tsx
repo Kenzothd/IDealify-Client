@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
@@ -8,6 +8,15 @@ import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
+
+import urlcat from "urlcat";
+import axios from "axios";
+import TouchAppIcon from "@mui/icons-material/TouchApp";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import CssBaseline from "@mui/material/CssBaseline";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Slide from "@mui/material/Slide";
 
 const projectButtonSx = {
   backgroundColor: "#D9DFE4",
@@ -20,9 +29,41 @@ const projectButtonSx = {
   },
 };
 
-const LandingPage: FC = () => {
-  const navigate = useNavigate();
+interface Props {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window?: () => Window;
+  children: React.ReactElement;
+}
 
+function HideOnScroll(props: Props) {
+  const { children, window } = props;
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+  });
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+const LandingPage = (props: Props) => {
+  const navigate = useNavigate();
+  const SERVER = import.meta.env.VITE_SERVER;
+  const imageUrl = urlcat(SERVER, "/getimages");
+  const [images, setImages] = useState([]);
+  useEffect(() => {
+    axios
+      .get(imageUrl)
+      .then((res) => setImages(res.data))
+      .catch((error) => console.log(error));
+  }, []);
   const vendorLogin = () => {
     navigate("/vendor/login");
   };
@@ -32,6 +73,27 @@ const LandingPage: FC = () => {
 
   return (
     <>
+      <CssBaseline />
+      <HideOnScroll {...props}>
+        <AppBar>
+          <Toolbar>
+            <Typography variant="h3" flexGrow={1}>
+              Idealify
+            </Typography>
+            <Box sx={{ display: "flex", gap: "1rem" }}>
+              <Button sx={projectButtonSx} onClick={clientLogin}>
+                <TouchAppIcon sx={{ paddingRight: "10px" }} />
+                Homeowners
+              </Button>
+              <Button sx={projectButtonSx} onClick={vendorLogin}>
+                <TouchAppIcon sx={{ paddingRight: "10px" }} /> Interior
+                Designers
+              </Button>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
+      <Toolbar />
       <Container
         maxWidth="lg"
         sx={{
@@ -41,48 +103,22 @@ const LandingPage: FC = () => {
         }}
       >
         <Grid container>
-          <Grid
-            item
-            xs={12}
-            sx={{
-              mb: "3rem",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography variant="h3">Idealify</Typography>
-            <Box sx={{ display: "flex", gap: "1rem" }}>
-              <Button sx={projectButtonSx} onClick={clientLogin}>
-                User Sign In
-              </Button>
-              <Button sx={projectButtonSx} onClick={vendorLogin}>
-                ID Sign In
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid container>
           <Grid item>
             <Typography variant="h4">Home Inspiration</Typography>
           </Grid>
-          <Grid
-            container
-            sx={{ mt: "1rem", display: "flex", justifyContent: "center" }}
-            spacing={2}
-          >
-            <Grid item sm={12} md={3}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="170"
-                  image="https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=400"
-                />
-                <CardContent>
-                  <Typography>Peter Tan Pte Ltd</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item sm={12} md={3}>
+          <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
+            {images.slice(0, 12).map((img, index) => (
+              <Grid item sm={12} md={3} key={index}>
+                <Card>
+                  <CardMedia component="img" height="170" image={img} />
+                  {/* <CardContent>
+                    <Typography>Urban style</Typography>
+                  </CardContent> */}
+                </Card>
+              </Grid>
+            ))}
+
+            {/* <Grid item sm={12} md={3}>
               <Card>
                 <CardMedia
                   component="img"
@@ -90,7 +126,7 @@ const LandingPage: FC = () => {
                   image="https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=400"
                 />
                 <CardContent>
-                  <Typography>Peter Tan Pte Ltd</Typography>
+                  <Typography>Tropical style</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -102,7 +138,7 @@ const LandingPage: FC = () => {
                   image="https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=400"
                 />
                 <CardContent>
-                  <Typography>Peter Tan Pte Ltd</Typography>
+                  <Typography>Hollywood Regency</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -118,62 +154,7 @@ const LandingPage: FC = () => {
                   <Typography>Peter Tan Pte Ltd</Typography>
                 </CardContent>
               </Card>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            sx={{ mt: "1rem", display: "flex", justifyContent: "center" }}
-            spacing={2}
-          >
-            <Grid item sm={12} md={3}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="170"
-                  image="https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=400"
-                />
-                <CardContent>
-                  <Typography>Peter Tan Pte Ltd</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item sm={12} md={3}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="170"
-                  image="https://images.pexels.com/photos/3797991/pexels-photo-3797991.jpeg?auto=compress&cs=tinysrgb&w=400"
-                />
-                <CardContent>
-                  <Typography>Peter Tan Pte Ltd</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item sm={12} md={3}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="170"
-                  image="https://images.pexels.com/photos/2251247/pexels-photo-2251247.jpeg?auto=compress&cs=tinysrgb&w=400"
-                />
-                <CardContent>
-                  <Typography>Peter Tan Pte Ltd</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item sm={12} md={3}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="170"
-                  width="170"
-                  image="https://images.pexels.com/photos/2079246/pexels-photo-2079246.jpeg?auto=compress&cs=tinysrgb&w=400"
-                />
-                <CardContent>
-                  <Typography>Peter Tan Pte Ltd</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
       </Container>
