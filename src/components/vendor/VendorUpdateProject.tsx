@@ -485,9 +485,11 @@ const VendorUpdateProject: FC = () => {
                 <Button
                   sx={buttonSx}
                   onClick={() => {
-                    console.log("cancel edit button");
                     setOffEditMode(!offEditMode);
-                    setProject({ ...project, projectName: "" }); // to rerender the state
+                    setProject({
+                      ...project,
+                      projectName: "rerender initial state",
+                    });
                   }}
                 >
                   Cancel Edit
