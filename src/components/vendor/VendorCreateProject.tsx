@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import urlcat from "urlcat";
 import {
+  Box,
   Button,
   Container,
   FormControl,
@@ -16,6 +17,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { IProject } from "../../Interface";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 const SERVER = import.meta.env.VITE_SERVER;
 
@@ -166,16 +168,44 @@ const VendorCreateProduct: FC = () => {
     },
   });
 
-  return (
-    <Container maxWidth='md' sx={{
-      mb: '5rem',
-      pr: '2rem',
-      pl: '2rem'
+  const returnToDashboard = () => {
+    navigate(`/vendor/${vendorid}/dashboard`);
+  };
 
-    }}>
-      <Grid container sx={{ mt: '5rem' }}>
-        <Grid item xs={12} sx={{ mb: '3rem' }}>
-          <Typography variant='h3'  >New Project</Typography>
+  return (
+    <Container
+      maxWidth="md"
+      sx={{
+        mb: "5rem",
+        pr: "2rem",
+        pl: "2rem",
+      }}
+    >
+      <Grid container sx={{ mt: "5rem" }}>
+        <Grid
+          item
+          xs={12}
+          sx={{ mb: "3rem", display: "flex", justifyContent: "space-between" }}
+        >
+          <Typography variant="h3">New Project</Typography>
+          <Box
+            sx={{
+              mb: "1.5rem",
+              cursor: "pointer",
+              border: 1,
+              p: "0.3rem",
+              borderRadius: "1rem",
+            }}
+          >
+            <Typography
+              variant="body1"
+              sx={{ alignItems: "center" }}
+              onClick={returnToDashboard}
+            >
+              <KeyboardReturnIcon sx={{ pr: "0.3rem", fontSize: "0.8rem" }} />
+              DashBoard
+            </Typography>
+          </Box>
         </Grid>
         <form onSubmit={formik.handleSubmit}>
           <Grid
@@ -228,7 +258,7 @@ const VendorCreateProduct: FC = () => {
                     sx={{ width: "100%" }}
                   />
                   {formik.touched.clientUsername &&
-                    formik.errors.clientUsername ? (
+                  formik.errors.clientUsername ? (
                     <div>{formik.errors.clientUsername}</div>
                   ) : null}
                 </Grid>
@@ -260,7 +290,7 @@ const VendorCreateProduct: FC = () => {
                     </Select>
                   </FormControl>
                   {formik.touched.projectStatus &&
-                    formik.errors.projectStatus ? (
+                  formik.errors.projectStatus ? (
                     <div>{formik.errors.projectStatus}</div>
                   ) : null}
                 </Grid>
@@ -376,7 +406,7 @@ const VendorCreateProduct: FC = () => {
                     sx={{ width: "100%" }}
                   />
                   {formik.touched.projectStartDate &&
-                    formik.errors.projectStartDate ? (
+                  formik.errors.projectStartDate ? (
                     <div>{formik.errors.projectStartDate}</div>
                   ) : null}
                 </Grid>
@@ -402,7 +432,7 @@ const VendorCreateProduct: FC = () => {
                     sx={{ width: "100%" }}
                   />
                   {formik.touched.projectEndDate &&
-                    formik.errors.projectEndDate ? (
+                  formik.errors.projectEndDate ? (
                     <div>{formik.errors.projectEndDate}</div>
                   ) : null}
                 </Grid>
@@ -453,7 +483,6 @@ const VendorCreateProduct: FC = () => {
               Submit
             </Button>
           </Grid>
-
         </form>
       </Grid>
     </Container>
