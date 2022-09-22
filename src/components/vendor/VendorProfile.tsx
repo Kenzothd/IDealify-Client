@@ -71,7 +71,8 @@ const VendorProfile: FC = () => {
       .then((res) => {
         setVendorAccount(res.data);
         setValue(res.data.brandSummary);
-        setImages(res.data.portfolio);
+        setImages(res.data.portfolio)
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, [offEditMode]);
@@ -123,7 +124,9 @@ const VendorProfile: FC = () => {
     axios
       .post(uploadImgUrl, formData, configForImg)
       .then((res) => {
-        vendorAccount.portfolio = res.data.imageLinks;
+        console.log('say thiss', res.data.imageLinks)
+        const portArr = res.data.imageLinks.concat(images)
+        vendorAccount.portfolio = portArr
         return axios.put(url, vendorAccount, config);
       })
       .then((res) => setImages(res.data.portfolio))
