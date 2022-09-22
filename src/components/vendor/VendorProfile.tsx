@@ -35,6 +35,10 @@ const projectButtonSx = {
 const SERVER = import.meta.env.VITE_SERVER;
 
 const VendorProfile: FC = () => {
+  const token: any = sessionStorage.getItem("token");
+  const { vendorid } = useParams();
+  const [value, setValue] = React.useState("");
+  const [offEditMode, setOffEditMode] = useState(true);
   const [vendorAccount, setVendorAccount] = useState<IVendor>({
     email: "",
     contactPersonName: "",
@@ -51,10 +55,6 @@ const VendorProfile: FC = () => {
     portfolio: [""],
   });
 
-  const [value, setValue] = React.useState("");
-  const [offEditMode, setOffEditMode] = useState(true);
-  const token: any = sessionStorage.getItem("token");
-  const { vendorid } = useParams();
   useEffect(() => {
     const config = {
       headers: {
