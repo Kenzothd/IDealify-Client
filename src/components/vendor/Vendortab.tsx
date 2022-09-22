@@ -83,21 +83,20 @@ const VendorTab = () => {
           <Grid item xs={8}>
             <Tabs value={value} onChange={handleChange}>
               <Tab
-                icon={<SettingsOutlined />}
+                icon={<AccountCircle />}
                 iconPosition="start"
-                value="account"
-                label="Account"
+                value="profile"
+                label="Profile"
                 sx={{
-                  color: "black",
-                  "&:hover": {
-                    color: "#254D71",
+                  color: 'black',
+                  '&:hover': {
+                    color: '#254D71',
                   },
 
                   fontSize: '1rem',
                   fontFamily: 'poppins'
                 }}
               />
-
               <Tab
                 icon={<TableRowsOutlined />}
                 iconPosition="start"
@@ -122,22 +121,22 @@ const VendorTab = () => {
                 label="New Project"
                 sx={{ color: 'black' }}
               /> */}
+
               <Tab
-                icon={<AccountCircle />}
+                icon={<SettingsOutlined />}
                 iconPosition="start"
-                value="profile"
-                label="Profile"
+                value="account"
+                label="Account"
                 sx={{
-                  color: 'black',
-                  '&:hover': {
-                    color: '#254D71',
+                  color: "black",
+                  "&:hover": {
+                    color: "#254D71",
                   },
 
                   fontSize: '1rem',
                   fontFamily: 'poppins',
                   ml: '1.5rem'
                 }}
-
               />
               <Tab
                 disabled

@@ -83,22 +83,6 @@ const ClientTab = () => {
           <Grid item xs={8}>
             <Tabs value={value} onChange={handleChange}>
               <Tab
-                icon={<SettingsOutlined />}
-                iconPosition="start"
-                value="account"
-                label="Account"
-                sx={{
-                  color: 'black',
-                  '&:hover': {
-                    color: '#254D71',
-                  },
-
-                  fontSize: '1rem',
-                  fontFamily: 'poppins'
-                }}
-              />
-
-              <Tab
                 icon={<TableRowsOutlined />}
                 iconPosition="start"
                 value="dashboard"
@@ -110,10 +94,27 @@ const ClientTab = () => {
                   },
 
                   fontSize: '1rem',
+                  fontFamily: 'poppins'
+                }}
+              />
+              <Tab
+                icon={<SettingsOutlined />}
+                iconPosition="start"
+                value="account"
+                label="Account"
+                sx={{
+                  color: 'black',
+                  '&:hover': {
+                    color: '#254D71',
+                  },
+
+                  fontSize: '1rem',
                   fontFamily: 'poppins',
                   ml: '1.5rem'
                 }}
               />
+
+
               {/* <Tab
                 icon={<LibraryAddOutlined />}
                 iconPosition="start"

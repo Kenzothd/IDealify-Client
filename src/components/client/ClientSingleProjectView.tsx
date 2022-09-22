@@ -170,7 +170,7 @@ const ClientSingleProjectView: FC = () => {
               {projectInfo.housingType}
             </Typography>
             <Typography sx={{ padding: "5px", color: "white" }}>
-              <span style={{ fontWeight: "bold" }}>Client:</span>
+              <span style={{ fontWeight: "bold" }}>Client: </span>
               {vendorName}
             </Typography>
           </Grid>
