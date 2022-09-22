@@ -30,7 +30,7 @@ const ClientProjectTable = ({ revampProjects }: Props) => {
   const [refreshActivities, setRefreshActivities] = useState<boolean>(false);
   const token: any = sessionStorage.getItem("token");
   const navigate = useNavigate();
-  const { vendorid, projectid } = useParams();
+  const { clientid, projectid } = useParams();
   const [offEditMode, setOffEditMode] = useState(true);
 
   const columns: GridColDef[] = [
@@ -42,8 +42,8 @@ const ClientProjectTable = ({ revampProjects }: Props) => {
       align: "left",
     },
     {
-      field: "clientName",
-      headerName: "Client Name",
+      field: "vendorName",
+      headerName: "Vendor Name",
       width: 150,
       headerAlign: "center",
       align: "center",
@@ -117,7 +117,7 @@ const ClientProjectTable = ({ revampProjects }: Props) => {
         const onClick = (e: React.MouseEvent) => {
           console.log(e.target);
           const id = params.row.id;
-          navigate(`/vendor/${vendorid}/projects/${id}`);
+          navigate(`/client/${clientid}/projects/${id}`);
         };
         return (
           <VisibilityIcon
@@ -140,7 +140,7 @@ const ClientProjectTable = ({ revampProjects }: Props) => {
     return {
       id: project._id,
       projectName: project.projectName,
-      clientName: project.clientName,
+      vendorName: project.vendorName,
       housingType: project.housingType,
       totalCosting: project.totalCosting ? `$${project.totalCosting}` : "$0",
       status: project.projectStatus,

@@ -33,6 +33,7 @@ export interface IProject {
   // review:{type: mongoose.Schema.Types.ObjectId, ref: "Review" },
   designTheme: string;
   clientName?: string;
+  vendorName?: string;
   totalCosting?: number;
   comments?: string;
 }

@@ -56,18 +56,22 @@ const ClientProjectTracker: FC = () => {
       .then((res) => {
         setProjects(res.data);
         const projects = res.data;
+        console.log(res.data);
         let requests: [] = res.data.map((project: IProject) => {
-          const url = urlcat(SERVER, `/clients/id/${project.clientId}`);
+          const url = urlcat(SERVER, `/vendors/id/${project.vendorId}`);
           return axios.get(url, config);
         });
-        //Fetch Client Names
+
+        //Fetch Vendor Names
         Promise.all(requests)
           .then((res) => {
-            let clientNames = res.map((r: any) => r.data.fullName);
+            let vendorNames = res.map((r: any) => r.data.contactPersonName);
+            console.log(vendorNames);
             let newProjects = projects.map((ele: IProject, i: number) => {
-              return { ...ele, clientName: clientNames[i] };
+              return { ...ele, vendorName: vendorNames[i] };
             });
             setRevampProjects(newProjects);
+            console.log(revampProjects);
           })
           .catch((err) => console.log(err));
       })
