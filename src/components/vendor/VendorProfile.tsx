@@ -55,6 +55,8 @@ const VendorProfile: FC = () => {
     portfolio: [""],
   });
 
+  console.log(vendorAccount.portfolio);
+
   useEffect(() => {
     const config = {
       headers: {
@@ -68,7 +70,6 @@ const VendorProfile: FC = () => {
       .then((res) => {
         setVendorAccount(res.data);
         setValue(res.data.brandSummary);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, [offEditMode]);
@@ -112,6 +113,7 @@ const VendorProfile: FC = () => {
         "Content-Type": "multipart/form-data",
       },
     };
+
     const formData = new FormData();
     for (let i = 0; i < vendorAccount.portfolio.length; i++) {
       formData.append("uploadedFiles", vendorAccount.portfolio[i]);
@@ -120,7 +122,8 @@ const VendorProfile: FC = () => {
     axios
       .post(uploadImgUrl, formData, configForImg)
       .then((res) => {
-        vendorAccount.uploadedFiles = res.data.imageLinks;
+        console.log("res.data.imageLinks", res.data.imageLinks);
+        vendorAccount.portfolio = res.data.imageLinks;
         return axios.put(url, vendorAccount, config);
       })
       .then((res) => setVendorAccount(res.data))
@@ -214,10 +217,10 @@ const VendorProfile: FC = () => {
                   }}
                   type="file"
                   onChange={(event: any) => {
-                    console.log(event.target.file);
+                    console.log(event.currentTarget.files);
                     setVendorAccount({
                       ...vendorAccount,
-                      uploadedFiles: event.currentTarget.files,
+                      portfolio: event.currentTarget.files,
                     });
                     // formik.setFieldValue(
                     //   "uploadedFiles",
@@ -245,7 +248,7 @@ const VendorProfile: FC = () => {
           </Grid>
         </Grid>
         <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
-          {vendorAccount.portfolio.map((img, index) => {
+          {/* {vendorAccount?.portfolio.map((img, index) => {
             return (
               <Grid item sm={12} md={3} key={index}>
                 <Card>
@@ -253,7 +256,7 @@ const VendorProfile: FC = () => {
                 </Card>
               </Grid>
             );
-          })}
+          })} */}
           {/* <Grid item sm={12} md={3}>
             <Card>
               <CardMedia
