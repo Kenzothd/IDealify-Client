@@ -17,7 +17,7 @@ import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
-import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
+import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 const projectButtonSx = {
   backgroundColor: "#D9DFE4",
   color: "#444444",
@@ -73,7 +73,7 @@ const LandingPage = (props: Props) => {
 
   return (
     <>
-      <CssBaseline sx={{ backgroundColor: "#5b8368" }} />
+      <CssBaseline />
       <HideOnScroll {...props}>
         <AppBar>
           <Toolbar>
@@ -82,9 +82,7 @@ const LandingPage = (props: Props) => {
             </Typography>
             <Box sx={{ display: "flex", gap: "1rem" }}>
               <Button sx={projectButtonSx} onClick={clientLogin}>
-                <EmojiObjectsIcon
-                  sx={{ paddingRight: "10px"}}
-                />
+                <TouchAppIcon sx={{ paddingRight: "10px" }} />
                 Homeowners
               </Button>
               <Button sx={projectButtonSx} onClick={vendorLogin}>
