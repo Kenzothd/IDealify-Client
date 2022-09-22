@@ -53,6 +53,7 @@ const VendorProfile: FC = () => {
 
   const [value, setValue] = React.useState("");
   const [offEditMode, setOffEditMode] = useState(true);
+  const [images, setImages] = useState([])
   const token: any = sessionStorage.getItem("token");
   const { vendorid } = useParams();
   useEffect(() => {
@@ -97,8 +98,9 @@ const VendorProfile: FC = () => {
     }
   };
 
+
   const handleAddPhotos = () => {
-    console.log(vendorAccount.portfolio);
+
     const url = urlcat(SERVER, `vendors/id/${vendorid}`);
     const uploadImgUrl = urlcat(SERVER, "/upload-images");
     const config = {
@@ -120,16 +122,19 @@ const VendorProfile: FC = () => {
     axios
       .post(uploadImgUrl, formData, configForImg)
       .then((res) => {
-        vendorAccount.uploadedFiles = res.data.imageLinks;
+        vendorAccount.portfolio = res.data.imageLinks;
         return axios.put(url, vendorAccount, config);
       })
-      .then((res) => setVendorAccount(res.data))
+      .then((res) => setImages(res.data.portfolio))
       .catch((error) => console.log(error));
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
+
+
+
   return (
     <>
       <Container
@@ -207,17 +212,17 @@ const VendorProfile: FC = () => {
                 sx={{ display: "flex", justifyContent: "right" }}
               >
                 <TextField
-                  id="uploadedFiles"
-                  name="uploadedFiles"
+                  id="portfolio"
+                  name="portfolio"
                   inputProps={{
                     multiple: true,
                   }}
                   type="file"
                   onChange={(event: any) => {
-                    console.log(event.target.file);
+                    console.log(event.currentTarget.files);
                     setVendorAccount({
                       ...vendorAccount,
-                      uploadedFiles: event.currentTarget.files,
+                      portfolio: event.currentTarget.files,
                     });
                     // formik.setFieldValue(
                     //   "uploadedFiles",
@@ -245,7 +250,7 @@ const VendorProfile: FC = () => {
           </Grid>
         </Grid>
         <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
-          {vendorAccount.portfolio.map((img, index) => {
+          {images.map((img, index) => {
             return (
               <Grid item sm={12} md={3} key={index}>
                 <Card>
