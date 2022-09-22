@@ -23,40 +23,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IActivities } from "../../Interface";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
-const projectButtonSx = {
-  backgroundColor: "#74ace4",
-  color: "white",
-  margin: "1% 4%",
-  fontWeight: 700,
-  fontSize: 12,
-  letterSpacing: 1,
-  borderRadius: 2,
-  padding: "0.5rem 1.5rem",
-};
-const buttonSx = {
-  backgroundColor: "#74ace4",
-  color: "white",
-  margin: "1% 1%",
-  fontWeight: 700,
-  fontSize: 12,
-  letterSpacing: 1,
-  borderRadius: 2,
-  padding: "0.5rem 1.5rem",
-};
 
-const buttonDeleteSx = {
-  backgroundColor: "red",
-  color: "white",
-  margin: "1% 1%",
-  fontWeight: 700,
-  fontSize: 12,
-  letterSpacing: 1,
-  borderRadius: 2,
-  padding: "0.5rem 1.5rem",
-};
-
-const Activity: FC = () => {
-  const { vendorid, projectid, activityid } = useParams();
+const ClientActivity: FC = () => {
+  const { clientid, projectid, activityid } = useParams();
   const token: any = sessionStorage.getItem("token");
   const [offEditMode, setOffEditMode] = useState(true);
 
@@ -124,29 +93,7 @@ const Activity: FC = () => {
     }),
 
     onSubmit: (values) => {
-      if (offEditMode) {
-        setOffEditMode(!offEditMode);
-      } else {
-        alert("data has been sent for update");
-        setOffEditMode(!offEditMode);
-        console.log(values);
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        console.log(values);
-        const url = urlcat(SERVER, `/activities/id/${activityid}`);
-        const body = { ...values, projectId: projectid };
-        console.log(body);
-        axios
-          .put(url, body, config)
-          .then((res) => {
-            setActivity(res.data);
-            navigate(`/vendor/${vendorid}/projects/${projectid}`);
-          })
-          .catch((err) => console.log(err));
-      }
+      console.log(values)
     },
   });
 
@@ -173,28 +120,11 @@ const Activity: FC = () => {
   }
 
   const handleReturnToAllActivities = () => {
-    navigate(`/vendor/${vendorid}/projects/${projectid}`);
-  };
-  const handleStatusChange = (event: SelectChangeEvent) => {
-    setActivity({ ...activity, status: event.target.value });
+    navigate(`/client/${clientid}/projects/${projectid}`);
   };
 
-  const handleDeleteActivity = () => {
-    console.log("handle delete activity");
-    const deleteUrl = urlcat(SERVER, `/activities/id/${activityid}`);
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    axios
-      .delete(deleteUrl, config)
-      .then((res) => {
-        console.log(res.data);
-        navigate(`/vendor/${vendorid}/projects/${projectid}`);
-      })
-      .catch((err) => console.log(err));
-  };
+
+
 
   return (
     <>
@@ -216,7 +146,7 @@ const Activity: FC = () => {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="h3">Edit Activity</Typography>
+            <Typography variant="h3">{activity.activityTitle}</Typography>
 
             <Box
               sx={{
@@ -326,7 +256,7 @@ const Activity: FC = () => {
                       sx={{ width: "100%" }}
                     />
                     {formik.touched.personInCharge &&
-                    formik.errors.personInCharge ? (
+                      formik.errors.personInCharge ? (
                       <div>{formik.errors.personInCharge}</div>
                     ) : null}
                   </Grid>
@@ -359,7 +289,7 @@ const Activity: FC = () => {
                       sx={{ width: "100%" }}
                     />
                     {formik.touched.activityStartDate &&
-                    formik.errors.activityStartDate ? (
+                      formik.errors.activityStartDate ? (
                       <div>{formik.errors.activityStartDate}</div>
                     ) : null}
                   </Grid>
@@ -388,7 +318,7 @@ const Activity: FC = () => {
                       sx={{ width: "100%" }}
                     />
                     {formik.touched.activityEndDate &&
-                    formik.errors.activityEndDate ? (
+                      formik.errors.activityEndDate ? (
                       <div>{formik.errors.activityEndDate}</div>
                     ) : null}
                   </Grid>
@@ -421,73 +351,9 @@ const Activity: FC = () => {
                   }}
                 />
                 {formik.touched.activityDescription &&
-                formik.errors.activityDescription ? (
+                  formik.errors.activityDescription ? (
                   <div>{formik.errors.activityDescription}</div>
                 ) : null}
-              </Grid>
-              <Grid
-                item
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  itemAlign: "center",
-                  gap: "1rem",
-                }}
-              >
-                <Button
-                  type="submit"
-                  sx={{
-                    background: "#254D71",
-                    color: "white",
-                    letterSpacing: "0.2rem",
-                    mt: "3rem",
-                    px: "2rem",
-                    "&:hover": {
-                      backgroundColor: "#113352 ",
-                    },
-                  }}
-                >
-                  {offEditMode ? "Edit" : "Submit Changes"}
-                </Button>
-                {!offEditMode && (
-                  <Button
-                    sx={{
-                      background: "#254D71",
-                      color: "white",
-                      letterSpacing: "0.2rem",
-                      mt: "3rem",
-                      px: "2rem",
-
-                      "&:hover": {
-                        backgroundColor: "#1C4163",
-                      },
-                    }}
-                    onClick={() => {
-                      setActivity({
-                        ...activity,
-                        activityDescription: "rerender initial state",
-                      });
-                      setOffEditMode(!offEditMode);
-                    }}
-                  >
-                    Cancel Edit
-                  </Button>
-                )}
-                <Button
-                  sx={{
-                    background: "#AC361D",
-                    color: "white",
-                    letterSpacing: "0.2rem",
-                    mt: "3rem",
-                    px: "2rem",
-                    "&:hover": {
-                      backgroundColor: "#802310",
-                    },
-                  }}
-                  onClick={handleDeleteActivity}
-                >
-                  Delete Activity
-                </Button>
               </Grid>
             </Grid>
           </form>
@@ -497,4 +363,4 @@ const Activity: FC = () => {
   );
 };
 
-export default Activity;
+export default ClientActivity;

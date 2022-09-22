@@ -7,10 +7,11 @@ const LoginRedirect: FC = () => {
   const navigate = useNavigate();
   return (
     <Container maxWidth="sm" sx={{
-      background: '#D9DFE4',
+      // background: '#D9DFE4',
       mt: '10rem',
       p: '5rem',
-      borderRadius: 4
+      borderRadius: 4,
+      border: 1
     }}>
 
       <Typography variant="h3" sx={{ textAlign: 'center', fontWeight: '600' }}>Opps! Your session has timed out.</Typography>
@@ -25,15 +26,16 @@ const LoginRedirect: FC = () => {
           type="submit"
           onClick={() => navigate("/client/login")}
           sx={{
-            background: "#254D71",
-            color: "white",
+            background: "#D9DFE4",
+            color: "#444444",
+            fontWeight: '600',
             letterSpacing: "0.2rem",
             pt: '0.75rem',
             pb: '0.75rem',
             pl: "1.2rem",
             pr: "1.2rem",
             "&:hover": {
-              backgroundColor: "#254D71",
+              backgroundColor: "#D9DFE4",
             },
           }}
         >
@@ -45,14 +47,14 @@ const LoginRedirect: FC = () => {
           type="submit"
           onClick={() => navigate("/vendor/login")}
           sx={{
-            background: "#254D71",
-            color: "white",
+            background: "#D9DFE4",
+            color: "#444444",
             letterSpacing: "0.2rem",
-
+            fontWeight: '600',
             pl: "1rem",
             pr: "1rem",
             "&:hover": {
-              backgroundColor: "#254D71",
+              backgroundColor: "#D9DFE4",
             },
           }}
         >

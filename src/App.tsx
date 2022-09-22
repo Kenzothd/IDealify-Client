@@ -6,7 +6,6 @@ import PrivateRoute from "./utilities/PrivateRoute";
 import VendorAccount from "./components/vendor/VendorAccount";
 import VendorSignUp from "./pages/VendorSignUp";
 import ClientSignUp from "./pages/ClientSignUp";
-import Activity from "./components/activity/Activity";
 import VendorLogIn from "./pages/VendorLogIn";
 import TokenProvider from "./contextStore/TokenProvider";
 import SecretPage from "./pages/SecretPage";
@@ -28,6 +27,8 @@ import ClientTab from "./components/client/Clienttab";
 import ClientActivityTable from "./components/client/ClientActivityTable";
 import ClientAccount from "./components/client/ClientAccount";
 import VendorProfile from "./components/vendor/VendorProfile";
+import ClientActivity from "./components/client/ClientActivity";
+import VendorActivity from "./components/vendor/VendorActivity";
 
 function App() {
   return (
@@ -54,6 +55,10 @@ function App() {
             <Route
               path="/client/:clientid/account"
               element={<PrivateRoute outlet={<ClientAccount />} />}
+            />
+            <Route
+              path="/client/:clientid/projects/:projectid/activity/:activityid"
+              element={<PrivateRoute outlet={<ClientActivity />} />}
             />
           </Route>
 
@@ -96,7 +101,7 @@ function App() {
             />
             <Route
               path="/vendor/:vendorid/projects/:projectid/activity/:activityid"
-              element={<PrivateRoute outlet={<Activity />} />}
+              element={<PrivateRoute outlet={<VendorActivity />} />}
             />
           </Route>
         </Routes>
