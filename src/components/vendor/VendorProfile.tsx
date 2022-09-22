@@ -177,12 +177,17 @@ const VendorProfile: FC = () => {
             <Divider sx={style} />
           </Grid>
         </Grid>
-        <Grid
-          container
-          sx={{ mt: "1rem", display: "flex", justifyContent: "center" }}
-          spacing={2}
-        >
-          <Grid item sm={12} md={3}>
+        <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
+          {vendorAccount.uploadedFiles.map((img) => {
+            return (
+              <Grid item sm={12} md={3}>
+                <Card>
+                  <CardMedia component="img" height="170" image={img} />
+                </Card>
+              </Grid>
+            );
+          })}
+          {/* <Grid item sm={12} md={3}>
             <Card>
               <CardMedia
                 component="img"
@@ -190,8 +195,8 @@ const VendorProfile: FC = () => {
                 image="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1600"
               />
             </Card>
-          </Grid>
-          <Grid item sm={12} md={3}>
+          </Grid> */}
+          {/* <Grid item sm={12} md={3}>
             <Card>
               <CardMedia
                 component="img"
@@ -217,7 +222,7 @@ const VendorProfile: FC = () => {
                 image="https://images.pexels.com/photos/1329711/pexels-photo-1329711.jpeg?auto=compress&cs=tinysrgb&w=1600"
               />
             </Card>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </>
