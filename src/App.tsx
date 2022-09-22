@@ -25,6 +25,7 @@ import Testing from "./pages/Testing";
 import ClientDashboard from "./pages/ClientDashboard";
 import ClientLoginForm from "./components/client/ClientLoginForm";
 import ClientTab from "./components/client/Clienttab";
+import ClientActivityTable from "./components/client/ClientActivityTable";
 
 function App() {
   return (
@@ -43,6 +44,10 @@ function App() {
             <Route
               path="/client/:clientid/dashboard"
               element={<PrivateRoute outlet={<ClientDashboard />} />}
+            />
+            <Route
+              path="/client/:clientid/projects/:projectid"
+              element={<PrivateRoute outlet={<ClientActivityTable />} />}
             />
           </Route>
 
