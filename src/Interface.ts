@@ -42,7 +42,7 @@ export interface IClient {
   password: string;
   email: string;
   fullName: string;
-  trackedProjects?: string[];
+  // trackedProjects?: string[];
   // favourites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Portfolio" }],
   // messages: [{ type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
 }

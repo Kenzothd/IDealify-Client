@@ -5,29 +5,18 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 
-interface IUsers {
-  _id?: String;
-  username?: String;
-  password?: String;
-  email?: String;
-  trackedProjects?: String[];
-  // updatedAt?: Date;
-  // createdAt?: Date
-  // __v?: Number;
-}
 
 const ClientSignUpForm: FC = () => {
-  // const [currentUsers, setCurrentUsers] = useState<Object[]>([])
-  const [error, setError] = useState<String>("");
   const token: any = sessionStorage.getItem("token");
 
+  const [username, setUsername] = useState(0);
+  const [regNum, setRegNum] = useState(0);
+  const [userData, setUserData] = useState({})
   const SERVER = import.meta.env.VITE_SERVER;
-  const url = urlcat(SERVER, "/clients");
-  const findNameUrl = urlcat(SERVER, "/clients/name");
 
-  // useEffect(() => {
-  //     axios(url).then(res => setCurrentUsers(res.data))
-  // }, [])
+  const navigateToProjects = useNavigate();
+
+
 
   const formik = useFormik({
     initialValues: {
@@ -80,10 +69,15 @@ const ClientSignUpForm: FC = () => {
           Authorization: `Bearer ${token}`,
         },
       };
+
+      const url = urlcat(SERVER, "/clients");
+      const findNameUrl = urlcat(SERVER, "/clients/name");
+
+
       axios
         .post(url, values, config)
         .then((res) => console.log(res.data))
-        .catch((error) => setError(error.response.data.error));
+        .catch((error) => console.log(error.response.data.error));
     },
   });
   return (
@@ -141,7 +135,7 @@ const ClientSignUpForm: FC = () => {
       ) : null}
 
       <button type="submit">Sign Up</button>
-      <span>{error}</span>
+
     </form>
   );
 };

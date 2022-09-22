@@ -31,7 +31,7 @@ const VendorSignUpForm: FC = () => {
       registeredOfficeAddress: "",
       uploadedFiles: null,
     },
-    validationSchema: Yup.object().shape({
+    validationSchema: Yup.object({
       contactPersonName: Yup.string().required("Required"),
       username: Yup.string()
         .required("Required")
@@ -46,7 +46,8 @@ const VendorSignUpForm: FC = () => {
               .catch((err) => console.log(err));
             return username === 0 ? true : false;
           }
-        ),
+        )
+      ,
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string()
         .matches(
@@ -73,7 +74,8 @@ const VendorSignUpForm: FC = () => {
               .catch((err) => console.log(err));
             return regNum === 0 ? true : false;
           }
-        ),
+        )
+      ,
       incorporationDate: Yup.date()
         .default(new Date())
         .max(
