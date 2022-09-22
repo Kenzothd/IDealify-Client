@@ -36,11 +36,11 @@ const buttonSx = {
 const projectButtonSx = {
   backgroundColor: "#D9DFE4",
   color: "#444444",
-  letterSpacing: '0.1rem',
-  pl: '0.75rem',
-  pr: '0.75rem',
-  '&:hover': {
-    backgroundColor: '#D9DFE4',
+  letterSpacing: "0.1rem",
+  pl: "0.75rem",
+  pr: "0.75rem",
+  "&:hover": {
+    backgroundColor: "#D9DFE4",
   },
 };
 
@@ -113,18 +113,19 @@ const VendorSingleProjectView: FC = () => {
       break;
   }
   return (
-
     <>
+
       <Box sx={{ display: 'inline-block', mb: '1.5rem', cursor: 'pointer', border: 1, p: '0.3rem', borderRadius: '1rem' }}>
         <Typography variant='body1' sx={{ alignItems: 'center' }} onClick={handleReturnToAllProjects}>
           <KeyboardReturnIcon sx={{ pr: "0.3rem", fontSize: '0.8rem' }} />
           All Projects
         </Typography>
-
       </Box>
-      <Grid container sx={{ mb: '1rem' }}>
+
+      <Grid container sx={{ mb: "1rem" }}>
+
         <Grid item xs={12} sm={7}>
-          <Box sx={{ display: 'flex', gap: '1rem' }}>
+          <Box sx={{ display: "flex", gap: "1rem" }}>
             <Typography variant="h3">{projectInfo.projectName}</Typography>
 
             <Button sx={projectButtonSx} onClick={handleViewProject}>
@@ -134,25 +135,19 @@ const VendorSingleProjectView: FC = () => {
           </Box>
         </Grid>
 
-
-
-
         <Grid item xs={12} sm={5}>
           <Grid
             container
             sx={{
               display: "flex",
               justifyContent: { sm: "right" },
-              gap: '1rem'
+              gap: "1rem",
             }}
           >
-
             <Button sx={projectButtonSx} onClick={handleAddActivity}>
               <AddIcon sx={{ paddingRight: "10px", fontSize: '1rem' }} />
               Activity
             </Button>
-
-
 
           </Grid>
         </Grid>
@@ -165,7 +160,7 @@ const VendorSingleProjectView: FC = () => {
         }}
       >
         <Grid container spacing={2} sx={{ textAlign: "center" }}>
-          <Grid item xs={12} md={3} sx={{ textAlign: 'left' }}>
+          <Grid item xs={12} md={3} sx={{ textAlign: "left" }}>
             <Typography sx={{ padding: "5px", color: "white" }}>
               <span style={{ fontWeight: "bold" }}>Housing Type: </span>
               {projectInfo.housingType}
@@ -175,7 +170,7 @@ const VendorSingleProjectView: FC = () => {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} md={3} sx={{ textAlign: 'left' }}>
+          <Grid item xs={12} md={3} sx={{ textAlign: "left" }}>
             <Typography sx={{ padding: "5px", color: "white" }}>
               <span style={{ fontWeight: "bold" }}>Start Date:</span>{" "}
               {format(new Date(projectInfo.projectStartDate), "dd LLL yyyy")}
@@ -186,7 +181,7 @@ const VendorSingleProjectView: FC = () => {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} md={3} sx={{ textAlign: 'left' }}>
+          <Grid item xs={12} md={3} sx={{ textAlign: "left" }}>
             <Typography sx={{ padding: "5px", color: "white" }}>
               <span style={{ fontWeight: "bold" }}>Design Theme:</span>{" "}
               {projectInfo.designTheme}
@@ -202,11 +197,12 @@ const VendorSingleProjectView: FC = () => {
             xs={12}
             md={3}
             sx={{
-              textAlign: 'right',
+              textAlign: "right",
             }}
           >
             <Grid item>
-              <Typography variant='body2'
+              <Typography
+                variant="body2"
                 sx={{
                   fontWeight: "600",
                   color: "#444444",
@@ -215,7 +211,7 @@ const VendorSingleProjectView: FC = () => {
                   padding: "0.5rem 1rem 0.5rem 1rem",
                   display: "inline-block",
                   backgroundColor: bgColor,
-                  textTransform: 'uppercase'
+                  textTransform: "uppercase",
                 }}
               >
                 {projectInfo.projectStatus}
@@ -224,7 +220,6 @@ const VendorSingleProjectView: FC = () => {
           </Grid>
         </Grid>
       </Card>
-
     </>
   );
 };

@@ -58,7 +58,10 @@ const VendorAddActivity: FC = () => {
       activityTitle: Yup.string().required("Required"),
       activityStartDate: Yup.date(),
       activityEndDate: Yup.date()
-        .min(Yup.ref("projectStartDate"), "end date can't be before start date")
+        .min(
+          Yup.ref("activityStartDate"),
+          "end date can't be before start date"
+        )
         .required("Project end date required"),
       status: Yup.string().required("Required"),
       personInCharge: Yup.string().required("Required"),
