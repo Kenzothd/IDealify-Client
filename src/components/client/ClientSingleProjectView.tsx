@@ -49,6 +49,7 @@ const ClientSingleProjectView: FC = () => {
   const navigate = useNavigate();
   const token: any = sessionStorage.getItem("token");
   const { clientid, projectid } = useParams();
+  const [vendorName, setVendorName] = useState("");
   let dollarUSLocale = Intl.NumberFormat("en-US");
   const [projectInfo, setProjectInfo] = useState<IProjectTwo>({
     vendorId: "",
@@ -67,17 +68,31 @@ const ClientSingleProjectView: FC = () => {
 
   useEffect(() => {
     const url = urlcat(SERVER, `/projects/id/${projectid}`);
+
     console.log(url);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-    console.log(token);
     axios
       .get(url, config)
       .then((res) => {
         setProjectInfo(res.data[0]);
+        console.log(res.data[0].vendorId);
+        const vendorNameUrl = urlcat(
+          SERVER,
+          `/vendors/id/${res.data[0].vendorId}`
+        );
+        axios
+          .get(vendorNameUrl, config)
+          .then((res) => {
+            console.log(res.data.contactPersonName);
+            setVendorName(res.data.contactPersonName);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => console.log(err));
   }, []);
@@ -135,31 +150,10 @@ const ClientSingleProjectView: FC = () => {
       </Box>
 
       <Grid container sx={{ mb: "1rem" }}>
-        <Grid item xs={12} sm={7}>
+        <Grid item xs={12}>
           <Box sx={{ display: "flex", gap: "1rem" }}>
             <Typography variant="h3">{projectInfo.projectName}</Typography>
-
-            <Button sx={projectButtonSx} onClick={handleViewProject}>
-              <EditIcon sx={{ paddingRight: "10px", fontSize: "1rem" }} />
-              Edit
-            </Button>
           </Box>
-        </Grid>
-
-        <Grid item xs={12} sm={5}>
-          <Grid
-            container
-            sx={{
-              display: "flex",
-              justifyContent: { sm: "right" },
-              gap: "1rem",
-            }}
-          >
-            <Button sx={projectButtonSx} onClick={handleAddActivity}>
-              <AddIcon sx={{ paddingRight: "10px", fontSize: "1rem" }} />
-              Activity
-            </Button>
-          </Grid>
         </Grid>
       </Grid>
       <Card
@@ -176,7 +170,8 @@ const ClientSingleProjectView: FC = () => {
               {projectInfo.housingType}
             </Typography>
             <Typography sx={{ padding: "5px", color: "white" }}>
-              <span style={{ fontWeight: "bold" }}>Client:</span> Mr Tan Ah Ah
+              <span style={{ fontWeight: "bold" }}>Client:</span>
+              {vendorName}
             </Typography>
           </Grid>
 
