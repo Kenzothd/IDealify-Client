@@ -36,11 +36,11 @@ const buttonSx = {
 const projectButtonSx = {
   backgroundColor: "#D9DFE4",
   color: "#444444",
-  letterSpacing: '0.1rem',
-  pl: '0.75rem',
-  pr: '0.75rem',
-  '&:hover': {
-    backgroundColor: '#D9DFE4',
+  letterSpacing: "0.1rem",
+  pl: "0.75rem",
+  pr: "0.75rem",
+  "&:hover": {
+    backgroundColor: "#D9DFE4",
   },
 };
 
@@ -86,7 +86,7 @@ const VendorSingleProjectView: FC = () => {
     navigate(`/vendor/${vendorid}/projects/${projectid}/add-activity`);
   };
 
-  const handleViewProject = () => {
+  const handleEditProject = () => {
     navigate(`/vendor/${vendorid}/projects/${projectid}/update-project`);
   };
 
@@ -113,22 +113,18 @@ const VendorSingleProjectView: FC = () => {
       break;
   }
   return (
-
     <>
-      <Grid container sx={{ mb: '1rem' }}>
+      <Grid container sx={{ mb: "1rem" }}>
         <Grid item xs={12} sm={7}>
-          <Box sx={{ display: 'flex', gap: '1rem' }}>
+          <Box sx={{ display: "flex", gap: "1rem" }}>
             <Typography variant="h3">{projectInfo.projectName}</Typography>
 
-            <Button sx={projectButtonSx} onClick={handleViewProject}>
+            <Button sx={projectButtonSx} onClick={handleEditProject}>
               <EditIcon sx={{ paddingRight: "10px" }} />
               Edit
             </Button>
           </Box>
         </Grid>
-
-
-
 
         <Grid item xs={12} sm={5}>
           <Grid
@@ -136,10 +132,9 @@ const VendorSingleProjectView: FC = () => {
             sx={{
               display: "flex",
               justifyContent: { sm: "right" },
-              gap: '1rem'
+              gap: "1rem",
             }}
           >
-
             <Button sx={projectButtonSx} onClick={handleAddActivity}>
               <AddIcon sx={{ paddingRight: "10px" }} />
               Activity
@@ -149,7 +144,6 @@ const VendorSingleProjectView: FC = () => {
               <KeyboardReturnIcon sx={{ paddingRight: "10px" }} />
               All Projects
             </Button>
-
           </Grid>
         </Grid>
       </Grid>
@@ -161,7 +155,7 @@ const VendorSingleProjectView: FC = () => {
         }}
       >
         <Grid container spacing={2} sx={{ textAlign: "center" }}>
-          <Grid item xs={12} md={3} sx={{ textAlign: 'left' }}>
+          <Grid item xs={12} md={3} sx={{ textAlign: "left" }}>
             <Typography sx={{ padding: "5px", color: "white" }}>
               <span style={{ fontWeight: "bold" }}>Housing Type: </span>
               {projectInfo.housingType}
@@ -171,7 +165,7 @@ const VendorSingleProjectView: FC = () => {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} md={3} sx={{ textAlign: 'left' }}>
+          <Grid item xs={12} md={3} sx={{ textAlign: "left" }}>
             <Typography sx={{ padding: "5px", color: "white" }}>
               <span style={{ fontWeight: "bold" }}>Start Date:</span>{" "}
               {format(new Date(projectInfo.projectStartDate), "dd LLL yyyy")}
@@ -182,7 +176,7 @@ const VendorSingleProjectView: FC = () => {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} md={3} sx={{ textAlign: 'left' }}>
+          <Grid item xs={12} md={3} sx={{ textAlign: "left" }}>
             <Typography sx={{ padding: "5px", color: "white" }}>
               <span style={{ fontWeight: "bold" }}>Design Theme:</span>{" "}
               {projectInfo.designTheme}
@@ -198,11 +192,12 @@ const VendorSingleProjectView: FC = () => {
             xs={12}
             md={3}
             sx={{
-              textAlign: 'right',
+              textAlign: "right",
             }}
           >
             <Grid item>
-              <Typography variant='body2'
+              <Typography
+                variant="body2"
                 sx={{
                   fontWeight: "600",
                   color: "#444444",
@@ -211,7 +206,7 @@ const VendorSingleProjectView: FC = () => {
                   padding: "0.5rem 1rem 0.5rem 1rem",
                   display: "inline-block",
                   backgroundColor: bgColor,
-                  textTransform: 'uppercase'
+                  textTransform: "uppercase",
                 }}
               >
                 {projectInfo.projectStatus}
@@ -220,7 +215,6 @@ const VendorSingleProjectView: FC = () => {
           </Grid>
         </Grid>
       </Card>
-
     </>
   );
 };
