@@ -38,7 +38,7 @@ const VendorProfile: FC = () => {
   const token: any = sessionStorage.getItem("token");
   const { vendorid } = useParams();
   const [value, setValue] = React.useState("");
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState([]);
   const [offEditMode, setOffEditMode] = useState(true);
   const [vendorAccount, setVendorAccount] = useState<IVendor>({
     email: "",
@@ -56,7 +56,6 @@ const VendorProfile: FC = () => {
     portfolio: [""],
   });
 
-
   useEffect(() => {
     const config = {
       headers: {
@@ -70,7 +69,6 @@ const VendorProfile: FC = () => {
       .then((res) => {
         setVendorAccount(res.data);
         setValue(res.data.brandSummary);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, [offEditMode]);
@@ -99,9 +97,7 @@ const VendorProfile: FC = () => {
     }
   };
 
-
   const handleAddPhotos = () => {
-
     const url = urlcat(SERVER, `vendors/id/${vendorid}`);
     const uploadImgUrl = urlcat(SERVER, "/upload-images");
     const config = {
@@ -115,6 +111,7 @@ const VendorProfile: FC = () => {
         "Content-Type": "multipart/form-data",
       },
     };
+
     const formData = new FormData();
     for (let i = 0; i < vendorAccount.portfolio.length; i++) {
       formData.append("uploadedFiles", vendorAccount.portfolio[i]);
@@ -133,8 +130,6 @@ const VendorProfile: FC = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
-
-
 
   return (
     <>
