@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
-
+import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import urlcat from "urlcat";
 import axios from "axios";
 import TouchAppIcon from "@mui/icons-material/TouchApp";
@@ -17,7 +17,7 @@ import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
-
+import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 const projectButtonSx = {
   backgroundColor: "#D9DFE4",
   color: "#444444",
@@ -73,16 +73,18 @@ const LandingPage = (props: Props) => {
 
   return (
     <>
-      <CssBaseline />
+      <CssBaseline sx={{ backgroundColor: "#5b8368" }} />
       <HideOnScroll {...props}>
         <AppBar>
           <Toolbar>
             <Typography variant="h3" flexGrow={1}>
-              Idealify
+              <LightbulbIcon sx={{ paddingRight: "10px" }} /> Idealify
             </Typography>
             <Box sx={{ display: "flex", gap: "1rem" }}>
               <Button sx={projectButtonSx} onClick={clientLogin}>
-                <TouchAppIcon sx={{ paddingRight: "10px" }} />
+                <EmojiObjectsIcon
+                  sx={{ paddingRight: "10px"}}
+                />
                 Homeowners
               </Button>
               <Button sx={projectButtonSx} onClick={vendorLogin}>
