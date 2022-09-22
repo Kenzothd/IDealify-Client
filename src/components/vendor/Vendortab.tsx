@@ -85,6 +85,8 @@ const VendorTab = () => {
                     color: '#254D71',
                   },
 
+                  fontSize: '1rem',
+                  fontFamily: 'poppins'
                 }}
 
               />
@@ -95,7 +97,16 @@ const VendorTab = () => {
                 iconPosition="start"
                 value="dashboard"
                 label="Projects"
-                sx={{ color: 'black' }}
+                sx={{
+                  color: 'black',
+                  '&:hover': {
+                    color: '#254D71',
+                  },
+
+                  fontSize: '1rem',
+                  fontFamily: 'poppins',
+                  ml: '1.5rem'
+                }}
               />
               {/* <Tab
                 icon={<LibraryAddOutlined />}
@@ -110,7 +121,17 @@ const VendorTab = () => {
                 iconPosition="start"
                 value="profile"
                 label="Profile"
-                sx={{ color: 'black' }}
+                sx={{
+                  color: 'black',
+                  '&:hover': {
+                    color: '#254D71',
+                  },
+
+                  fontSize: '1rem',
+                  fontFamily: 'poppins',
+                  ml: '1.5rem'
+
+                }}
               />
               <Tab
                 disabled
@@ -118,7 +139,16 @@ const VendorTab = () => {
                 iconPosition="start"
                 value="inbox"
                 label="Inbox"
-                sx={{ color: 'black' }}
+                sx={{
+                  color: 'black',
+                  '&:hover': {
+                    color: '#254D71',
+                  },
+
+                  fontSize: '1rem',
+                  fontFamily: 'poppins',
+                  ml: '1.5rem'
+                }}
               />
             </Tabs>
           </Grid>
