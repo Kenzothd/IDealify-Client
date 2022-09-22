@@ -97,238 +97,239 @@ const VendorAddActivity: FC = () => {
   };
 
   return (
-    <Container>
-      <Box
-        sx={{
-          display: "inline-block",
-          mb: "1.5rem",
-          cursor: "pointer",
-          border: 1,
-          p: "0.3rem",
-          borderRadius: "1rem",
-        }}
-      >
-        <Typography
-          variant="body1"
-          sx={{ alignItems: "center" }}
-          onClick={handleReturnToActivities}
+    <Container
+      maxWidth="md"
+      sx={{
+        mb: "5rem",
+        pr: "2rem",
+        pl: "2rem",
+      }}
+    >
+      <Grid container>
+        <Grid
+          item
+          xs={12}
+          sx={{ mb: "3rem", display: "flex", justifyContent: "space-between" }}
         >
-          <KeyboardReturnIcon sx={{ pr: "0.3rem", fontSize: "0.8rem" }} />
-          All Activities
-        </Typography>
-      </Box>
-
-      <Container
-        maxWidth="md"
-        sx={{
-          mb: "5rem",
-          pr: "2rem",
-          pl: "2rem",
-        }}
-      >
-        <Grid container>
-          <Grid item xs={12} sx={{ mb: "3rem" }}>
-            <Typography variant="h3">New Activity</Typography>
-          </Grid>
-
-          <form onSubmit={formik.handleSubmit}>
-            <Grid
-              container
-              spacing={5}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+          <Typography variant="h3">New Activity</Typography>
+          <Box
+            sx={{
+              display: "inline-block",
+              mb: "1.5rem",
+              cursor: "pointer",
+              border: 1,
+              p: "0.3rem",
+              borderRadius: "1rem",
+            }}
+          >
+            <Typography
+              variant="body1"
+              sx={{ alignItems: "center" }}
+              onClick={handleReturnToActivities}
             >
-              <Grid item xs={12}>
-                <Typography
-                  variant="body2"
-                  sx={{ mb: "0.5rem", color: "#444444" }}
-                >
-                  ACTIVITY NAME
-                </Typography>
+              <KeyboardReturnIcon sx={{ pr: "0.3rem", fontSize: "0.8rem" }} />
+              All Activities
+            </Typography>
+          </Box>
+        </Grid>
 
-                <TextField
-                  required
-                  id="activityTitle"
-                  autoComplete="off"
-                  name="activityTitle"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  sx={{ width: "100%" }}
-                />
-                {formik.touched.activityTitle && formik.errors.activityTitle ? (
-                  <div>{formik.errors.activityTitle}</div>
-                ) : null}
-              </Grid>
+        <form onSubmit={formik.handleSubmit}>
+          <Grid
+            container
+            spacing={5}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Grid item xs={12}>
+              <Typography
+                variant="body2"
+                sx={{ mb: "0.5rem", color: "#444444" }}
+              >
+                ACTIVITY NAME
+              </Typography>
 
-              <Grid item xs={12}>
-                <Grid container spacing={5}>
-                  <Grid item xs={12} sm={6}>
-                    <Typography
-                      variant="body2"
-                      sx={{ mb: "0.5rem", color: "#444444" }}
-                    >
-                      ACTIVITY STATUS
-                    </Typography>
-                    <FormControl sx={{ width: "100%" }}>
-                      <Select
-                        value={activity}
-                        id="status"
-                        name="status"
-                        onChange={(e) => {
-                          handleActivityChange(e);
-                          formik.handleChange(e);
-                        }}
-                        onBlur={formik.handleBlur}
-                        sx={{ width: "100%" }}
-                      >
-                        {activityStatusOptions.map((option, i) => (
-                          <MenuItem key={i} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                    {formik.touched.status && formik.errors.status ? (
-                      <div>{formik.errors.status}</div>
-                    ) : null}
-                  </Grid>
+              <TextField
+                required
+                id="activityTitle"
+                autoComplete="off"
+                name="activityTitle"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                sx={{ width: "100%" }}
+              />
+              {formik.touched.activityTitle && formik.errors.activityTitle ? (
+                <div>{formik.errors.activityTitle}</div>
+              ) : null}
+            </Grid>
 
-                  <Grid item xs={12} sm={6}>
-                    <Typography
-                      variant="body2"
-                      sx={{ mb: "0.5rem", color: "#444444" }}
-                    >
-                      PERSON IN CHARGE
-                    </Typography>
-                    <TextField
-                      required
-                      autoComplete="off"
-                      id="personInCharge"
-                      name="personInCharge"
-                      type="text"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      sx={{ width: "100%" }}
-                    />
-                    {formik.touched.personInCharge &&
-                    formik.errors.personInCharge ? (
-                      <div>{formik.errors.personInCharge}</div>
-                    ) : null}
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Grid container spacing={5}>
-                  <Grid item xs={12} sm={6}>
-                    <Typography
-                      variant="body2"
-                      sx={{ mb: "0.5rem", color: "#444444" }}
-                    >
-                      ACTIVITY START DATE
-                    </Typography>
-
-                    <TextField
-                      required
-                      autoComplete="off"
-                      type="date"
-                      InputLabelProps={{
-                        shrink: true,
+            <Grid item xs={12}>
+              <Grid container spacing={5}>
+                <Grid item xs={12} sm={6}>
+                  <Typography
+                    variant="body2"
+                    sx={{ mb: "0.5rem", color: "#444444" }}
+                  >
+                    ACTIVITY STATUS
+                  </Typography>
+                  <FormControl sx={{ width: "100%" }}>
+                    <Select
+                      value={activity}
+                      id="status"
+                      name="status"
+                      onChange={(e) => {
+                        handleActivityChange(e);
+                        formik.handleChange(e);
                       }}
-                      id="activityStartDate"
-                      name="activityStartDate"
-                      onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       sx={{ width: "100%" }}
-                    />
-                    {formik.touched.activityStartDate &&
-                    formik.errors.activityStartDate ? (
-                      <div>{formik.errors.activityStartDate}</div>
-                    ) : null}
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <Typography
-                      variant="body2"
-                      sx={{ mb: "0.5rem", color: "#444444" }}
                     >
-                      ACTIVITY END DATE
-                    </Typography>
-
-                    <TextField
-                      required
-                      autoComplete="off"
-                      type="date"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      id="activityEndDate"
-                      name="activityEndDate"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      sx={{ width: "100%" }}
-                    />
-                    {formik.touched.activityEndDate &&
-                    formik.errors.activityEndDate ? (
-                      <div>{formik.errors.activityEndDate}</div>
-                    ) : null}
-                  </Grid>
+                      {activityStatusOptions.map((option, i) => (
+                        <MenuItem key={i} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  {formik.touched.status && formik.errors.status ? (
+                    <div>{formik.errors.status}</div>
+                  ) : null}
                 </Grid>
-              </Grid>
 
-              <Grid item xs={12}>
-                <Typography
-                  variant="body2"
-                  sx={{ mb: "0.5rem", color: "#444444" }}
-                >
-                  DESCRIPTION
-                </Typography>
-
-                <TextField
-                  required
-                  autoComplete="off"
-                  id="activityDescription"
-                  name="activityDescription"
-                  type="text"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  sx={{
-                    width: "100%",
-                    "& .MuiInputBase-root": {
-                      height: 200,
-                    },
-                  }}
-                />
-                {formik.touched.activityDescription &&
-                formik.errors.activityDescription ? (
-                  <div>{formik.errors.activityDescription}</div>
-                ) : null}
-              </Grid>
-              <Grid item sx={{ textAlign: "center" }}>
-                <Button
-                  type="submit"
-                  sx={{
-                    background: "#254D71",
-                    color: "white",
-                    letterSpacing: "0.2rem",
-                    mt: "1rem",
-                    pl: "6rem",
-                    pr: "6rem",
-                    "&:hover": {
-                      backgroundColor: "#254D71",
-                    },
-                  }}
-                >
-                  Submit
-                </Button>
+                <Grid item xs={12} sm={6}>
+                  <Typography
+                    variant="body2"
+                    sx={{ mb: "0.5rem", color: "#444444" }}
+                  >
+                    PERSON IN CHARGE
+                  </Typography>
+                  <TextField
+                    required
+                    autoComplete="off"
+                    id="personInCharge"
+                    name="personInCharge"
+                    type="text"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    sx={{ width: "100%" }}
+                  />
+                  {formik.touched.personInCharge &&
+                  formik.errors.personInCharge ? (
+                    <div>{formik.errors.personInCharge}</div>
+                  ) : null}
+                </Grid>
               </Grid>
             </Grid>
-          </form>
-        </Grid>
-      </Container>
+
+            <Grid item xs={12}>
+              <Grid container spacing={5}>
+                <Grid item xs={12} sm={6}>
+                  <Typography
+                    variant="body2"
+                    sx={{ mb: "0.5rem", color: "#444444" }}
+                  >
+                    ACTIVITY START DATE
+                  </Typography>
+
+                  <TextField
+                    required
+                    autoComplete="off"
+                    type="date"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    id="activityStartDate"
+                    name="activityStartDate"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    sx={{ width: "100%" }}
+                  />
+                  {formik.touched.activityStartDate &&
+                  formik.errors.activityStartDate ? (
+                    <div>{formik.errors.activityStartDate}</div>
+                  ) : null}
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <Typography
+                    variant="body2"
+                    sx={{ mb: "0.5rem", color: "#444444" }}
+                  >
+                    ACTIVITY END DATE
+                  </Typography>
+
+                  <TextField
+                    required
+                    autoComplete="off"
+                    type="date"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    id="activityEndDate"
+                    name="activityEndDate"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    sx={{ width: "100%" }}
+                  />
+                  {formik.touched.activityEndDate &&
+                  formik.errors.activityEndDate ? (
+                    <div>{formik.errors.activityEndDate}</div>
+                  ) : null}
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Typography
+                variant="body2"
+                sx={{ mb: "0.5rem", color: "#444444" }}
+              >
+                DESCRIPTION
+              </Typography>
+
+              <TextField
+                required
+                autoComplete="off"
+                id="activityDescription"
+                name="activityDescription"
+                type="text"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                sx={{
+                  width: "100%",
+                  "& .MuiInputBase-root": {
+                    height: 200,
+                  },
+                }}
+              />
+              {formik.touched.activityDescription &&
+              formik.errors.activityDescription ? (
+                <div>{formik.errors.activityDescription}</div>
+              ) : null}
+            </Grid>
+            <Grid item sx={{ textAlign: "center" }}>
+              <Button
+                type="submit"
+                sx={{
+                  background: "#254D71",
+                  color: "white",
+                  letterSpacing: "0.2rem",
+                  mt: "1rem",
+                  pl: "6rem",
+                  pr: "6rem",
+                  "&:hover": {
+                    backgroundColor: "#254D71",
+                  },
+                }}
+              >
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Grid>
     </Container>
   );
 };
