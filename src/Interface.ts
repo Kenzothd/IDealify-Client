@@ -13,8 +13,8 @@ export interface IVendor {
   uploadedFiles: string[];
   trackedProjects?: string[];
   brandSummary?: string;
+  portfolio: string[];
   // messages: [{type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
-  // portfolio: [{type: mongoose.Schema.Types.ObjectId, ref: "Portfolio" }],
   // review: [{type: mongoose.Schema.Types.ObjectId, ref: "Review" }]
 }
 

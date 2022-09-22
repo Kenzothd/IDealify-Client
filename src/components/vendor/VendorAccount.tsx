@@ -34,9 +34,9 @@ const VendorAccount: FC = () => {
   const [offEditMode, setOffEditMode] = useState<boolean>(true);
   const { vendorid } = useParams();
   const navigate = useNavigate();
-  const [userName, setUsername] = useState('');
-  const [userEmail, setUserEmail] = useState('')
-  const [userRegNum, setUserRegNum] = useState('')
+  const [userName, setUsername] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userRegNum, setUserRegNum] = useState("");
   const [vendorAccount, setVendorAccount] = useState<IVendor>({
     email: "",
     contactPersonName: "",
@@ -50,6 +50,7 @@ const VendorAccount: FC = () => {
     uploadedFiles: [""],
     trackedProjects: [""],
     brandSummary: "",
+    portfolio: [""],
   });
 
   console.log(offEditMode);
@@ -100,36 +101,38 @@ const VendorAccount: FC = () => {
         .min(3, "Must be 3 characters or more")
         .max(20, "Must be 20 characters or less")
         .required("Required")
-        .test(
-          "value-name",
-          "Username is in used",
-          (name: any): boolean => {
-            const clientUrl = urlcat(SERVER, `vendors/findByName/${name}`);
-            axios
-              .get(clientUrl)
-              .then((res) => setUsername(res.data.length === 0 ? '' : res.data[0].username))
-              .catch((err) => console.log(err));
-            return userName === '' || userName === vendorAccount.username ? true : false;
-          }
-        ),
+        .test("value-name", "Username is in used", (name: any): boolean => {
+          const clientUrl = urlcat(SERVER, `vendors/findByName/${name}`);
+          axios
+            .get(clientUrl)
+            .then((res) =>
+              setUsername(res.data.length === 0 ? "" : res.data[0].username)
+            )
+            .catch((err) => console.log(err));
+          return userName === "" || userName === vendorAccount.username
+            ? true
+            : false;
+        }),
       // .test(
       //   "value-name",
       //   "username must not have spacing",
       //   (username: any) => !username.includes(" ")
       // )
-      email: Yup.string().email("Invalid email address").required("Required")
-        .test(
-          "email-name",
-          "Email is in used",
-          (email: any): boolean => {
-            const clientUrl = urlcat(SERVER, `vendors/findByEmail/${email}`);
-            axios
-              .get(clientUrl)
-              .then((res) => setUserEmail(res.data.length === 0 ? '' : res.data[0].email))
-              .catch((err) => console.log(err));
-            return userEmail === '' || userEmail === vendorAccount.email ? true : false;
-          }
-        ),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Required")
+        .test("email-name", "Email is in used", (email: any): boolean => {
+          const clientUrl = urlcat(SERVER, `vendors/findByEmail/${email}`);
+          axios
+            .get(clientUrl)
+            .then((res) =>
+              setUserEmail(res.data.length === 0 ? "" : res.data[0].email)
+            )
+            .catch((err) => console.log(err));
+          return userEmail === "" || userEmail === vendorAccount.email
+            ? true
+            : false;
+        }),
       password: Yup.string()
         .matches(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
@@ -145,12 +148,22 @@ const VendorAccount: FC = () => {
           "regis-name",
           "Registration number is in used",
           (regNum: any): boolean => {
-            const clientUrl = urlcat(SERVER, `vendors/findByRegistrationNum/${regNum}`);
+            const clientUrl = urlcat(
+              SERVER,
+              `vendors/findByRegistrationNum/${regNum}`
+            );
             axios
               .get(clientUrl)
-              .then((res) => setUserRegNum(res.data.length === 0 ? '' : res.data[0].registrationNumber))
+              .then((res) =>
+                setUserRegNum(
+                  res.data.length === 0 ? "" : res.data[0].registrationNumber
+                )
+              )
               .catch((err) => console.log(err));
-            return userRegNum === '' || userRegNum === vendorAccount.registrationNumber ? true : false;
+            return userRegNum === "" ||
+              userRegNum === vendorAccount.registrationNumber
+              ? true
+              : false;
           }
         ),
       // .test(
@@ -480,6 +493,7 @@ const VendorAccount: FC = () => {
                 }}
                 type="file"
                 onChange={(event: any) => {
+                  console.log(event.currentTarget.files);
                   formik.setFieldValue(
                     "uploadedFiles",
                     event.currentTarget.files

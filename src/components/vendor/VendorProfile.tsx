@@ -48,7 +48,9 @@ const VendorProfile: FC = () => {
     uploadedFiles: [""],
     trackedProjects: [""],
     brandSummary: "",
+    portfolio: [""],
   });
+
   const [value, setValue] = React.useState("");
   const [offEditMode, setOffEditMode] = useState(true);
   const token: any = sessionStorage.getItem("token");
@@ -83,6 +85,7 @@ const VendorProfile: FC = () => {
           Authorization: `Bearer ${token}`,
         },
       };
+
       const body = { ...vendorAccount, brandSummary: value };
       console.log(body);
       axios
@@ -93,6 +96,37 @@ const VendorProfile: FC = () => {
         .catch((err) => console.log(err));
     }
   };
+
+  const handleAddPhotos = () => {
+    console.log(vendorAccount.portfolio);
+    const url = urlcat(SERVER, `vendors/id/${vendorid}`);
+    const uploadImgUrl = urlcat(SERVER, "/upload-images");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const configForImg = {
+      headers: {
+        // Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    const formData = new FormData();
+    for (let i = 0; i < vendorAccount.portfolio.length; i++) {
+      formData.append("uploadedFiles", vendorAccount.portfolio[i]);
+    }
+
+    axios
+      .post(uploadImgUrl, formData, configForImg)
+      .then((res) => {
+        vendorAccount.uploadedFiles = res.data.imageLinks;
+        return axios.put(url, vendorAccount, config);
+      })
+      .then((res) => setVendorAccount(res.data))
+      .catch((error) => console.log(error));
+  };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
@@ -167,10 +201,43 @@ const VendorProfile: FC = () => {
                 gap: "1rem",
               }}
             >
-              <Button sx={projectButtonSx}>
-                <AddIcon sx={{ paddingRight: "10px" }} />
-                Photos
-              </Button>
+              <Grid
+                item
+                sm={6}
+                sx={{ display: "flex", justifyContent: "right" }}
+              >
+                <TextField
+                  id="uploadedFiles"
+                  name="uploadedFiles"
+                  inputProps={{
+                    multiple: true,
+                  }}
+                  type="file"
+                  onChange={(event: any) => {
+                    console.log(event.target.file);
+                    setVendorAccount({
+                      ...vendorAccount,
+                      uploadedFiles: event.currentTarget.files,
+                    });
+                    // formik.setFieldValue(
+                    //   "uploadedFiles",
+                    //   event.currentTarget.files
+                    // );
+                  }}
+                  sx={{ width: "100%" }}
+                  hidden
+                />
+              </Grid>
+              <Grid
+                item
+                sm={5}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
+                <Button sx={projectButtonSx} onClick={handleAddPhotos}>
+                  <AddIcon sx={{ paddingRight: "10px" }} />
+                  Photos
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
           <Grid container sx={{ mt: "1rem" }}>
@@ -178,9 +245,9 @@ const VendorProfile: FC = () => {
           </Grid>
         </Grid>
         <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
-          {vendorAccount.uploadedFiles.map((img) => {
+          {vendorAccount.portfolio.map((img, index) => {
             return (
-              <Grid item sm={12} md={3}>
+              <Grid item sm={12} md={3} key={index}>
                 <Card>
                   <CardMedia component="img" height="170" image={img} />
                 </Card>
