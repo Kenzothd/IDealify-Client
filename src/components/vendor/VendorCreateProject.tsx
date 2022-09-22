@@ -180,7 +180,7 @@ const VendorCreateProduct: FC = () => {
         <form onSubmit={formik.handleSubmit}>
           <Grid
             container
-            spacing={3}
+            spacing={4}
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -188,7 +188,7 @@ const VendorCreateProduct: FC = () => {
             }}
           >
             <Grid item sm={12}>
-              <Grid container spacing={2}>
+              <Grid container spacing={4}>
                 <Grid item xs={12} sm={4}>
                   <Typography
                     variant="body2"
@@ -267,7 +267,7 @@ const VendorCreateProduct: FC = () => {
               </Grid>
             </Grid>
             <Grid item sm={12}>
-              <Grid container spacing={2}>
+              <Grid container spacing={4}>
                 <Grid item xs={12} sm={4}>
                   <Typography
                     variant="body2"
@@ -354,7 +354,7 @@ const VendorCreateProduct: FC = () => {
               </Grid>
             </Grid>
             <Grid item sm={12}>
-              <Grid container spacing={2}>
+              <Grid container spacing={4}>
                 <Grid item xs={6} sm={6}>
                   <Typography
                     variant="body2"

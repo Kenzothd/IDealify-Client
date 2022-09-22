@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import urlcat from "urlcat";
 import {
   Button,
+  Container,
   FormControl,
   Grid,
   InputLabel,
@@ -17,6 +18,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { Box } from "@mui/system";
 
 const SERVER = import.meta.env.VITE_SERVER;
 const buttonSx = {
@@ -95,48 +97,47 @@ const VendorAddActivity: FC = () => {
     navigate(`/vendor/${vendorid}/projects/${projectid}`);
   };
 
-  const handleReturnToAllProjects = () => {
-    console.log("return to all projects");
-    navigate(`/vendor/${vendorid}/dashboard`);
-  };
   return (
-    <>
-      <Grid container spacing={2} sx={{ padding: "0% 5%" }}>
-        <Grid item md={12}>
-          <Grid container>
-            <Grid item md={6}>
-              <Typography variant="h2">Add Activity</Typography>
-            </Grid>
-            <Grid item md={6} sx={{ display: "flex", justifyContent: "right" }}>
-              <Button onClick={handleReturnToActivities} sx={buttonSx}>
-                <KeyboardReturnIcon sx={{ paddingRight: "10px" }} />
-                All Activities
-              </Button>
-              <Button onClick={handleReturnToAllProjects} sx={buttonSx}>
-                <KeyboardReturnIcon sx={{ paddingRight: "10px" }} />
-                All Projects
-              </Button>
-            </Grid>
+    <Container>
+      <Box sx={{ display: 'inline-block', mb: '1.5rem', cursor: 'pointer', border: 1, p: '0.3rem', borderRadius: '1rem' }}>
+        <Typography variant='body1' sx={{ alignItems: 'center' }} onClick={handleReturnToActivities}>
+          <KeyboardReturnIcon sx={{ pr: "0.3rem", fontSize: '0.8rem' }} />
+          All Activities
+        </Typography>
+      </Box>
+
+
+      <Container maxWidth='md' sx={{
+        mb: '5rem',
+        pr: '2rem',
+        pl: '2rem'
+
+      }}>
+        <Grid container >
+
+          <Grid item xs={12} sx={{ mb: '3rem' }}>
+            <Typography variant='h3'>New Activity</Typography>
           </Grid>
-        </Grid>
-        <Grid item md={12}>
+
+
           <form onSubmit={formik.handleSubmit}>
             <Grid
               container
-              spacing={3}
+              spacing={5}
               sx={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <Grid item sm={12} md={12}>
+
+              <Grid item xs={12} >
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>ACTIVITY NAME</Typography>
+
                 <TextField
                   required
                   id="activityTitle"
                   autoComplete="off"
-                  variant="filled"
-                  label="Activity Name"
                   name="activityTitle"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -146,14 +147,15 @@ const VendorAddActivity: FC = () => {
                   <div>{formik.errors.activityTitle}</div>
                 ) : null}
               </Grid>
-              <Grid item sm={12} md={12}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} md={6}>
-                    <FormControl variant="filled" sx={{ width: "100%" }}>
-                      <InputLabel required>Activity Status</InputLabel>
+
+
+              <Grid item xs={12}>
+                <Grid container spacing={5}>
+                  <Grid item xs={12} sm={6} >
+                    <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>ACTIVITY STATUS</Typography>
+                    <FormControl sx={{ width: "100%" }}>
                       <Select
                         value={activity}
-                        label="Activity Status"
                         id="status"
                         name="status"
                         onChange={(e) => {
@@ -175,12 +177,11 @@ const VendorAddActivity: FC = () => {
                     ) : null}
                   </Grid>
 
-                  <Grid item xs={12} sm={6} md={6}>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>PERSON IN CHARGE</Typography>
                     <TextField
                       required
                       autoComplete="off"
-                      variant="filled"
-                      label="Person In Charge"
                       id="personInCharge"
                       name="personInCharge"
                       type="text"
@@ -189,20 +190,22 @@ const VendorAddActivity: FC = () => {
                       sx={{ width: "100%" }}
                     />
                     {formik.touched.personInCharge &&
-                    formik.errors.personInCharge ? (
+                      formik.errors.personInCharge ? (
                       <div>{formik.errors.personInCharge}</div>
                     ) : null}
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item sm={12} md={12}>
-                <Grid container spacing={2}>
-                  <Grid item xs={6} sm={6} md={6}>
+
+
+              <Grid item xs={12}>
+                <Grid container spacing={5}>
+                  <Grid item xs={12} sm={6} >
+                    <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>ACTIVITY START DATE</Typography>
+
                     <TextField
                       required
                       autoComplete="off"
-                      variant="filled"
-                      label="Activity Start Date"
                       type="date"
                       InputLabelProps={{
                         shrink: true,
@@ -214,16 +217,17 @@ const VendorAddActivity: FC = () => {
                       sx={{ width: "100%" }}
                     />
                     {formik.touched.activityStartDate &&
-                    formik.errors.activityStartDate ? (
+                      formik.errors.activityStartDate ? (
                       <div>{formik.errors.activityStartDate}</div>
                     ) : null}
                   </Grid>
-                  <Grid item xs={6} sm={6} md={6}>
+
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>ACTIVITY END DATE</Typography>
+
                     <TextField
                       required
                       autoComplete="off"
-                      variant="filled"
-                      label="Activity End Date"
                       type="date"
                       InputLabelProps={{
                         shrink: true,
@@ -235,18 +239,19 @@ const VendorAddActivity: FC = () => {
                       sx={{ width: "100%" }}
                     />
                     {formik.touched.activityEndDate &&
-                    formik.errors.activityEndDate ? (
+                      formik.errors.activityEndDate ? (
                       <div>{formik.errors.activityEndDate}</div>
                     ) : null}
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12} sm={12} md={12}>
+
+              <Grid item xs={12}>
+                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>DESCRIPTION</Typography>
+
                 <TextField
                   required
                   autoComplete="off"
-                  variant="filled"
-                  label="Description"
                   id="activityDescription"
                   name="activityDescription"
                   type="text"
@@ -260,30 +265,34 @@ const VendorAddActivity: FC = () => {
                   }}
                 />
                 {formik.touched.activityDescription &&
-                formik.errors.activityDescription ? (
+                  formik.errors.activityDescription ? (
                   <div>{formik.errors.activityDescription}</div>
                 ) : null}
               </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={12}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Button type="submit" sx={buttonSx}>
+              <Grid item sx={{ textAlign: 'center' }}>
+                <Button
+                  type="submit"
+                  sx={{
+                    background: "#254D71",
+                    color: "white",
+                    letterSpacing: "0.2rem",
+                    mt: "1rem",
+                    pl: "6rem",
+                    pr: "6rem",
+                    "&:hover": {
+                      backgroundColor: "#254D71",
+                    },
+                  }}
+                >
                   Submit
                 </Button>
               </Grid>
             </Grid>
           </form>
+
         </Grid>
-      </Grid>
-    </>
+      </Container>
+    </Container>
   );
 };
 
