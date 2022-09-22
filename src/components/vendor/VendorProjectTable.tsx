@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, FC } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import urlcat from "urlcat";
 import format from "date-fns/format";
@@ -38,7 +38,7 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
     {
       field: "projectName",
       headerName: "Project Name",
-      width: 500,
+      width: 400,
       headerAlign: "center",
       align: "center",
     },
@@ -52,41 +52,38 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
     {
       field: "status",
       headerName: "Status",
-      width: 200,
+      width: 300,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
         let bgColor: string;
         switch (params.row.status) {
           case "Upcoming":
-            bgColor = "#84c4cb";
+            bgColor = "#6AA6D1";
             break;
           case "In Progress":
-            bgColor = "orange";
+            bgColor = "#FDC22B";
             break;
           case "Completed":
-            bgColor = "green";
+            bgColor = "#6FA585";
             break;
           case "Cancelled":
-            bgColor = "red";
+            bgColor = "#E96755";
             break;
           default:
-            bgColor = "gray";
+            bgColor = "#CACACA";
             break;
         }
         return (
-          <Typography
+          <Typography variant='body2'
             sx={{
-              fontWeight: "bold",
-              fontSize: "0.85rem",
-              letterSpacing: "0.1rem",
-              color: "white",
-              width: "100px",
+              fontWeight: "500",
+              color: "#444444",
               textAlign: "center",
               borderRadius: 8,
-              padding: "3px 10px",
-              display: "inline-block",
+              padding: "0.5rem 1.3rem 0.5rem 1.3rem",
               backgroundColor: bgColor,
+              textTransform: 'uppercase'
             }}
           >
             {params.row.status}
@@ -96,7 +93,7 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
     },
     {
       field: "action",
-      headerName: "Click To View",
+      headerName: "View",
       sortable: false,
       width: 200,
       headerAlign: "center",
@@ -138,15 +135,20 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
   // };
 
   return (
-    <>
-      <Grid container spacing={2} sx={{ padding: "0% 5%", marginTop: "2%" }}>
+    <Container maxWidth='lg' sx={{
+      mb: '5rem',
+      pr: '2rem',
+      pl: '2rem'
+
+    }}>
+      <Grid container >
         <Grid item md={12}>
           <DataGrid
             rows={rows}
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[5]}
-            sx={{ height: "500px", width: "100%" }}
+            sx={{ height: "30rem" }}
           />
         </Grid>
         {/* <Grid item md={12} sx={{ display: "flex", justifyContent: "right" }}>
@@ -156,7 +158,7 @@ const VendorProjectTable = ({ revampProjects }: Props) => {
           </Button>
         </Grid> */}
       </Grid>
-    </>
+    </Container>
   );
 };
 
