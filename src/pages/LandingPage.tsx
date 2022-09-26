@@ -18,6 +18,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
+import { IPortfolio } from "../Interface";
 
 const projectButtonSx = {
   backgroundColor: "#D9DFE4",
@@ -31,10 +32,12 @@ const projectButtonSx = {
 };
 
 const LandingPage: FC = () => {
+  const [images, setImages] = useState<IPortfolio[]>([]);
   const navigate = useNavigate();
   const SERVER = import.meta.env.VITE_SERVER;
-  const imageUrl = urlcat(SERVER, "/getimages");
-  const [images, setImages] = useState([]);
+  // const imageUrl = urlcat(SERVER, "/getimages");
+  const imageUrl = urlcat(SERVER, "/portfolios");
+  const vendorUrl = urlcat(SERVER, "/vendors");
   useEffect(() => {
     axios
       .get(imageUrl)
@@ -47,6 +50,10 @@ const LandingPage: FC = () => {
   const clientLogin = () => {
     navigate("/client/login");
   };
+
+  const handleClick = (e: any) => {
+    console.log(e)
+  }
 
   return (
     <>
@@ -84,8 +91,8 @@ const LandingPage: FC = () => {
           <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
             {images.slice(0, 12).map((img, index) => (
               <Grid item sm={12} md={3} key={index} sx={{ padding: 0 }}>
-                <Card>
-                  <CardMedia component="img" height="170" image={img} />
+                <Card defaultValue={img._id} onClick={handleClick}>
+                  <CardMedia component="img" height="170" image={img.images[0]} />
                   <CardContent sx={{ pt: 1, pl: 1, pr: 0, pb: 0 }}>
                     <Typography
                       sx={{
@@ -93,7 +100,15 @@ const LandingPage: FC = () => {
                         fontSize: "medium",
                       }}
                     >
-                      Minimalist
+                      {img.designTheme}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "600",
+                        fontSize: "medium",
+                      }}
+                    >
+                      {img.designTheme}
                     </Typography>
                   </CardContent>
                   <CardActions

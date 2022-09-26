@@ -80,3 +80,14 @@ export interface IProjectTwo {
   totalCosting: number;
   comments: string;
 }
+
+export interface IPortfolio {
+  vendorId: string;
+  description?: string;
+  designTheme?: string;
+  housingType: string;
+  images: string[];
+  portfolioName: string,
+  __v?: number;
+  _id: string
+}
