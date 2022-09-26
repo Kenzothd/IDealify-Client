@@ -27,7 +27,7 @@ const projectButtonSx = {
   pl: "0.75rem",
   pr: "0.75rem",
   "&:hover": {
-    backgroundColor: "#D9DFE4",
+    backgroundColor: "#ADB0B1",
   },
 };
 

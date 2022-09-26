@@ -30,7 +30,7 @@ const projectButtonSx = {
   pl: "0.75rem",
   pr: "0.75rem",
   "&:hover": {
-    backgroundColor: "#D9DFE4",
+    backgroundColor: "#ADB0B1",
   },
 };
 
@@ -140,7 +140,7 @@ const VendorProfile: FC = () => {
     setValue(event.target.value);
   };
 
-  const formPortfolio = () => {
+  const handleformPortfolio = () => {
     navigate("/vendor/:vendorid/portfolio-form");
   };
 
@@ -200,21 +200,24 @@ const VendorProfile: FC = () => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid container sx={{ mt: "2rem", display: "flex" }}>
-          <Grid item xs={12} sm={7}>
-            <Box>
-              <Typography variant="h3">Photos</Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={5}>
-            <Grid
-              container
-              sx={{
-                display: "flex",
-                justifyContent: { sm: "right" },
-                gap: "1rem",
-              }}
-            >
+
+        <Grid
+          container
+          sx={{
+            mt: "2rem",
+            display: "flex",
+            justifyContent: "space-between",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h3">Photos</Typography>
+          <Button sx={projectButtonSx} onClick={handleformPortfolio}>
+            <AddIcon />
+            Portfolio
+          </Button>
+
+          {/* <Grid item xs={12} sm={5}>
+            <Grid container>
               <Grid
                 item
                 sm={6}
@@ -242,22 +245,14 @@ const VendorProfile: FC = () => {
                   hidden
                 />
               </Grid>
-              <Grid
-                item
-                sm={5}
-                sx={{ display: "flex", justifyContent: "center" }}
-              >
-                <Button sx={projectButtonSx} onClick={handleAddPhotos}>
-                  <AddIcon sx={{ paddingRight: "10px" }} />
-                  Photos
-                </Button>
-              </Grid>
             </Grid>
-          </Grid>
-          <Grid container sx={{ mt: "1rem" }}>
-            <Divider sx={style} />
-          </Grid>
+          </Grid> */}
         </Grid>
+
+        <Grid container sx={{ mt: "1rem" }}>
+          <Divider sx={style} />
+        </Grid>
+
         <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
           {images.map((img, index) => {
             return (
