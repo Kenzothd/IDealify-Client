@@ -75,17 +75,39 @@ const LandingPage: FC = () => {
         }}
       >
         <Grid container>
-          <Grid item>
-            <Typography variant="h4">Home Inspiration</Typography>
+          <Grid item sx={{ display: "flex" }}>
+            <LightbulbIcon color="info" />
+            <Typography variant="h4" sx={{ fontWeight: "800" }}>
+              Home Inspiration
+            </Typography>
           </Grid>
           <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
             {images.slice(0, 12).map((img, index) => (
-              <Grid item sm={12} md={3} key={index}>
+              <Grid item sm={12} md={3} key={index} sx={{ padding: 0 }}>
                 <Card>
                   <CardMedia component="img" height="170" image={img} />
-                  {/* <CardContent>
-                    <Typography>Urban style</Typography>
-                  </CardContent> */}
+                  <CardContent sx={{ pt: 1, pl: 1, pr: 0, pb: 0 }}>
+                    <Typography
+                      sx={{
+                        fontWeight: "600",
+                        fontSize: "medium",
+                      }}
+                    >
+                      Minimalist
+                    </Typography>
+                  </CardContent>
+                  <CardActions
+                    sx={{
+                      pt: 0,
+                      pl: 0,
+                      pr: 1,
+                      pb: 1,
+                      display: "flex",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Button size="small">Learn More</Button>
+                  </CardActions>
                 </Card>
               </Grid>
             ))}
