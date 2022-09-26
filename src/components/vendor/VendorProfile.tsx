@@ -5,6 +5,7 @@ import {
   Grid,
   TextField,
   Typography,
+  CardContent,
 } from "@mui/material";
 import React, { FC, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,6 +16,7 @@ import CardMedia from "@mui/material/CardMedia";
 import axios from "axios";
 import urlcat from "urlcat";
 import { IVendor } from "../../Interface";
+import CardActions from "@mui/material/CardActions";
 
 const style = {
   width: "100%",
@@ -55,6 +57,7 @@ const VendorProfile: FC = () => {
     brandSummary: "",
     portfolio: [""],
   });
+  const navigate = useNavigate();
 
   console.log(images);
 
@@ -137,6 +140,10 @@ const VendorProfile: FC = () => {
     setValue(event.target.value);
   };
 
+  const formPortfolio = () => {
+    navigate("/vendor/:vendorid/portfolio-form");
+  };
+
   return (
     <>
       <Container
@@ -193,10 +200,10 @@ const VendorProfile: FC = () => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid container sx={{ mt: "2rem" }}>
+        <Grid container sx={{ mt: "2rem", display: "flex" }}>
           <Grid item xs={12} sm={7}>
-            <Box sx={{ display: "flex", gap: "1rem" }}>
-              <Typography variant="h3">Portfolio</Typography>
+            <Box>
+              <Typography variant="h3">Photos</Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={5}>
@@ -254,9 +261,31 @@ const VendorProfile: FC = () => {
         <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
           {images.map((img, index) => {
             return (
-              <Grid item sm={12} md={3} key={index}>
+              <Grid item sm={12} md={3} key={index} sx={{ padding: 0 }}>
                 <Card>
                   <CardMedia component="img" height="170" image={img} />
+                  <CardContent sx={{ pt: 1, pl: 1, pr: 0, pb: 0 }}>
+                    <Typography
+                      sx={{
+                        fontWeight: "600",
+                        fontSize: "medium",
+                      }}
+                    >
+                      Minimalist
+                    </Typography>
+                  </CardContent>
+                  <CardActions
+                    sx={{
+                      pt: 0,
+                      pl: 0,
+                      pr: 1,
+                      pb: 1,
+                      display: "flex",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Button size="small">Learn More</Button>
+                  </CardActions>
                 </Card>
               </Grid>
             );
