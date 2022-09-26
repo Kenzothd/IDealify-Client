@@ -27,6 +27,7 @@ import VendorProfile from "./components/vendor/VendorProfile";
 import ClientActivity from "./components/client/ClientActivity";
 import VendorActivity from "./components/vendor/VendorActivity";
 import NavBar from "./components/UI/NavBar";
+import PortfolioDetails from "./pages/PortfolioDetails";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             <Route path="/client/login" element={<ClientLogIn />} />
             <Route path="/vendor/sign-up" element={<VendorSignUp />} />
             <Route path="/vendor/login" element={<VendorLogIn />} />
+            <Route path="/:vendorname/:portfolioid" element={<PortfolioDetails />} />
           </Route>
 
           <Route path="/login-redirect" element={<LoginRedirect />} />
