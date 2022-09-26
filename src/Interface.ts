@@ -41,21 +41,11 @@ export interface IProject {
 export interface IPortfolio {
   _id?: string;
   vendorId?: string;
-  clientId?: string;
   portfolioName: string;
   housingType: string;
-  projectStartDate: Date;
-  projectEndDate: Date;
-  projectStatus: string;
-  uploadedFiles: string[];
+  images: string[];
   description?: string;
-  projectProgress?: string;
-  // review:{type: mongoose.Schema.Types.ObjectId, ref: "Review" },
   designTheme: string;
-  clientName?: string;
-  vendorName?: string;
-  totalCosting?: number;
-  comments?: string;
 }
 
 export interface IClient {

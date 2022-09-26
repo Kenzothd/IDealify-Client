@@ -24,10 +24,6 @@ const SERVER = import.meta.env.VITE_SERVER;
 const VendorPortfolioForm: FC = () => {
   const [design, setDesign] = React.useState("");
   const [housingType, setHousingType] = React.useState("");
-  const [status, setStatus] = React.useState("");
-  const [username, setUsername] = useState(0);
-  const [clientId, setClientId] = useState("");
-  // const [data, setData] = useState(0);
   const navigate = useNavigate();
   const token: any = sessionStorage.getItem("token");
   const { vendorid } = useParams();
@@ -75,8 +71,6 @@ const VendorPortfolioForm: FC = () => {
     "Others",
   ];
 
-  const statusOptions = ["Upcoming", "In Progress", "Completed", "Cancelled"];
-
   const handleDesignChange = (event: SelectChangeEvent) => {
     setDesign(event.target.value);
   };
@@ -85,57 +79,19 @@ const VendorPortfolioForm: FC = () => {
     setHousingType(event.target.value);
   };
 
-  const handleStatusChange = (event: SelectChangeEvent) => {
-    setStatus(event.target.value);
-  };
-
   const formik = useFormik({
     initialValues: {
+      vendorId: "",
       portfolioName: "",
       housingType: "",
-      projectStartDate: "",
-      projectEndDate: "",
-      projectStatus: "",
-      designTheme: "",
-      clientUsername: "",
-      totalCosting: "",
+      images: [""],
       description: "",
+      designTheme: "",
     },
     validationSchema: Yup.object({
       portfolioName: Yup.string().max(35).required("Required"),
       housingType: Yup.string().required("Required"),
-      projectStartDate: Yup.date(),
-      projectEndDate: Yup.date()
-        .min(Yup.ref("projectStartDate"), "end date can't be before start date")
-        .required("Project end date required"),
-      projectStatus: Yup.string().required("Required"),
       designTheme: Yup.string().required("Required"),
-      // there is a bug here whereby it will show prev error message if re-entering, ask simon
-      clientUsername: Yup.string()
-        .required("Required")
-        .test(
-          "value-name",
-          "Client username does not exist",
-          (name: any): boolean => {
-            const userUrl = urlcat(SERVER, `clients/findByName/${name}`);
-            const config = {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            };
-            axios
-              .get(userUrl, config)
-              .then((res) => {
-                setUsername(res.data.length);
-                setClientId(res.data[0]._id);
-              })
-              .catch((err) => console.log(err));
-            return username === 0 ? false : true;
-          }
-        ),
-      totalCosting: Yup.number()
-        .typeError("You must specify a number")
-        .required("Required"),
       description: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
@@ -147,17 +103,13 @@ const VendorPortfolioForm: FC = () => {
       };
       const body: IPortfolio = {
         vendorId: vendorid,
-        clientId: clientId,
         portfolioName: values.portfolioName,
         housingType: values.housingType,
-        projectStartDate: new Date(values.projectStartDate),
-        projectEndDate: new Date(values.projectEndDate),
-        projectStatus: values.projectStatus,
-        uploadedFiles: ["url", "url", "url"],
+        images: ["url", "url", "url"],
         description: values.description,
         designTheme: values.designTheme,
-        totalCosting: Number(values.totalCosting),
       };
+
       axios
         .post(url, body, config)
         .then((res) => {
@@ -332,32 +284,6 @@ const VendorPortfolioForm: FC = () => {
                 <div>{formik.errors.description}</div>
               ) : null}
             </Grid>
-            {/* <Grid item xs={12}>
-              <Typography
-                variant="body2"
-                sx={{ mb: "0.5rem", color: "#444444" }}
-              >
-                DESCRIPTION
-              </Typography>
-              <TextField
-                required
-                autoComplete="off"
-                id="description"
-                name="description"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                sx={{
-                  width: "100%",
-                  "& .MuiInputBase-root": {
-                    height: 200,
-                  },
-                }}
-              />
-              {formik.touched.description && formik.errors.description ? (
-                <div>{formik.errors.description}</div>
-              ) : null}
-            </Grid> */}
           </Grid>
           <Grid item sx={{ textAlign: "center" }}>
             <Button
