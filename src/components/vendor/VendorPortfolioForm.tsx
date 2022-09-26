@@ -93,6 +93,7 @@ const VendorPortfolioForm: FC = () => {
       housingType: Yup.string().required("Required"),
       designTheme: Yup.string().required("Required"),
       description: Yup.string().required("Required"),
+      images: Yup.mixed().required("A file is required"),
     }),
     onSubmit: (values) => {
       const url = urlcat(SERVER, `/projects/vendor/${vendorid}`);
@@ -282,6 +283,32 @@ const VendorPortfolioForm: FC = () => {
               />
               {formik.touched.description && formik.errors.description ? (
                 <div>{formik.errors.description}</div>
+              ) : null}
+            </Grid>
+            <Grid item sm={12}>
+              <Typography
+                variant="body2"
+                sx={{ mb: "0.5rem", color: "#444444" }}
+              >
+                UPLOAD IMAGES
+              </Typography>
+
+              <TextField
+                id="images"
+                name="images"
+                inputProps={{
+                  multiple: true,
+                }}
+                type="file"
+                onChange={(event: any) => {
+                  formik.setFieldValue("images", event.currentTarget.files);
+                }}
+                onBlur={formik.handleBlur}
+                sx={{ width: "100%" }}
+                hidden
+              />
+              {formik.touched.images && formik.errors.images ? (
+                <div>{formik.errors.images}</div>
               ) : null}
             </Grid>
           </Grid>
