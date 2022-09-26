@@ -27,6 +27,7 @@ import VendorProfile from "./components/vendor/VendorProfile";
 import ClientActivity from "./components/client/ClientActivity";
 import VendorActivity from "./components/vendor/VendorActivity";
 import NavBar from "./components/UI/NavBar";
+import VendorPortfolioForm from "./components/vendor/VendorPortfolioForm";
 
 function App() {
   return (
@@ -88,6 +89,10 @@ function App() {
             <Route
               path="/vendor/:vendorid/profile"
               element={<PrivateRoute outlet={<VendorProfile />} />}
+            />
+            <Route
+              path="/vendor/:vendorid/portfolio-form"
+              element={<PrivateRoute outlet={<VendorPortfolioForm />} />}
             />
             <Route
               path="/vendor/:vendorid/dashboard"

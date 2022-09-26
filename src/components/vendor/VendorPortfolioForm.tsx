@@ -16,12 +16,12 @@ import {
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { IProject } from "../../Interface";
+import { IPortfolio } from "../../Interface";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 const SERVER = import.meta.env.VITE_SERVER;
 
-const VendorCreateProduct: FC = () => {
+const VendorPortfolioForm: FC = () => {
   const [design, setDesign] = React.useState("");
   const [housingType, setHousingType] = React.useState("");
   const [status, setStatus] = React.useState("");
@@ -91,7 +91,7 @@ const VendorCreateProduct: FC = () => {
 
   const formik = useFormik({
     initialValues: {
-      projectName: "",
+      portfolioName: "",
       housingType: "",
       projectStartDate: "",
       projectEndDate: "",
@@ -102,7 +102,7 @@ const VendorCreateProduct: FC = () => {
       description: "",
     },
     validationSchema: Yup.object({
-      projectName: Yup.string().max(35).required("Required"),
+      portfolioName: Yup.string().max(35).required("Required"),
       housingType: Yup.string().required("Required"),
       projectStartDate: Yup.date(),
       projectEndDate: Yup.date()
@@ -145,10 +145,10 @@ const VendorCreateProduct: FC = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const body: IProject = {
+      const body: IPortfolio = {
         vendorId: vendorid,
         clientId: clientId,
-        projectName: values.projectName,
+        portfolioName: values.portfolioName,
         housingType: values.housingType,
         projectStartDate: new Date(values.projectStartDate),
         projectEndDate: new Date(values.projectEndDate),
@@ -168,8 +168,8 @@ const VendorCreateProduct: FC = () => {
     },
   });
 
-  const returnToDashboard = () => {
-    navigate(`/vendor/${vendorid}/dashboard`);
+  const returnToProfile = () => {
+    navigate(`/vendor/${vendorid}/profile`);
   };
 
   return (
@@ -187,7 +187,7 @@ const VendorCreateProduct: FC = () => {
           xs={12}
           sx={{ mb: "3rem", display: "flex", justifyContent: "space-between" }}
         >
-          <Typography variant="h3">New Project</Typography>
+          <Typography variant="h3">New Portfolio</Typography>
           <Box
             sx={{
               mb: "1.5rem",
@@ -200,10 +200,10 @@ const VendorCreateProduct: FC = () => {
             <Typography
               variant="body1"
               sx={{ alignItems: "center" }}
-              onClick={returnToDashboard}
+              onClick={returnToProfile}
             >
               <KeyboardReturnIcon sx={{ pr: "0.3rem", fontSize: "0.8rem" }} />
-              DashBoard
+              Profile
             </Typography>
           </Box>
         </Grid>
@@ -219,87 +219,29 @@ const VendorCreateProduct: FC = () => {
             }}
           >
             <Grid item sm={12}>
-              <Grid container spacing={4}>
-                <Grid item xs={12} sm={4}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: "0.5rem", color: "#444444" }}
-                  >
-                    PROJECT NAME
-                  </Typography>
-                  <TextField
-                    required
-                    id="projectName"
-                    autoComplete="off"
-                    name="projectName"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    sx={{ width: "100%" }}
-                  />
-                  {formik.touched.projectName && formik.errors.projectName ? (
-                    <div>{formik.errors.projectName}</div>
-                  ) : null}
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: "0.5rem", color: "#444444" }}
-                  >
-                    CLIENT'S USERNAME
-                  </Typography>
-
-                  <TextField
-                    required
-                    autoComplete="off"
-                    id="clientUsername"
-                    name="clientUsername"
-                    type="text"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    sx={{ width: "100%" }}
-                  />
-                  {formik.touched.clientUsername &&
-                  formik.errors.clientUsername ? (
-                    <div>{formik.errors.clientUsername}</div>
-                  ) : null}
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: "0.5rem", color: "#444444" }}
-                  >
-                    PROJECT STATUS
-                  </Typography>
-
-                  <FormControl sx={{ width: "100%" }}>
-                    <Select
-                      value={status}
-                      id="projectStatus"
-                      name="projectStatus"
-                      onChange={(e) => {
-                        handleStatusChange(e);
-                        formik.handleChange(e);
-                      }}
-                      onBlur={formik.handleBlur}
-                      sx={{ width: "100%" }}
-                    >
-                      {statusOptions.map((option, i) => (
-                        <MenuItem key={i} value={option}>
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  {formik.touched.projectStatus &&
-                  formik.errors.projectStatus ? (
-                    <div>{formik.errors.projectStatus}</div>
-                  ) : null}
-                </Grid>
-              </Grid>
+              <Typography
+                variant="body2"
+                sx={{ mb: "0.5rem", color: "#444444" }}
+              >
+                PORTFOLIO NAME
+              </Typography>
+              <TextField
+                required
+                id="portfolioName"
+                autoComplete="off"
+                name="portfolioName"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                sx={{ width: "100%" }}
+              />
+              {formik.touched.portfolioName && formik.errors.portfolioName ? (
+                <div>{formik.errors.portfolioName}</div>
+              ) : null}
             </Grid>
+
             <Grid item sm={12}>
               <Grid container spacing={4}>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6}>
                   <Typography
                     variant="body2"
                     sx={{ mb: "0.5rem", color: "#444444" }}
@@ -329,7 +271,8 @@ const VendorCreateProduct: FC = () => {
                     <div>{formik.errors.designTheme}</div>
                   ) : null}
                 </Grid>
-                <Grid item xs={12} sm={4}>
+
+                <Grid item xs={12} sm={6}>
                   <FormControl sx={{ width: "100%" }}>
                     <Typography
                       variant="body2"
@@ -360,86 +303,10 @@ const VendorCreateProduct: FC = () => {
                     <div>{formik.errors.housingType}</div>
                   ) : null}
                 </Grid>
-                <Grid item xs={12} sm={4}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: "0.5rem", color: "#444444" }}
-                  >
-                    TOTAL COSTING
-                  </Typography>
-
-                  <TextField
-                    required
-                    autoComplete="off"
-                    id="totalCosting"
-                    name="totalCosting"
-                    type="text"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    sx={{ width: "100%" }}
-                  />
-                  {formik.touched.totalCosting && formik.errors.totalCosting ? (
-                    <div>{formik.errors.totalCosting}</div>
-                  ) : null}
-                </Grid>
               </Grid>
             </Grid>
+
             <Grid item sm={12}>
-              <Grid container spacing={4}>
-                <Grid item xs={6} sm={6}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: "0.5rem", color: "#444444" }}
-                  >
-                    PROJECT START DATE
-                  </Typography>
-                  <TextField
-                    required
-                    autoComplete="off"
-                    type="date"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    id="projectStartDate"
-                    name="projectStartDate"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    sx={{ width: "100%" }}
-                  />
-                  {formik.touched.projectStartDate &&
-                  formik.errors.projectStartDate ? (
-                    <div>{formik.errors.projectStartDate}</div>
-                  ) : null}
-                </Grid>
-                <Grid item xs={6} sm={6}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: "0.5rem", color: "#444444" }}
-                  >
-                    PROJECT END DATE
-                  </Typography>
-
-                  <TextField
-                    required
-                    autoComplete="off"
-                    type="date"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    id="projectEndDate"
-                    name="projectEndDate"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    sx={{ width: "100%" }}
-                  />
-                  {formik.touched.projectEndDate &&
-                  formik.errors.projectEndDate ? (
-                    <div>{formik.errors.projectEndDate}</div>
-                  ) : null}
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
               <Typography
                 variant="body2"
                 sx={{ mb: "0.5rem", color: "#444444" }}
@@ -465,6 +332,32 @@ const VendorCreateProduct: FC = () => {
                 <div>{formik.errors.description}</div>
               ) : null}
             </Grid>
+            {/* <Grid item xs={12}>
+              <Typography
+                variant="body2"
+                sx={{ mb: "0.5rem", color: "#444444" }}
+              >
+                DESCRIPTION
+              </Typography>
+              <TextField
+                required
+                autoComplete="off"
+                id="description"
+                name="description"
+                type="text"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                sx={{
+                  width: "100%",
+                  "& .MuiInputBase-root": {
+                    height: 200,
+                  },
+                }}
+              />
+              {formik.touched.description && formik.errors.description ? (
+                <div>{formik.errors.description}</div>
+              ) : null}
+            </Grid> */}
           </Grid>
           <Grid item sx={{ textAlign: "center" }}>
             <Button
@@ -490,4 +383,4 @@ const VendorCreateProduct: FC = () => {
   );
 };
 
-export default VendorCreateProduct;
+export default VendorPortfolioForm;

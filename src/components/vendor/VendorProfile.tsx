@@ -71,7 +71,7 @@ const VendorProfile: FC = () => {
       .then((res) => {
         setVendorAccount(res.data);
         setValue(res.data.brandSummary);
-        setImages(res.data.portfolio)
+        setImages(res.data.portfolio);
         console.log(res.data);
       })
       .catch((err) => console.log(err));
@@ -124,9 +124,9 @@ const VendorProfile: FC = () => {
     axios
       .post(uploadImgUrl, formData, configForImg)
       .then((res) => {
-        console.log('say thiss', res.data.imageLinks)
-        const portArr = res.data.imageLinks.concat(images)
-        vendorAccount.portfolio = portArr
+        console.log("say thiss", res.data.imageLinks);
+        const portArr = res.data.imageLinks.concat(images);
+        vendorAccount.portfolio = portArr;
         return axios.put(url, vendorAccount, config);
       })
       .then((res) => setImages(res.data.portfolio))
@@ -196,7 +196,7 @@ const VendorProfile: FC = () => {
         <Grid container sx={{ mt: "2rem" }}>
           <Grid item xs={12} sm={7}>
             <Box sx={{ display: "flex", gap: "1rem" }}>
-              <Typography variant="h3">Photos</Typography>
+              <Typography variant="h3">Portfolio</Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={5}>
