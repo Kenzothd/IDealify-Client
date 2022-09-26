@@ -326,7 +326,7 @@ const VendorActivity: FC = () => {
                       sx={{ width: "100%" }}
                     />
                     {formik.touched.personInCharge &&
-                      formik.errors.personInCharge ? (
+                    formik.errors.personInCharge ? (
                       <div>{formik.errors.personInCharge}</div>
                     ) : null}
                   </Grid>
@@ -359,7 +359,7 @@ const VendorActivity: FC = () => {
                       sx={{ width: "100%" }}
                     />
                     {formik.touched.activityStartDate &&
-                      formik.errors.activityStartDate ? (
+                    formik.errors.activityStartDate ? (
                       <div>{formik.errors.activityStartDate}</div>
                     ) : null}
                   </Grid>
@@ -388,7 +388,7 @@ const VendorActivity: FC = () => {
                       sx={{ width: "100%" }}
                     />
                     {formik.touched.activityEndDate &&
-                      formik.errors.activityEndDate ? (
+                    formik.errors.activityEndDate ? (
                       <div>{formik.errors.activityEndDate}</div>
                     ) : null}
                   </Grid>
@@ -421,7 +421,7 @@ const VendorActivity: FC = () => {
                   }}
                 />
                 {formik.touched.activityDescription &&
-                  formik.errors.activityDescription ? (
+                formik.errors.activityDescription ? (
                   <div>{formik.errors.activityDescription}</div>
                 ) : null}
               </Grid>
@@ -443,7 +443,7 @@ const VendorActivity: FC = () => {
                     mt: "3rem",
                     px: "2rem",
                     "&:hover": {
-                      backgroundColor: "#113352 ",
+                      backgroundColor: "#173754",
                     },
                   }}
                 >
