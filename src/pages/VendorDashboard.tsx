@@ -8,11 +8,11 @@ import AddIcon from "@mui/icons-material/Add";
 const projectButtonSx = {
   backgroundColor: "#D9DFE4",
   color: "#444444",
-  letterSpacing: '0.1rem',
-  pl: '0.75rem',
-  pr: '0.75rem',
-  '&:hover': {
-    backgroundColor: '#D9DFE4',
+  letterSpacing: "0.1rem",
+  pl: "0.75rem",
+  pr: "0.75rem",
+  "&:hover": {
+    backgroundColor: "#ADB0B1",
   },
 };
 
@@ -23,19 +23,18 @@ const VendorDashboard: FC = () => {
     navigate(`/vendor/${vendorid}/create-project`);
   };
 
-
   return (
-    <Container maxWidth='lg' sx={{
-      mb: '5rem',
-      pr: '2rem',
-      pl: '2rem'
-
-    }}>
-
-      <Grid container sx={{ mb: '1rem' }}>
-
+    <Container
+      maxWidth="lg"
+      sx={{
+        mb: "5rem",
+        pr: "2rem",
+        pl: "2rem",
+      }}
+    >
+      <Grid container sx={{ mb: "1rem" }}>
         <Grid item xs={12} sm={7}>
-          <Box sx={{ display: 'flex', gap: '1rem' }}>
+          <Box sx={{ display: "flex", gap: "1rem" }}>
             <Typography variant="h3">Projects Overview</Typography>
           </Box>
         </Grid>
@@ -46,20 +45,18 @@ const VendorDashboard: FC = () => {
             sx={{
               display: "flex",
               justifyContent: { sm: "right" },
-              gap: '1rem'
+              gap: "1rem",
             }}
           >
-
             <Button sx={projectButtonSx} onClick={handleCreateProject}>
-              <AddIcon sx={{ paddingRight: "10px" }} />Project</Button>
-
+              <AddIcon sx={{ paddingRight: "10px" }} />
+              Project
+            </Button>
           </Grid>
-
         </Grid>
 
         <VendorProjectTracker />
       </Grid>
-
     </Container>
   );
 };

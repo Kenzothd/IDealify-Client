@@ -477,7 +477,7 @@ const VendorCreateProduct: FC = () => {
                 pl: "6rem",
                 pr: "6rem",
                 "&:hover": {
-                  backgroundColor: "#254D71",
+                  backgroundColor: "#173754",
                 },
               }}
             >
