@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-
 import PrivateRoute from "./utilities/PrivateRoute";
 import VendorAccount from "./components/vendor/VendorAccount";
 import VendorSignUp from "./pages/VendorSignUp";
@@ -16,10 +15,8 @@ import ClientLogIn from "./pages/ClientLogIn";
 import VendorDashboard from "./pages/VendorDashboard";
 import LoginRedirect from "./pages/LoginRedirect";
 import VendorUpdateProject from "./components/vendor/VendorUpdateProject";
-
 import VendorTab from "./components/vendor/Vendortab";
 import VendorActivityTable from "./components/vendor/VendorActivityTable";
-
 import Testing from "./pages/Testing";
 import ClientDashboard from "./pages/ClientDashboard";
 import ClientLoginForm from "./components/client/ClientLoginForm";
