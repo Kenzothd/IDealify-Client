@@ -38,6 +38,16 @@ export interface IProject {
   comments?: string;
 }
 
+export interface IPortfolio {
+  _id?: string;
+  vendorId?: string;
+  portfolioName: string;
+  housingType: string;
+  images: string[];
+  description?: string;
+  designTheme: string;
+}
+
 export interface IClient {
   username: string;
   password: string;

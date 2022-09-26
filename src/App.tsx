@@ -27,6 +27,7 @@ import VendorProfile from "./components/vendor/VendorProfile";
 import ClientActivity from "./components/client/ClientActivity";
 import VendorActivity from "./components/vendor/VendorActivity";
 import NavBar from "./components/UI/NavBar";
+import VendorPortfolioForm from "./components/vendor/VendorPortfolioForm";
 import PortfolioDetails from "./pages/PortfolioDetails";
 
 function App() {
@@ -42,7 +43,10 @@ function App() {
             <Route path="/client/login" element={<ClientLogIn />} />
             <Route path="/vendor/sign-up" element={<VendorSignUp />} />
             <Route path="/vendor/login" element={<VendorLogIn />} />
-            <Route path="/:vendorname/:portfolioid" element={<PortfolioDetails />} />
+            <Route
+              path="/:vendorname/:portfolioid"
+              element={<PortfolioDetails />}
+            />
           </Route>
 
           <Route path="/login-redirect" element={<LoginRedirect />} />
@@ -90,6 +94,10 @@ function App() {
             <Route
               path="/vendor/:vendorid/profile"
               element={<PrivateRoute outlet={<VendorProfile />} />}
+            />
+            <Route
+              path="/vendor/:vendorid/portfolio-form"
+              element={<PrivateRoute outlet={<VendorPortfolioForm />} />}
             />
             <Route
               path="/vendor/:vendorid/dashboard"
