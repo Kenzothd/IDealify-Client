@@ -53,11 +53,8 @@ const VendorAccount: FC = () => {
     portfolio: [""],
   });
 
-  console.log(offEditMode);
-
-  console.log(token);
-
   useEffect(() => {
+    console.log("axios call done");
     const url = urlcat(SERVER, `/vendors/id/${vendorid}`);
     const config = {
       headers: {
@@ -68,7 +65,10 @@ const VendorAccount: FC = () => {
     const vendorURL = urlcat(SERVER, `/vendors/id/${vendorid}`);
     axios
       .get(vendorURL, config)
-      .then((res) => setVendorAccount(res.data))
+      .then((res) => {
+        setVendorAccount(res.data);
+        console.log(res.data);
+      })
       .catch((err) => console.log(err));
   }, []);
 

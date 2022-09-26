@@ -388,14 +388,16 @@ const VendorSignUpForm: FC = () => {
           </Grid>
 
         </Grid>
+
         <Grid item sx={{ textAlign: 'center' }}>
           <Button type="submit" sx={{
             background: '#254D71',
             color: 'white',
             letterSpacing: '0.2rem',
             mt: '3rem',
-            pl: '6rem',
-            pr: '6rem',
+            width: { xs: '100%', sm: '0' },
+            pl: { sm: '6rem' },
+            pr: { sm: '6rem' },
             '&:hover': {
               backgroundColor: '#254D71',
             }

@@ -78,7 +78,7 @@ const LandingPage = (props: Props) => {
         <AppBar>
           <Toolbar>
             <Typography variant="h3" flexGrow={1}>
-              <LightbulbIcon sx={{ paddingRight: "10px" }} /> Idealify
+              <LightbulbIcon /> IDealify
             </Typography>
             <Box sx={{ display: "flex", gap: "1rem" }}>
               <Button sx={projectButtonSx} onClick={clientLogin}>

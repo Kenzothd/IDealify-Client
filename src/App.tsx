@@ -26,7 +26,14 @@ import ClientAccount from "./components/client/ClientAccount";
 import VendorProfile from "./components/vendor/VendorProfile";
 import ClientActivity from "./components/client/ClientActivity";
 import VendorActivity from "./components/vendor/VendorActivity";
-
+interface Props {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window?: () => Window;
+  children: React.ReactElement;
+}
 function App() {
   return (
     <TokenProvider>
