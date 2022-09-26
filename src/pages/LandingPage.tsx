@@ -18,6 +18,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
+
 const projectButtonSx = {
   backgroundColor: "#D9DFE4",
   color: "#444444",
@@ -29,31 +30,7 @@ const projectButtonSx = {
   },
 };
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-  children: React.ReactElement;
-};
-
-function HideOnScroll(props: Props) {
-  const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-  });
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
-
-const LandingPage = (props: Props) => {
+const LandingPage: FC = () => {
   const navigate = useNavigate();
   const SERVER = import.meta.env.VITE_SERVER;
   const imageUrl = urlcat(SERVER, "/getimages");
@@ -73,27 +50,22 @@ const LandingPage = (props: Props) => {
 
   return (
     <>
-      <CssBaseline />
-      <HideOnScroll {...props}>
-        <AppBar>
-          <Toolbar>
-            <Typography variant="h3" flexGrow={1}>
-              <LightbulbIcon /> IDealify
-            </Typography>
-            <Box sx={{ display: "flex", gap: "1rem" }}>
-              <Button sx={projectButtonSx} onClick={clientLogin}>
-                <TouchAppIcon sx={{ paddingRight: "10px" }} />
-                Homeowners
-              </Button>
-              <Button sx={projectButtonSx} onClick={vendorLogin}>
-                <TouchAppIcon sx={{ paddingRight: "10px" }} /> Interior
-                Designers
-              </Button>
-            </Box>
-          </Toolbar>
-        </AppBar>
-      </HideOnScroll>
-      <Toolbar />
+      {/* <AppBar>
+        <Toolbar sx={{ backgroundColor: "#254D71" }}>
+          <Typography variant="h3" flexGrow={1} sx={{ fontWeight: "bold" }}>
+            IDealify
+          </Typography>
+          <Box sx={{ display: "flex", gap: "1rem" }}>
+            <Button sx={projectButtonSx} onClick={clientLogin}>
+              Homeowners
+            </Button>
+            <Button sx={projectButtonSx} onClick={vendorLogin}>
+              Interior Designers
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <Toolbar /> */}
       <Container
         maxWidth="lg"
         sx={{

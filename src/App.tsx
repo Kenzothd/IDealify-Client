@@ -26,26 +26,26 @@ import ClientAccount from "./components/client/ClientAccount";
 import VendorProfile from "./components/vendor/VendorProfile";
 import ClientActivity from "./components/client/ClientActivity";
 import VendorActivity from "./components/vendor/VendorActivity";
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-  children: React.ReactElement;
-}
+import NavBar from "./components/UI/NavBar";
+
 function App() {
   return (
     <TokenProvider>
       <BrowserRouter>
         <Routes>
           {/* for all */}
-          <Route path="/" element={<LandingPage />} />
+
+          <Route path="/" element={<NavBar />}>
+            <Route index element={<LandingPage />} />
+            <Route path="/client/sign-up" element={<ClientSignUp />} />
+            <Route path="/client/login" element={<ClientLogIn />} />
+            <Route path="/vendor/sign-up" element={<VendorSignUp />} />
+            <Route path="/vendor/login" element={<VendorLogIn />} />
+          </Route>
+
           <Route path="/login-redirect" element={<LoginRedirect />} />
 
           {/* client */}
-          <Route path="/client/sign-up" element={<ClientSignUp />} />
-          <Route path="/client/login" element={<ClientLogIn />} />
 
           <Route path="/client" element={<ClientTab />}>
             <Route
@@ -67,8 +67,6 @@ function App() {
           </Route>
 
           {/* vendor */}
-          <Route path="/vendor/sign-up" element={<VendorSignUp />} />
-          <Route path="/vendor/login" element={<VendorLogIn />} />
 
           <Route path="/vendor/upload" element={<Testing />} />
 
