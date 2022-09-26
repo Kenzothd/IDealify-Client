@@ -1,10 +1,11 @@
-import { Typography } from "@mui/material"
+import { Typography } from "@mui/material";
 
 const PortfolioDetails = () => {
+  return (
+    <>
+      <Typography variant="h3">Jurong east</Typography>;
+    </>
+  );
+};
 
-    return (
-        <Typography variant="h3">Portfolio Details</Typography>
-    )
-}
-
-export default PortfolioDetails
+export default PortfolioDetails;

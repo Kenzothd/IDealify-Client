@@ -43,10 +43,7 @@ function App() {
             <Route path="/client/login" element={<ClientLogIn />} />
             <Route path="/vendor/sign-up" element={<VendorSignUp />} />
             <Route path="/vendor/login" element={<VendorLogIn />} />
-            <Route
-              path="/:vendorname/:portfolioid"
-              element={<PortfolioDetails />}
-            />
+            <Route path="/portfoliodetails" element={<PortfolioDetails />} />
           </Route>
 
           <Route path="/login-redirect" element={<LoginRedirect />} />
