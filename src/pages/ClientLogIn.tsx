@@ -16,29 +16,35 @@ const ClientLogIn: FC = () => {
             backgroundSize: "cover",
             backgroundPosition: "center center",
             height: "100vh",
+            display: { xs: 'none', sm: 'block' }
           }}
         ></Grid>
         <Grid
           item
-          xs={6}
+          xs={12}
+          sm={6}
+
           sx={{
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
             alignItems: "center",
-            p: "2rem",
+            justifyContent: 'center',
+            mt: { xs: '6rem', sm: '0' }
           }}
         >
-          <Box sx={{ mb: "3rem" }}>
-            <Typography variant="h2">Hello</Typography>
-            <Typography variant="h2">Homeowners,</Typography>
-          </Box>
-          <ClientLoginForm />
-          <Box>
-            <Typography variant="body2" sx={{ mt: "1rem" }}>
-              Not a member yet?
-              <Link to="/client/sign-up">SIGN UP</Link>
-            </Typography>
+          <Box sx={{ p: '2rem' }}>
+            <Box sx={{ mb: "3rem" }}>
+              <Typography variant="h2">Hello</Typography>
+              <Typography variant="h2">Homeowners,</Typography>
+            </Box>
+
+            <ClientLoginForm />
+
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: "1.5rem", gap: '0.5rem' }}>
+              <Typography variant="body2">Not a member yet?</Typography>
+
+              <Link to="/client/sign-up"><Typography variant="body2">SIGN UP</Typography></Link>
+            </Box>
+
           </Box>
         </Grid>
       </Grid>
