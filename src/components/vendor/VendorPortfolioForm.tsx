@@ -103,20 +103,8 @@ const VendorPortfolioForm: FC = () => {
         },
       };
 
-      // const body: IPortfolio = {
-      //   vendorId: vendorid,
-      //   portfolioName: values.portfolioName,
-      //   housingType: values.housingType,
-      //   images: values.images,
-      //   description: values.description,
-      //   designTheme: values.designTheme,
-      // };
-      // console.log(body);
-
-      // upload image to cloudinary
       const imgConfig = {
         headers: {
-          // Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       };
