@@ -5,7 +5,10 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import urlcat from "urlcat";
 
+
+
 const PortfolioDetails = () => {
+
 
     const [bigImg, setBigImg] = useState('https://images.unsplash.com/photo-1551782450-a2132b4ba21d')
     const [vendorPortfolio, setVendorPortfolio] = useState({})

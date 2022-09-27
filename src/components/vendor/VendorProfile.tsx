@@ -141,7 +141,7 @@ const VendorProfile: FC = () => {
   };
 
   const handleformPortfolio = () => {
-    navigate("/vendor/:vendorid/portfolio-form");
+    navigate(`/vendor/${vendorid}/portfolio-form`);
   };
 
   return (
@@ -210,7 +210,7 @@ const VendorProfile: FC = () => {
             textAlign: "center",
           }}
         >
-          <Typography variant="h3">Photos</Typography>
+          <Typography variant="h3">Portfolios</Typography>
           <Button sx={projectButtonSx} onClick={handleformPortfolio}>
             <AddIcon />
             Portfolio

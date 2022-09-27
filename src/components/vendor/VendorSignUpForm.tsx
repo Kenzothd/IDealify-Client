@@ -13,7 +13,7 @@ const VendorSignUpForm: FC = () => {
   const [username, setUsername] = useState(0);
   const [userEmail, setUserEmail] = useState(0);
   const [regNum, setRegNum] = useState(0);
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState({});
   const SERVER = import.meta.env.VITE_SERVER;
 
   const navigateToProjects = useNavigate();
@@ -51,32 +51,25 @@ const VendorSignUpForm: FC = () => {
       username: Yup.string()
         .min(3, "Must be 3 characters or more")
         .required("Required")
-        .test(
-          "value-name",
-          "Username is in used",
-          (name: any): boolean => {
-            const userUrl = urlcat(SERVER, `vendors/findByName/${name}`);
-            axios
-              .get(userUrl)
-              .then((res) => setUsername(res.data.length))
-              .catch((err) => console.log(err));
-            return username === 0 ? true : false;
-          }
-        )
-      ,
-      email: Yup.string().email("Invalid email address").required("Required")
-        .test(
-          "value-email",
-          "Email is in used",
-          (email: any): boolean => {
-            const clientUrl = urlcat(SERVER, `vendors/findByEmail/${email}`);
-            axios
-              .get(clientUrl)
-              .then((res) => setUserEmail(res.data.length))
-              .catch((err) => console.log(err));
-            return userEmail === 0 ? true : false;
-          }
-        ),
+        .test("value-name", "Username is in used", (name: any): boolean => {
+          const userUrl = urlcat(SERVER, `vendors/findByName/${name}`);
+          axios
+            .get(userUrl)
+            .then((res) => setUsername(res.data.length))
+            .catch((err) => console.log(err));
+          return username === 0 ? true : false;
+        }),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Required")
+        .test("value-email", "Email is in used", (email: any): boolean => {
+          const clientUrl = urlcat(SERVER, `vendors/findByEmail/${email}`);
+          axios
+            .get(clientUrl)
+            .then((res) => setUserEmail(res.data.length))
+            .catch((err) => console.log(err));
+          return userEmail === 0 ? true : false;
+        }),
       password: Yup.string()
         .matches(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
@@ -102,8 +95,7 @@ const VendorSignUpForm: FC = () => {
               .catch((err) => console.log(err));
             return regNum === 0 ? true : false;
           }
-        )
-      ,
+        ),
       incorporationDate: Yup.date()
         .default(new Date())
         .max(
@@ -116,26 +108,26 @@ const VendorSignUpForm: FC = () => {
     }),
     onSubmit: (values: any) => {
       console.log(values);
-      console.log(values.uploadedFiles)
+      console.log(values.uploadedFiles);
 
-
-      const formData = new FormData()
+      const formData = new FormData();
       for (let i = 0; i < values.uploadedFiles.length; i++) {
-        formData.append("uploadedFiles", values.uploadedFiles[i])
+        formData.append("uploadedFiles", values.uploadedFiles[i]);
       }
-      const uploadImgUrl = urlcat(SERVER, '/upload-images');
+
+      const uploadImgUrl = urlcat(SERVER, "/upload-images");
       const createVendorUrl = urlcat(SERVER, "/vendors");
       const config = {
         headers: {
           // Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       };
       axios
         .post(uploadImgUrl, formData, config)
         .then((res) => {
-          values.uploadedFiles = res.data.imageLinks
-          return axios.post(createVendorUrl, values)
+          values.uploadedFiles = res.data.imageLinks;
+          return axios.post(createVendorUrl, values);
         })
         .then((res) => {
           sessionStorage.setItem("token", res.data.token);
@@ -144,10 +136,6 @@ const VendorSignUpForm: FC = () => {
           navigateToProjects(`/vendor/${payload.userId}/dashboard`);
         })
         .catch((error) => console.log(error.response.data.error));
-
-
-
-
 
       // axios
       //   .post(url, values)
@@ -174,7 +162,12 @@ const VendorSignUpForm: FC = () => {
           <Grid item sm={12}>
             <Grid container spacing={5}>
               <Grid item xs={12} sm={6}>
-                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>CONTACT PERSON</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ mb: "0.5rem", color: "#444444" }}
+                >
+                  CONTACT PERSON
+                </Typography>
 
                 <TextField
                   required
@@ -187,13 +180,18 @@ const VendorSignUpForm: FC = () => {
                   value={formik.values.contactPersonName}
                 />
                 {formik.touched.contactPersonName &&
-                  formik.errors.contactPersonName ? (
+                formik.errors.contactPersonName ? (
                   <div>{formik.errors.contactPersonName}</div>
                 ) : null}
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>USERNAME</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ mb: "0.5rem", color: "#444444" }}
+                >
+                  USERNAME
+                </Typography>
                 <TextField
                   required
                   id="username"
@@ -211,10 +209,15 @@ const VendorSignUpForm: FC = () => {
             </Grid>
           </Grid>
 
-          <Grid item sm={12} >
+          <Grid item sm={12}>
             <Grid container spacing={5}>
               <Grid item xs={12} sm={6}>
-                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>EMAIL ADDRESS</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ mb: "0.5rem", color: "#444444" }}
+                >
+                  EMAIL ADDRESS
+                </Typography>
                 <TextField
                   required
                   id="email"
@@ -231,7 +234,12 @@ const VendorSignUpForm: FC = () => {
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>PASSWORD</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ mb: "0.5rem", color: "#444444" }}
+                >
+                  PASSWORD
+                </Typography>
 
                 <TextField
                   required
@@ -253,7 +261,12 @@ const VendorSignUpForm: FC = () => {
           <Grid item sm={12}>
             <Grid container spacing={5}>
               <Grid item xs={12} sm={6}>
-                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>CONTACT NUMBER</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ mb: "0.5rem", color: "#444444" }}
+                >
+                  CONTACT NUMBER
+                </Typography>
                 <TextField
                   required
                   id="contractNumber"
@@ -270,7 +283,12 @@ const VendorSignUpForm: FC = () => {
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>COMPANY NAME</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ mb: "0.5rem", color: "#444444" }}
+                >
+                  COMPANY NAME
+                </Typography>
 
                 <TextField
                   required
@@ -292,7 +310,12 @@ const VendorSignUpForm: FC = () => {
           <Grid item sm={12}>
             <Grid container spacing={5}>
               <Grid item xs={12} sm={6}>
-                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>REGISTRATION NUMBER</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ mb: "0.5rem", color: "#444444" }}
+                >
+                  REGISTRATION NUMBER
+                </Typography>
 
                 <TextField
                   required
@@ -305,13 +328,18 @@ const VendorSignUpForm: FC = () => {
                   value={formik.values.registrationNumber}
                 />
                 {formik.touched.registrationNumber &&
-                  formik.errors.registrationNumber ? (
+                formik.errors.registrationNumber ? (
                   <div>{formik.errors.registrationNumber}</div>
                 ) : null}
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>INCORPORATION DATE</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ mb: "0.5rem", color: "#444444" }}
+                >
+                  INCORPORATION DATE
+                </Typography>
 
                 <TextField
                   required
@@ -332,7 +360,7 @@ const VendorSignUpForm: FC = () => {
                   value={formik.values.incorporationDate}
                 />
                 {formik.touched.incorporationDate &&
-                  formik.errors.incorporationDate ? (
+                formik.errors.incorporationDate ? (
                   <div>{formik.errors.incorporationDate}</div>
                 ) : null}
               </Grid>
@@ -342,7 +370,12 @@ const VendorSignUpForm: FC = () => {
           <Grid item sm={12}>
             <Grid container spacing={5}>
               <Grid item xs={12} sm={6}>
-                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>REGISTERED OFFICE ADDRESS</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ mb: "0.5rem", color: "#444444" }}
+                >
+                  REGISTERED OFFICE ADDRESS
+                </Typography>
 
                 <TextField
                   required
@@ -355,19 +388,24 @@ const VendorSignUpForm: FC = () => {
                   value={formik.values.registeredOfficeAddress}
                 />
                 {formik.touched.registeredOfficeAddress &&
-                  formik.errors.registeredOfficeAddress ? (
+                formik.errors.registeredOfficeAddress ? (
                   <div>{formik.errors.registeredOfficeAddress}</div>
                 ) : null}
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>UPLOAD FILES</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ mb: "0.5rem", color: "#444444" }}
+                >
+                  UPLOAD FILES
+                </Typography>
 
                 <TextField
                   id="uploadedFiles"
                   name="uploadedFiles"
                   inputProps={{
-                    multiple: true
+                    multiple: true,
                   }}
                   type="file"
                   onChange={(event: any) => {
@@ -386,26 +424,28 @@ const VendorSignUpForm: FC = () => {
               </Grid>
             </Grid>
           </Grid>
-
         </Grid>
 
-        <Grid item sx={{ textAlign: 'center' }}>
-          <Button type="submit" sx={{
-            background: '#254D71',
-            color: 'white',
-            letterSpacing: '0.2rem',
-            mt: '3rem',
-            width: { xs: '100%', sm: '0' },
-            pl: { sm: '6rem' },
-            pr: { sm: '6rem' },
-            '&:hover': {
-              backgroundColor: '#254D71',
-            }
-          }}>
-            Submit</Button>
+        <Grid item sx={{ textAlign: "center" }}>
+          <Button
+            type="submit"
+            sx={{
+              background: "#254D71",
+              color: "white",
+              letterSpacing: "0.2rem",
+              mt: "3rem",
+              width: { xs: "100%", sm: "0" },
+              pl: { sm: "6rem" },
+              pr: { sm: "6rem" },
+              "&:hover": {
+                backgroundColor: "#254D71",
+              },
+            }}
+          >
+            Submit
+          </Button>
         </Grid>
       </form>
-
     </Grid>
   );
 };

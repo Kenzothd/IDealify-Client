@@ -93,28 +93,56 @@ const VendorPortfolioForm: FC = () => {
       housingType: Yup.string().required("Required"),
       designTheme: Yup.string().required("Required"),
       description: Yup.string().required("Required"),
+      images: Yup.mixed().required("A file is required"),
     }),
     onSubmit: (values) => {
-      const url = urlcat(SERVER, `/projects/vendor/${vendorid}`);
+      console.log(values.images);
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-      const body: IPortfolio = {
-        vendorId: vendorid,
-        portfolioName: values.portfolioName,
-        housingType: values.housingType,
-        images: ["url", "url", "url"],
-        description: values.description,
-        designTheme: values.designTheme,
+
+      // const body: IPortfolio = {
+      //   vendorId: vendorid,
+      //   portfolioName: values.portfolioName,
+      //   housingType: values.housingType,
+      //   images: values.images,
+      //   description: values.description,
+      //   designTheme: values.designTheme,
+      // };
+      // console.log(body);
+
+      // upload image to cloudinary
+      const imgConfig = {
+        headers: {
+          // Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
       };
+      const url = urlcat(SERVER, `/portfolios/vendor/${vendorid}`);
+      const uploadImgUrl = urlcat(SERVER, "/upload-images");
+      const formData = new FormData();
+      for (let i = 0; i < values.images.length; i++) {
+        formData.append("uploadedFiles", values.images[i]);
+      }
 
       axios
-        .post(url, body, config)
+        .post(uploadImgUrl, formData, imgConfig)
+        .then((res) => {
+          const body: IPortfolio = {
+            vendorId: vendorid,
+            portfolioName: values.portfolioName,
+            housingType: values.housingType,
+            images: res.data.imageLinks,
+            description: values.description,
+            designTheme: values.designTheme,
+          };
+          return axios.post(url, body, config);
+        })
         .then((res) => {
           console.log(res.data);
-          navigate(`/vendor/${vendorid}/dashboard`);
+          navigate(`/vendor/${vendorid}/profile`);
         })
         .catch((err) => console.log(err));
     },
@@ -282,6 +310,32 @@ const VendorPortfolioForm: FC = () => {
               />
               {formik.touched.description && formik.errors.description ? (
                 <div>{formik.errors.description}</div>
+              ) : null}
+            </Grid>
+            <Grid item sm={12}>
+              <Typography
+                variant="body2"
+                sx={{ mb: "0.5rem", color: "#444444" }}
+              >
+                UPLOAD IMAGES
+              </Typography>
+
+              <TextField
+                id="images"
+                name="images"
+                inputProps={{
+                  multiple: true,
+                }}
+                type="file"
+                onChange={(event: any) => {
+                  formik.setFieldValue("images", event.currentTarget.files);
+                }}
+                onBlur={formik.handleBlur}
+                sx={{ width: "100%" }}
+                hidden
+              />
+              {formik.touched.images && formik.errors.images ? (
+                <div>{formik.errors.images}</div>
               ) : null}
             </Grid>
           </Grid>
