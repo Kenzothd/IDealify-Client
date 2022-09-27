@@ -96,26 +96,53 @@ const VendorPortfolioForm: FC = () => {
       images: Yup.mixed().required("A file is required"),
     }),
     onSubmit: (values) => {
-      const url = urlcat(SERVER, `/projects/vendor/${vendorid}`);
+      console.log(values.images);
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-      const body: IPortfolio = {
-        vendorId: vendorid,
-        portfolioName: values.portfolioName,
-        housingType: values.housingType,
-        images: ["url", "url", "url"],
-        description: values.description,
-        designTheme: values.designTheme,
+
+      // const body: IPortfolio = {
+      //   vendorId: vendorid,
+      //   portfolioName: values.portfolioName,
+      //   housingType: values.housingType,
+      //   images: values.images,
+      //   description: values.description,
+      //   designTheme: values.designTheme,
+      // };
+      // console.log(body);
+
+      // upload image to cloudinary
+      const imgConfig = {
+        headers: {
+          // Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
       };
+      const url = urlcat(SERVER, `/portfolios/vendor/${vendorid}`);
+      const uploadImgUrl = urlcat(SERVER, "/upload-images");
+      const formData = new FormData();
+      for (let i = 0; i < values.images.length; i++) {
+        formData.append("uploadedFiles", values.images[i]);
+      }
 
       axios
-        .post(url, body, config)
+        .post(uploadImgUrl, formData, imgConfig)
+        .then((res) => {
+          const body: IPortfolio = {
+            vendorId: vendorid,
+            portfolioName: values.portfolioName,
+            housingType: values.housingType,
+            images: res.data.imageLinks,
+            description: values.description,
+            designTheme: values.designTheme,
+          };
+          return axios.post(url, body, config);
+        })
         .then((res) => {
           console.log(res.data);
-          navigate(`/vendor/${vendorid}/dashboard`);
+          navigate(`/vendor/${vendorid}/profile`);
         })
         .catch((err) => console.log(err));
     },
