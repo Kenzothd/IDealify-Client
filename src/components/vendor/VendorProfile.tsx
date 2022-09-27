@@ -140,8 +140,9 @@ const VendorProfile: FC = () => {
     setValue(event.target.value);
   };
 
-  const formPortfolio = () => {
-    navigate("/vendor/:vendorid/portfolio-form");
+
+  const handleformPortfolio = () => {
+    navigate(`/vendor/${vendorid}/portfolio-form`);
   };
 
   return (
@@ -200,21 +201,25 @@ const VendorProfile: FC = () => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid container sx={{ mt: "2rem", display: "flex" }}>
-          <Grid item xs={12} sm={7}>
-            <Box>
-              <Typography variant="h3">Photos</Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={5}>
-            <Grid
-              container
-              sx={{
-                display: "flex",
-                justifyContent: { sm: "right" },
-                gap: "1rem",
-              }}
-            >
+
+
+        <Grid
+          container
+          sx={{
+            mt: "2rem",
+            display: "flex",
+            justifyContent: "space-between",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h3">Portfolios</Typography>
+          <Button sx={projectButtonSx} onClick={handleformPortfolio}>
+            <AddIcon />
+            Portfolio
+          </Button>
+
+          {/* <Grid item xs={12} sm={5}>
+            <Grid container>
               <Grid
                 item
                 sm={6}
