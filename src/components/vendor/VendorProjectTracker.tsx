@@ -81,7 +81,6 @@ const VendorProjectTracker: FC = () => {
 
   return (
     <>
-
       <VendorProjectTable revampProjects={revampProjects} />
     </>
   );
