@@ -140,7 +140,6 @@ const VendorProfile: FC = () => {
     setValue(event.target.value);
   };
 
-
   const handleformPortfolio = () => {
     navigate(`/vendor/${vendorid}/portfolio-form`);
   };
@@ -202,7 +201,6 @@ const VendorProfile: FC = () => {
           />
         </Grid>
 
-
         <Grid
           container
           sx={{
@@ -218,47 +216,6 @@ const VendorProfile: FC = () => {
             Portfolio
           </Button>
 
-          {/* <Grid item xs={12} sm={5}>
-            <Grid container>
-              <Grid
-                item
-                sm={6}
-                sx={{ display: "flex", justifyContent: "right" }}
-              >
-                <TextField
-                  id="portfolio"
-                  name="portfolio"
-                  inputProps={{
-                    multiple: true,
-                  }}
-                  type="file"
-                  onChange={(event: any) => {
-                    console.log(event.currentTarget.files);
-                    setVendorAccount({
-                      ...vendorAccount,
-                      portfolio: event.currentTarget.files,
-                    });
-                    // formik.setFieldValue(
-                    //   "uploadedFiles",
-                    //   event.currentTarget.files
-                    // );
-                  }}
-                  sx={{ width: "100%" }}
-                  hidden
-                />
-              </Grid>
-              <Grid
-                item
-                sm={5}
-                sx={{ display: "flex", justifyContent: "center" }}
-              >
-                <Button sx={projectButtonSx} onClick={handleAddPhotos}>
-                  <AddIcon sx={{ paddingRight: "10px" }} />
-                  Photos
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
           <Grid container sx={{ mt: "1rem" }}>
             <Divider sx={style} />
           </Grid>
@@ -303,7 +260,7 @@ const VendorProfile: FC = () => {
                 image="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1600"
               />
             </Card>
-          </Grid> */}
+          </Grid>
           {/* <Grid item sm={12} md={3}>
             <Card>
               <CardMedia
