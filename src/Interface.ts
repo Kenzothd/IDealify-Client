@@ -40,7 +40,7 @@ export interface IProject {
 
 export interface IPortfolio {
   _id?: string;
-  vendorId?: string;
+  vendorId?: { _id: string, username: string };
   portfolioName: string;
   housingType: string;
   images: string[];
