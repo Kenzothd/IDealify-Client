@@ -41,7 +41,9 @@ const LandingPage: FC = () => {
   useEffect(() => {
     axios
       .get(imageUrl)
-      .then((res) => { setImages(res.data) })
+      .then((res) => {
+        setImages(res.data);
+      })
       .catch((error) => console.log(error));
   }, []);
   const vendorLogin = () => {
@@ -52,8 +54,8 @@ const LandingPage: FC = () => {
   };
 
   const handleClick = (e: any) => {
-    navigate(`/${e.target.name}/${e.target.id}`)
-  }
+    navigate(`/${e.target.name}/${e.target.id}`);
+  };
 
   return (
     <>
@@ -91,8 +93,12 @@ const LandingPage: FC = () => {
           <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
             {images.slice(0, 12).map((img, index) => (
               <Grid item sm={12} md={3} key={index} sx={{ padding: 0 }}>
-                <Card >
-                  <CardMedia component="img" height="170" image={img.images[0]} />
+                <Card>
+                  <CardMedia
+                    component="img"
+                    height="170"
+                    image={img.images[0]}
+                  />
                   <CardContent sx={{ pt: 1, pl: 1, pr: 0, pb: 0 }}>
                     <Typography
                       sx={{
@@ -121,10 +127,16 @@ const LandingPage: FC = () => {
                       justifyContent: "flex-end",
                     }}
                   >
-                    <Button size="small" name={img.vendorId?.username} id={img._id} onClick={handleClick}>Learn More</Button>
+                    <Button
+                      size="small"
+                      name={img.vendorId?.username}
+                      id={img._id}
+                      onClick={handleClick}
+                    >
+                      Learn More
+                    </Button>
                   </CardActions>
                 </Card>
-
               </Grid>
             ))}
 
