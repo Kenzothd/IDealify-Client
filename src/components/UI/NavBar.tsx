@@ -12,7 +12,7 @@ const projectButtonSx = {
   pl: "0.75rem",
   pr: "0.75rem",
   "&:hover": {
-    backgroundColor: "#D9DFE4",
+    backgroundColor: "#ADB0B1",
   },
 };
 
@@ -27,21 +27,23 @@ const NavBar = () => {
   return (
     <>
       <AppBar>
-        <Toolbar sx={{ backgroundColor: "#254D71", pt: '0.3rem', pb: '0.3rem' }}>
-          <Container
-            maxWidth="lg"
-            sx={{
-            }}
-          >
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-
+        <Toolbar
+          sx={{ backgroundColor: "#254D71", pt: "0.3rem", pb: "0.3rem" }}
+        >
+          <Container maxWidth="lg" sx={{}}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
               <Typography
                 variant="h3"
-                sx={{ fontWeight: "bold", cursor: 'pointer' }}
+                sx={{ fontWeight: "bold", cursor: "pointer" }}
                 onClick={() => {
                   navigate("/");
                 }}
-
               >
                 IDealify
               </Typography>
@@ -54,7 +56,6 @@ const NavBar = () => {
                   Interior Designers
                 </Button>
               </Box>
-
             </Box>
           </Container>
         </Toolbar>
