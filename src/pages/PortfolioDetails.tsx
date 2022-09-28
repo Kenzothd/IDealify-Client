@@ -1,17 +1,28 @@
 import { Grid, ImageList, ImageListItem, TextField, Typography } from "@mui/material"
 import { Box, Container } from "@mui/system"
-import axios from "axios"
-import { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState, FC } from "react";
 import { useParams } from "react-router-dom"
 import urlcat from "urlcat";
+import { IVendorPortfolio } from "../Interface"
+import axios from "axios";
 
 
 
-const PortfolioDetails = () => {
+const PortfolioDetails: FC = () => {
 
 
-    const [bigImg, setBigImg] = useState('https://images.unsplash.com/photo-1551782450-a2132b4ba21d')
-    const [vendorPortfolio, setVendorPortfolio] = useState({})
+    const [vendorPortfolio, setVendorPortfolio] = useState<IVendorPortfolio>({
+        _id: '',
+        vendorId: { _id: '', brandSummary: '', companyName: '', contactPersonName: '', contactNumber: '', email: '' },
+        portfolioName: '',
+        housingType: '',
+        images: [],
+        description: '',
+        designTheme: '',
+        __v: 0,
+    })
+
+    const [bigImg, setBigImg] = useState('')
 
     const { portfolioid } = useParams()
     const SERVER = import.meta.env.VITE_SERVER;
@@ -20,7 +31,11 @@ const PortfolioDetails = () => {
     useEffect(() => {
         axios
             .get(portfolioUrl)
-            .then((res) => console.log(res.data))
+            .then((res) => {
+                setBigImg(res.data.images[0])
+                setVendorPortfolio(res.data)
+
+            })
             .catch((error) => console.log(error));
     }, [])
 
@@ -29,27 +44,7 @@ const PortfolioDetails = () => {
     }
 
 
-    const itemData = [
-        {
-            img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-            title: 'Breakfast',
-        },
-        {
-            img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-            title: 'Burger',
-        },
-        {
-            img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-            title: 'Camera',
-        },
-        {
-            img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-            title: 'Coffee',
-        },
-        {
-            img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-            title: 'Hats',
-        },]
+
 
     return (
         <Container
@@ -74,7 +69,7 @@ const PortfolioDetails = () => {
                             mb: '1rem',
                             pb: '0.5rem'
                         }}
-                    >Portfolio Details
+                    >{vendorPortfolio.portfolioName}
                     </Typography>
                 </Grid>
 
@@ -85,12 +80,12 @@ const PortfolioDetails = () => {
                         style={{ width: '99%', marginBottom: '1rem', borderRadius: 15 }}
                     />
                     <Box sx={{ display: 'flex', gap: '3%', flexWrap: 'wrap', rowGap: '0.8rem' }}>
-                        {itemData.map((item, index) => (
+                        {vendorPortfolio.images.map((image, index) => (
 
                             <img
                                 key={index}
-                                src={item.img}
-                                alt={item.title}
+                                src={image}
+                                alt={image}
                                 style={{ width: '31%', borderRadius: 15 }}
                                 onClick={handleEnlarge}
                             />
@@ -105,17 +100,17 @@ const PortfolioDetails = () => {
                     <Grid container sx={{ mb: '2rem' }}>
                         <Grid item xs={12} sm={6}>
                             <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>DESIGN THEME</Typography>
-                            <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>Minimalist</Typography>
+                            <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>{vendorPortfolio.designTheme}</Typography>
 
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>HOUSING TYPE</Typography>
-                            <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>Detached House</Typography>
+                            <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>{vendorPortfolio.housingType}</Typography>
 
                         </Grid>
                     </Grid>
                     <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>DESCRIPTION</Typography>
-                    <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>Minimal to the max</Typography>
+                    <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>{vendorPortfolio.description}</Typography>
 
                 </Grid>
 
@@ -138,7 +133,7 @@ const PortfolioDetails = () => {
                 <Grid item xs={12} sx={{ mb: '3rem' }}>
                     <Box>
                         <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>BRAND SUMMARY</Typography>
-                        <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>Best designer in Batam, coming to SG NOW</Typography>
+                        <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>{vendorPortfolio.vendorId.brandSummary}</Typography>
                     </Box>
                 </Grid>
 
@@ -147,22 +142,22 @@ const PortfolioDetails = () => {
 
                     <Grid item xs={12} sm={6}>
                         <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>COMPANY NAME</Typography>
-                        <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>Best designer in Batam, coming to SG NOW</Typography>
+                        <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>{vendorPortfolio.vendorId.companyName}</Typography>
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
                         <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>CONTACT PERSON</Typography>
-                        <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>Best designer in Batam, coming to SG NOW</Typography>
+                        <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>{vendorPortfolio.vendorId.contactPersonName}</Typography>
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
                         <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>PHONE NUMBER</Typography>
-                        <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>Best designer in Batam, coming to SG NOW</Typography>
+                        <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>{vendorPortfolio.vendorId.contactNumber}</Typography>
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
                         <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>EMAIL</Typography>
-                        <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>Best designer in Batam, coming to SG NOW</Typography>
+                        <Typography variant='h5' sx={{ mb: '0.5rem', color: '#444444' }}>{vendorPortfolio.vendorId.email}</Typography>
                     </Grid>
 
 

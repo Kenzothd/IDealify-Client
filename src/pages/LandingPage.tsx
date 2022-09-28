@@ -18,7 +18,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
-import { IPortfolio } from "../Interface";
+import { IPortfolio2 } from "../Interface";
 
 const projectButtonSx = {
   backgroundColor: "#D9DFE4",
@@ -32,7 +32,7 @@ const projectButtonSx = {
 };
 
 const LandingPage: FC = () => {
-  const [images, setImages] = useState<IPortfolio[]>([]);
+  const [images, setImages] = useState<IPortfolio2[]>([]);
   const navigate = useNavigate();
   const SERVER = import.meta.env.VITE_SERVER;
   // const imageUrl = urlcat(SERVER, "/getimages");

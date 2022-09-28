@@ -38,7 +38,7 @@ export interface IProject {
   comments?: string;
 }
 
-export interface IPortfolio {
+export interface IPortfolio2 {
   _id?: string;
   vendorId?: { _id: string, username: string };
   portfolioName: string;
@@ -46,6 +46,27 @@ export interface IPortfolio {
   images: string[];
   description?: string;
   designTheme: string;
+}
+
+export interface IVendorProfile {
+  _id?: string;
+  brandSummary: string;
+  companyName: string;
+  contactPersonName: string;
+  contactNumber: string;
+  email: string;
+
+
+}
+export interface IVendorPortfolio {
+  _id?: string;
+  vendorId: IVendorProfile;
+  portfolioName: string;
+  housingType: string;
+  images: string[];
+  description?: string;
+  designTheme: string;
+  __v?: number
 }
 
 export interface IClient {
