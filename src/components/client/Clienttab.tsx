@@ -25,7 +25,7 @@ const projectButtonSx = {
   pl: "0.75rem",
   pr: "0.75rem",
   "&:hover": {
-    backgroundColor: "#D9DFE4",
+    backgroundColor: "#ADB0B1",
   },
 };
 
@@ -88,13 +88,13 @@ const ClientTab = () => {
                 value="dashboard"
                 label="Projects"
                 sx={{
-                  color: 'black',
-                  '&:hover': {
-                    color: '#254D71',
+                  color: "black",
+                  "&:hover": {
+                    color: "#254D71",
                   },
 
-                  fontSize: '1rem',
-                  fontFamily: 'poppins'
+                  fontSize: "1rem",
+                  fontFamily: "poppins",
                 }}
               />
               <Tab
@@ -103,17 +103,16 @@ const ClientTab = () => {
                 value="account"
                 label="Account"
                 sx={{
-                  color: 'black',
-                  '&:hover': {
-                    color: '#254D71',
+                  color: "black",
+                  "&:hover": {
+                    color: "#254D71",
                   },
 
-                  fontSize: '1rem',
-                  fontFamily: 'poppins',
-                  ml: '1.5rem'
+                  fontSize: "1rem",
+                  fontFamily: "poppins",
+                  ml: "1.5rem",
                 }}
               />
-
 
               {/* <Tab
                 icon={<LibraryAddOutlined />}
@@ -148,14 +147,14 @@ const ClientTab = () => {
                 value="inbox"
                 label="Inbox"
                 sx={{
-                  color: 'black',
-                  '&:hover': {
-                    color: '#254D71',
+                  color: "black",
+                  "&:hover": {
+                    color: "#254D71",
                   },
 
-                  fontSize: '1rem',
-                  fontFamily: 'poppins',
-                  ml: '1.5rem'
+                  fontSize: "1rem",
+                  fontFamily: "poppins",
+                  ml: "1.5rem",
                 }}
               />
             </Tabs>

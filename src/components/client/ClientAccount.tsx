@@ -3,9 +3,9 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import type { } from "@mui/x-date-pickers/themeAugmentation";
+import type {} from "@mui/x-date-pickers/themeAugmentation";
 import urlcat from "urlcat";
-import { IClient, } from "../../Interface";
+import { IClient } from "../../Interface";
 import axios from "axios";
 import { date } from "yup/lib/locale";
 import format from "date-fns/format";
@@ -14,13 +14,12 @@ import { render } from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Grid, Paper, Typography } from "@mui/material";
 
-
 const SERVER = import.meta.env.VITE_SERVER;
 
 const ClientAccount: FC = () => {
   const token: any = sessionStorage.getItem("token");
-  const [userName, setUserName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
   const [offEditMode, setOffEditMode] = useState<boolean>(true);
   const { clientid } = useParams();
@@ -29,7 +28,7 @@ const ClientAccount: FC = () => {
     email: "",
     username: "",
     password: "",
-    fullName: ""
+    fullName: "",
   });
 
   console.log(offEditMode);
@@ -48,7 +47,6 @@ const ClientAccount: FC = () => {
       .get(clientURL, config)
       .then((res) => setClientAccount(res.data))
       .catch((err) => console.log(err));
-
   }, []);
 
   const FILE_SIZE = 160 * 1024;
@@ -59,54 +57,57 @@ const ClientAccount: FC = () => {
     "image/png",
   ];
 
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       username: clientAccount.username,
       email: clientAccount.email,
       password: clientAccount.password,
-      fullName: clientAccount.fullName
+      fullName: clientAccount.fullName,
     },
-    validationSchema: offEditMode ? null : Yup.object({
-      email: Yup.string().email("Invalid email address").required("Required")
-        .test(
-          "email-name",
-          "Email is in used",
-          (email: any): boolean => {
-            const clientUrl = urlcat(SERVER, `clients/findByEmail/${email}`);
-            axios
-              .get(clientUrl)
-              .then((res) => setUserEmail(res.data.length === 0 ? '' : res.data[0].email))
-              .catch((err) => console.log(err));
-            return userEmail === '' || userEmail === clientAccount.email ? true : false;
-          }
-        ),
+    validationSchema: offEditMode
+      ? null
+      : Yup.object({
+          email: Yup.string()
+            .email("Invalid email address")
+            .required("Required")
+            .test("email-name", "Email is in used", (email: any): boolean => {
+              const clientUrl = urlcat(SERVER, `clients/findByEmail/${email}`);
+              axios
+                .get(clientUrl)
+                .then((res) =>
+                  setUserEmail(res.data.length === 0 ? "" : res.data[0].email)
+                )
+                .catch((err) => console.log(err));
+              return userEmail === "" || userEmail === clientAccount.email
+                ? true
+                : false;
+            }),
 
-      fullName: Yup.string().required("Required"),
-      username: Yup.string()
-        .min(3, "Must be 3 characters or more")
-        .max(20, "Must be 20 characters or less")
-        .required("Required")
-        .test(
-          "value-name",
-          "Username is in used",
-          (name: any): boolean => {
-            const clientUrl = urlcat(SERVER, `clients/findByName/${name}`);
-            axios
-              .get(clientUrl)
-              .then((res) => setUserName(res.data.length === 0 ? '' : res.data[0].username))
-              .catch((err) => console.log(err));
-            return userName === '' || userName === clientAccount.username ? true : false;
-          }
-        ),
-      password: Yup.string()
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-        )
-        .required("Required"),
-    }),
+          fullName: Yup.string().required("Required"),
+          username: Yup.string()
+            .min(3, "Must be 3 characters or more")
+            .max(20, "Must be 20 characters or less")
+            .required("Required")
+            .test("value-name", "Username is in used", (name: any): boolean => {
+              const clientUrl = urlcat(SERVER, `clients/findByName/${name}`);
+              axios
+                .get(clientUrl)
+                .then((res) =>
+                  setUserName(res.data.length === 0 ? "" : res.data[0].username)
+                )
+                .catch((err) => console.log(err));
+              return userName === "" || userName === clientAccount.username
+                ? true
+                : false;
+            }),
+          password: Yup.string()
+            .matches(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+              "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+            )
+            .required("Required"),
+        }),
 
     onSubmit: (values: any) => {
       console.log("submit button");
@@ -132,24 +133,28 @@ const ClientAccount: FC = () => {
   });
 
   return (
-    <Container maxWidth='md' sx={{
-      mb: '5rem',
-      pr: '2rem',
-      pl: '2rem'
-
-    }}>
+    <Container
+      maxWidth="md"
+      sx={{
+        mb: "5rem",
+        pr: "2rem",
+        pl: "2rem",
+      }}
+    >
       <Grid container>
-
-        <Grid item xs={12} sx={{ mb: '3rem' }}>
-          <Typography variant='h3'>Account</Typography>
+        <Grid item xs={12} sx={{ mb: "3rem" }}>
+          <Typography variant="h3">Account</Typography>
         </Grid>
-
 
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={4}>
-
             <Grid item xs={12}>
-              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>FULL NAME</Typography>
+              <Typography
+                variant="body2"
+                sx={{ mb: "0.5rem", color: "#444444" }}
+              >
+                FULL NAME
+              </Typography>
 
               <TextField
                 required
@@ -162,14 +167,18 @@ const ClientAccount: FC = () => {
                 sx={{ width: "100%" }}
                 value={formik.values.fullName}
               />
-              {formik.touched.fullName &&
-                formik.errors.fullName ? (
+              {formik.touched.fullName && formik.errors.fullName ? (
                 <div>{formik.errors.fullName}</div>
               ) : null}
             </Grid>
 
             <Grid item xs={12}>
-              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>USERNAME</Typography>
+              <Typography
+                variant="body2"
+                sx={{ mb: "0.5rem", color: "#444444" }}
+              >
+                USERNAME
+              </Typography>
               <TextField
                 required
                 disabled={offEditMode}
@@ -187,7 +196,12 @@ const ClientAccount: FC = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>EMAIL ADDRESS</Typography>
+              <Typography
+                variant="body2"
+                sx={{ mb: "0.5rem", color: "#444444" }}
+              >
+                EMAIL ADDRESS
+              </Typography>
               <TextField
                 required
                 disabled={offEditMode}
@@ -205,7 +219,12 @@ const ClientAccount: FC = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>PASSWORD</Typography>
+              <Typography
+                variant="body2"
+                sx={{ mb: "0.5rem", color: "#444444" }}
+              >
+                PASSWORD
+              </Typography>
 
               <TextField
                 required
@@ -224,21 +243,25 @@ const ClientAccount: FC = () => {
             </Grid>
           </Grid>
 
-          <Grid item sx={{ textAlign: 'center' }}>
-            <Button type="submit" sx={{
-              background: '#254D71',
-              color: 'white',
-              letterSpacing: '0.2rem',
-              mt: '3rem',
-              pl: '6rem',
-              pr: '6rem',
-              '&:hover': {
-                backgroundColor: '#254D71',
-              }
-            }}> {offEditMode ? "Edit" : "Submit Changes"}
+          <Grid item sx={{ textAlign: "center" }}>
+            <Button
+              type="submit"
+              sx={{
+                background: "#254D71",
+                color: "white",
+                letterSpacing: "0.2rem",
+                mt: "3rem",
+                pl: "6rem",
+                pr: "6rem",
+                "&:hover": {
+                  backgroundColor: "#173754",
+                },
+              }}
+            >
+              {" "}
+              {offEditMode ? "Edit" : "Submit Changes"}
             </Button>
           </Grid>
-
         </form>
       </Grid>
     </Container>
