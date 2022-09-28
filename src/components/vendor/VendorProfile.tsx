@@ -17,6 +17,7 @@ import axios from "axios";
 import urlcat from "urlcat";
 import { IVendor } from "../../Interface";
 import CardActions from "@mui/material/CardActions";
+import { IPortfolio } from "../../Interface";
 
 const style = {
   width: "100%",
@@ -39,9 +40,11 @@ const SERVER = import.meta.env.VITE_SERVER;
 const VendorProfile: FC = () => {
   const token: any = sessionStorage.getItem("token");
   const { vendorid } = useParams();
-  const [value, setValue] = React.useState("");
-  const [images, setImages] = useState([]);
   const [offEditMode, setOffEditMode] = useState(true);
+  const navigate = useNavigate();
+  const [value, setValue] = React.useState("");
+  const [portfolio, setPortfolio] = useState([]);
+
   const [vendorAccount, setVendorAccount] = useState<IVendor>({
     email: "",
     contactPersonName: "",
@@ -57,25 +60,14 @@ const VendorProfile: FC = () => {
     brandSummary: "",
     portfolio: [""],
   });
-  const navigate = useNavigate();
-
-  console.log(images);
 
   useEffect(() => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    //get vendor account details
-    const vendorURL = urlcat(SERVER, `/vendors/id/${vendorid}`);
+    //get portfolios
+    const portfolioUrl = urlcat(SERVER, `/portfolios/findById/${vendorid}`);
     axios
-      .get(vendorURL, config)
+      .get(portfolioUrl)
       .then((res) => {
-        setVendorAccount(res.data);
-        setValue(res.data.brandSummary);
-        setImages(res.data.portfolio);
-        console.log(res.data);
+        setPortfolio(res.data);
       })
       .catch((err) => console.log(err));
   }, [offEditMode]);
@@ -92,7 +84,6 @@ const VendorProfile: FC = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-
       const body = { ...vendorAccount, brandSummary: value };
       console.log(body);
       axios
@@ -102,38 +93,6 @@ const VendorProfile: FC = () => {
         })
         .catch((err) => console.log(err));
     }
-  };
-
-  const handleAddPhotos = () => {
-    const url = urlcat(SERVER, `vendors/id/${vendorid}`);
-    const uploadImgUrl = urlcat(SERVER, "/upload-images");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const configForImg = {
-      headers: {
-        // Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    };
-
-    const formData = new FormData();
-    for (let i = 0; i < vendorAccount.portfolio.length; i++) {
-      formData.append("uploadedFiles", vendorAccount.portfolio[i]);
-    }
-
-    axios
-      .post(uploadImgUrl, formData, configForImg)
-      .then((res) => {
-        console.log("say thiss", res.data.imageLinks);
-        const portArr = res.data.imageLinks.concat(images);
-        vendorAccount.portfolio = portArr;
-        return axios.put(url, vendorAccount, config);
-      })
-      .then((res) => setImages(res.data.portfolio))
-      .catch((error) => console.log(error));
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -221,11 +180,15 @@ const VendorProfile: FC = () => {
           </Grid>
         </Grid>
         <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
-          {images.map((img, index) => {
+          {portfolio?.map((item: any, index) => {
             return (
               <Grid item sm={12} md={3} key={index} sx={{ padding: 0 }}>
                 <Card>
-                  <CardMedia component="img" height="170" image={img} />
+                  <CardMedia
+                    component="img"
+                    height="170"
+                    image={item?.images[0]}
+                  />
                   <CardContent sx={{ pt: 1, pl: 1, pr: 0, pb: 0 }}>
                     <Typography
                       sx={{
@@ -233,7 +196,7 @@ const VendorProfile: FC = () => {
                         fontSize: "medium",
                       }}
                     >
-                      Minimalist
+                      {item?.designTheme}
                     </Typography>
                   </CardContent>
                   <CardActions
@@ -252,42 +215,6 @@ const VendorProfile: FC = () => {
               </Grid>
             );
           })}
-          {/* <Grid item sm={12} md={3}>
-            <Card>
-              <CardMedia
-                component="img"
-                height="170"
-                image="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              />
-            </Card>
-          </Grid>
-          {/* <Grid item sm={12} md={3}>
-            <Card>
-              <CardMedia
-                component="img"
-                height="170"
-                image="https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              />
-            </Card>
-          </Grid>
-          <Grid item sm={12} md={3}>
-            <Card>
-              <CardMedia
-                component="img"
-                height="170"
-                image="https://images.pexels.com/photos/271795/pexels-photo-271795.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              />
-            </Card>
-          </Grid>
-          <Grid item sm={12} md={3}>
-            <Card>
-              <CardMedia
-                component="img"
-                height="170"
-                image="https://images.pexels.com/photos/1329711/pexels-photo-1329711.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              />
-            </Card>
-          </Grid> */}
         </Grid>
       </Container>
     </>
