@@ -48,6 +48,16 @@ export interface IPortfolio {
   designTheme: string;
 }
 
+export interface IPortfolio2 {
+  _id?: string;
+  vendorId?: { _id: string, username: string };
+  portfolioName: string;
+  housingType: string;
+  images: string[];
+  description?: string;
+  designTheme: string;
+}
+
 export interface IClient {
   username: string;
   password: string;
