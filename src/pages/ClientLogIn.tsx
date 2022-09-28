@@ -6,7 +6,7 @@ import ClientLoginForm from "../components/client/ClientLoginForm";
 
 const ClientLogIn: FC = () => {
   return (
-    <Box>
+    <Box >
       <Grid container>
         <Grid
           item
@@ -16,7 +16,8 @@ const ClientLogIn: FC = () => {
             backgroundSize: "cover",
             backgroundPosition: "center center",
             height: "100vh",
-            display: { xs: 'none', sm: 'block' }
+            display: { xs: 'none', sm: 'block' },
+            mt: '4rem',
           }}
         ></Grid>
         <Grid

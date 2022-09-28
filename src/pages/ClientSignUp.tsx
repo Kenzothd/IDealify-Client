@@ -6,6 +6,7 @@ import ClientSignUpForm from "../components/client/ClientSignUpForm";
 const ClientSignUp: FC = () => {
     return (
         <Container maxWidth='sm' sx={{
+            mt: '10rem',
             mb: '5rem',
             pr: '2rem',
             pl: '2rem'

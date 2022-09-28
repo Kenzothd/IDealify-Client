@@ -18,7 +18,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
-import { IPortfolio, IPortfolio2 } from "../Interface";
+import { IPortfolio2 } from "../Interface";
 
 const projectButtonSx = {
   backgroundColor: "#D9DFE4",
@@ -78,7 +78,7 @@ const LandingPage: FC = () => {
       <Container
         maxWidth="lg"
         sx={{
-          mt: "2.5rem",
+          mt: '10rem',
           mb: "5rem",
           px: "2rem",
         }}

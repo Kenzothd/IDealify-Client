@@ -6,6 +6,7 @@ import VendorSignUpForm from "../components/vendor/VendorSignUpForm";
 const VendorSignUp: FC = () => {
   return (
     <Container maxWidth='md' sx={{
+      mt: '10rem',
       mb: '5rem',
       pr: '2rem',
       pl: '2rem'

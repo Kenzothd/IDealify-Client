@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -27,28 +27,39 @@ const NavBar = () => {
   return (
     <>
       <AppBar>
-        <Toolbar sx={{ backgroundColor: "#254D71" }}>
-          <Typography
-            variant="h3"
-            flexGrow={1}
-            sx={{ fontWeight: "bold" }}
-            onClick={() => {
-              navigate("/");
+        <Toolbar sx={{ backgroundColor: "#254D71", pt: '0.3rem', pb: '0.3rem' }}>
+          <Container
+            maxWidth="lg"
+            sx={{
             }}
           >
-            IDealify
-          </Typography>
-          <Box sx={{ display: "flex", gap: "1rem" }}>
-            <Button sx={projectButtonSx} onClick={clientLogin}>
-              Homeowners
-            </Button>
-            <Button sx={projectButtonSx} onClick={vendorLogin}>
-              Interior Designers
-            </Button>
-          </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+
+              <Typography
+                variant="h3"
+                sx={{ fontWeight: "bold", cursor: 'pointer' }}
+                onClick={() => {
+                  navigate("/");
+                }}
+
+              >
+                IDealify
+              </Typography>
+
+              <Box sx={{ display: "flex", gap: "1rem" }}>
+                <Button sx={projectButtonSx} onClick={clientLogin}>
+                  Homeowners
+                </Button>
+                <Button sx={projectButtonSx} onClick={vendorLogin}>
+                  Interior Designers
+                </Button>
+              </Box>
+
+            </Box>
+          </Container>
         </Toolbar>
       </AppBar>
-      <Toolbar />
+
       <Outlet />
     </>
   );

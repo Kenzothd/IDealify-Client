@@ -16,7 +16,8 @@ const VendorLogIn: FC = () => {
             backgroundSize: "cover",
             backgroundPosition: "center center",
             height: "100vh",
-            display: { xs: 'none', sm: 'block' }
+            display: { xs: 'none', sm: 'block' },
+            mt: '4rem',
           }}
         ></Grid>
         <Grid
