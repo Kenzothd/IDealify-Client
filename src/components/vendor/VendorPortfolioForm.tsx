@@ -193,6 +193,7 @@ const VendorPortfolioForm: FC = () => {
               >
                 PORTFOLIO NAME
               </Typography>
+
               <TextField
                 required
                 id="portfolioName"
@@ -202,6 +203,7 @@ const VendorPortfolioForm: FC = () => {
                 onBlur={formik.handleBlur}
                 sx={{ width: "100%" }}
               />
+
               {formik.touched.portfolioName && formik.errors.portfolioName ? (
                 <div>{formik.errors.portfolioName}</div>
               ) : null}
