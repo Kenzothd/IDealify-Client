@@ -29,6 +29,7 @@ import VendorActivity from "./components/vendor/VendorActivity";
 import NavBar from "./components/UI/NavBar";
 import VendorPortfolioForm from "./components/vendor/VendorPortfolioForm";
 import PortfolioDetails from "./pages/PortfolioDetails";
+import VendorSinglePortfolio from "./pages/vendorSinglePortfolio";
 
 function App() {
   return (
@@ -46,6 +47,10 @@ function App() {
             <Route
               path="/:vendorname/:portfolioid"
               element={<PortfolioDetails />}
+            />
+            <Route
+              path="/singleportfolio"
+              element={<VendorSinglePortfolio />}
             />
           </Route>
 

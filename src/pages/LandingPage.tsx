@@ -129,7 +129,7 @@ const LandingPage: FC = () => {
                   >
                     <Button
                       size="small"
-                      name={img.vendorId?.username}
+                      name={img.vendorId}
                       id={img._id}
                       onClick={handleClick}
                     >
