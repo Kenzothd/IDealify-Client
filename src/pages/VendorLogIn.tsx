@@ -6,7 +6,7 @@ import VendorLoginForm from "../components/vendor/VendorLoginForm";
 
 const VendorLogIn: FC = () => {
   return (
-    <Box >
+    <Box>
       <Grid container>
         <Grid
           item
@@ -16,24 +16,22 @@ const VendorLogIn: FC = () => {
             backgroundSize: "cover",
             backgroundPosition: "center center",
             height: "100vh",
-            display: { xs: 'none', sm: 'block' },
-            mt: '4rem',
+            display: { xs: "none", sm: "block" },
+            mt: "4rem",
           }}
         ></Grid>
         <Grid
           item
           xs={12}
           sm={6}
-
           sx={{
             display: "flex",
             alignItems: "center",
-            justifyContent: 'center',
-            mt: { xs: '6rem', sm: '0' }
+            justifyContent: "center",
+            mt: { xs: "6rem", sm: "0" },
           }}
         >
-
-          <Box sx={{ p: '2rem' }}>
+          <Box sx={{ p: "2rem" }}>
             <Box sx={{ mb: "3rem" }}>
               <Typography variant="h2">Hello</Typography>
               <Typography variant="h2">Interior Designers,</Typography>
@@ -41,14 +39,21 @@ const VendorLogIn: FC = () => {
 
             <VendorLoginForm />
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: "1.5rem", gap: '0.5rem' }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                mt: "1.5rem",
+                gap: "0.5rem",
+              }}
+            >
               <Typography variant="body2">Not a member yet?</Typography>
 
-              <Link to="/vendor/sign-up"><Typography variant="body2">SIGN UP</Typography></Link>
+              <Link to="/vendor/sign-up">
+                <Typography variant="body2">SIGN UP</Typography>
+              </Link>
             </Box>
-
           </Box>
-
         </Grid>
       </Grid>
     </Box>

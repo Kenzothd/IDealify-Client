@@ -438,7 +438,7 @@ const VendorSignUpForm: FC = () => {
               pl: { sm: "6rem" },
               pr: { sm: "6rem" },
               "&:hover": {
-                backgroundColor: "#254D71",
+                backgroundColor: "#173754",
               },
             }}
           >

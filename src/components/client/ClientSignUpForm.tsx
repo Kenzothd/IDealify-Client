@@ -193,9 +193,9 @@ const ClientSignUpForm: FC = () => {
             width: { xs: '100%', sm: '0' },
             pl: { sm: '6rem' },
             pr: { sm: '6rem' },
-            '&:hover': {
-              backgroundColor: '#254D71',
-            }
+            "&:hover": {
+              backgroundColor: "#173754",
+            },
           }}>
             Submit</Button>
         </Grid>
