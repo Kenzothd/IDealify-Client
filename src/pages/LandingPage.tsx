@@ -53,6 +53,8 @@ const LandingPage: FC = () => {
     navigate("/client/login");
   };
 
+
+
   const handleClick = (e: any) => {
     navigate(`/${e.target.name}/${e.target.id}`);
   };
@@ -129,7 +131,7 @@ const LandingPage: FC = () => {
                   >
                     <Button
                       size="small"
-                      name={img.vendorId}
+                      name={img.vendorId?.username}
                       id={img._id}
                       onClick={handleClick}
                     >

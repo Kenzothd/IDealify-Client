@@ -29,7 +29,7 @@ import VendorActivity from "./components/vendor/VendorActivity";
 import NavBar from "./components/UI/NavBar";
 import VendorPortfolioForm from "./components/vendor/VendorPortfolioForm";
 import PortfolioDetails from "./pages/PortfolioDetails";
-import VendorSinglePortfolio from "./pages/vendorSinglePortfolio";
+import VendorSinglePortfolio from "./pages/VendorSinglePortfolio";
 
 function App() {
   return (
