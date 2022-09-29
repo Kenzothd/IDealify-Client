@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IPortfolio } from "../Interface";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import { IVendorPortfolio } from "../Interface";
 
 const VendorSinglePortfolio = () => {
   const [design, setDesign] = useState("");
@@ -27,45 +28,48 @@ const VendorSinglePortfolio = () => {
   const [bigImg, setBigImg] = useState(
     "https://images.pexels.com/photos/271816/pexels-photo-271816.jpeg?auto=compress&cs=tinysrgb&w=600"
   );
-  const [vendorPortfolio, setVendorPortfolio] = useState({});
+  const [smallImg, setSmallImg] = useState([]);
+  const [vendorPortfolio, setVendorPortfolio] = useState<IVendorPortfolio>({
+    _id: "",
+    vendorId: {
+      _id: "",
+      brandSummary: "",
+      companyName: "",
+      contactPersonName: "",
+      contactNumber: "",
+      email: "",
+    },
+    portfolioName: "",
+    housingType: "",
+    images: [],
+    description: "",
+    designTheme: "",
+    __v: 0,
+  });
   const { vendorid } = useParams();
   const { portfolioid } = useParams();
   const SERVER = import.meta.env.VITE_SERVER;
-  const portfolioUrl = urlcat(SERVER, `/portfolios/id/${portfolioid}`);
+  const portfolioUrl = urlcat(
+    SERVER,
+    `/portfolios/id/${"63347f0ee71c2eee2a171e8c"}`
+  );
+
+  console.log(vendorPortfolio);
 
   useEffect(() => {
     axios
       .get(portfolioUrl)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        setBigImg(res.data.images[0]);
+        setSmallImg(res.data.images.slice(1, res.data.images.length));
+        setVendorPortfolio(res.data);
+      })
       .catch((error) => console.log(error));
   }, []);
 
   const handleEnlarge = (e: any) => {
     setBigImg(e.target.src);
   };
-
-  const itemData = [
-    {
-      img: "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=600",
-      title: "Breakfast",
-    },
-    {
-      img: "https://images.pexels.com/photos/667838/pexels-photo-667838.jpeg?auto=compress&cs=tinysrgb&w=600",
-      title: "Burger",
-    },
-    {
-      img: "https://images.pexels.com/photos/245208/pexels-photo-245208.jpeg?auto=compress&cs=tinysrgb&w=600",
-      title: "Camera",
-    },
-    // {
-    //   img: "https://images.pexels.com/photos/271795/pexels-photo-271795.jpeg?auto=compress&cs=tinysrgb&w=600",
-    //   title: "Coffee",
-    // },
-    // {
-    //   img: "https://images.pexels.com/photos/37347/office-sitting-room-executive-sitting.jpg?auto=compress&cs=tinysrgb&w=600",
-    //   title: "Hats",
-    // },
-  ];
 
   const designOptions = [
     "Modern",
@@ -109,14 +113,15 @@ const VendorSinglePortfolio = () => {
     "Apartment",
     "Others",
   ];
+
   const formik = useFormik({
     initialValues: {
-      vendorId: "",
-      portfolioName: "Test",
-      housingType: "4-Room Flat (HDB)",
-      images: ["url"],
-      description: "best",
-      designTheme: "Minimalist",
+      vendorId: vendorPortfolio.vendorId,
+      portfolioName: vendorPortfolio.portfolioName,
+      housingType: vendorPortfolio.housingType,
+      images: vendorPortfolio.images,
+      description: vendorPortfolio.description,
+      designTheme: vendorPortfolio.designTheme,
     },
     validationSchema: Yup.object({
       portfolioName: Yup.string().max(35).required("Required"),
@@ -166,7 +171,7 @@ const VendorSinglePortfolio = () => {
                     pb: "0.5rem",
                   }}
                 >
-                  {formik.values.portfolioName}
+                  {vendorPortfolio.portfolioName}
                 </Typography>
               ) : (
                 <TextField
@@ -174,6 +179,7 @@ const VendorSinglePortfolio = () => {
                   id="portfolioName"
                   autoComplete="off"
                   name="portfolioName"
+                  value={formik.values.portfolioName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   sx={{ width: "100%" }}
@@ -198,11 +204,10 @@ const VendorSinglePortfolio = () => {
                   rowGap: "0.8rem",
                 }}
               >
-                {itemData.map((item, index) => (
+                {smallImg.map((item, index) => (
                   <img
                     key={index}
-                    src={item.img}
-                    alt={item.title}
+                    src={item}
                     style={{ width: "31%", borderRadius: 15 }}
                     onClick={handleEnlarge}
                   />
@@ -225,12 +230,12 @@ const VendorSinglePortfolio = () => {
                       variant="h5"
                       sx={{ mb: "0.5rem", color: "#444444" }}
                     >
-                      {formik.values.designTheme}
+                      {vendorPortfolio.designTheme}
                     </Typography>
                   ) : (
                     <FormControl sx={{ width: "100%" }}>
                       <Select
-                        value={design}
+                        value={formik.values.designTheme}
                         id="designTheme"
                         name="designTheme"
                         onChange={(e) => {
@@ -267,12 +272,12 @@ const VendorSinglePortfolio = () => {
                       variant="h5"
                       sx={{ mb: "0.5rem", color: "#444444" }}
                     >
-                      {formik.values.housingType}
+                      {vendorPortfolio.housingType}
                     </Typography>
                   ) : (
                     <FormControl sx={{ width: "100%" }}>
                       <Select
-                        value={housingType}
+                        value={formik.values.housingType}
                         id="housingType"
                         name="housingType"
                         onChange={(e) => {
@@ -309,11 +314,12 @@ const VendorSinglePortfolio = () => {
                   variant="h5"
                   sx={{ mb: "0.5rem", color: "#444444" }}
                 >
-                  Minimal to the max
+                  {vendorPortfolio.description}
                 </Typography>
               ) : (
                 <TextField
                   required
+                  value={formik.values.description}
                   autoComplete="off"
                   id="description"
                   name="description"
