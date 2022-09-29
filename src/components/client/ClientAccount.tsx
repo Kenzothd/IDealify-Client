@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import type {} from "@mui/x-date-pickers/themeAugmentation";
+import type { } from "@mui/x-date-pickers/themeAugmentation";
 import urlcat from "urlcat";
 import { IClient } from "../../Interface";
 import axios from "axios";
@@ -49,13 +49,6 @@ const ClientAccount: FC = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const FILE_SIZE = 160 * 1024;
-  const SUPPORTED_FORMATS = [
-    "image/jpg",
-    "image/jpeg",
-    "image/gif",
-    "image/png",
-  ];
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -68,49 +61,50 @@ const ClientAccount: FC = () => {
     validationSchema: offEditMode
       ? null
       : Yup.object({
-          email: Yup.string()
-            .email("Invalid email address")
-            .required("Required")
-            .test("email-name", "Email is in used", (email: any): boolean => {
-              const clientUrl = urlcat(SERVER, `clients/findByEmail/${email}`);
-              axios
-                .get(clientUrl)
-                .then((res) =>
-                  setUserEmail(res.data.length === 0 ? "" : res.data[0].email)
-                )
-                .catch((err) => console.log(err));
-              return userEmail === "" || userEmail === clientAccount.email
-                ? true
-                : false;
-            }),
+        email: Yup.string()
+          .email("Invalid email address")
+          .required("Required")
+          .test("email-name", "Email is in used", (email: any): boolean => {
+            const clientUrl = urlcat(SERVER, `clients/findByEmail/${email}`);
+            axios
+              .get(clientUrl)
+              .then((res) =>
+                setUserEmail(res.data.length === 0 ? "" : res.data[0].email)
+              )
+              .catch((err) => console.log(err));
+            return userEmail === "" || userEmail === clientAccount.email
+              ? true
+              : false;
+          }),
 
-          fullName: Yup.string().required("Required"),
-          username: Yup.string()
-            .min(3, "Must be 3 characters or more")
-            .max(20, "Must be 20 characters or less")
-            .required("Required")
-            .test("value-name", "Username is in used", (name: any): boolean => {
-              const clientUrl = urlcat(SERVER, `clients/findByName/${name}`);
-              axios
-                .get(clientUrl)
-                .then((res) =>
-                  setUserName(res.data.length === 0 ? "" : res.data[0].username)
-                )
-                .catch((err) => console.log(err));
-              return userName === "" || userName === clientAccount.username
-                ? true
-                : false;
-            }),
-          password: Yup.string()
-            .matches(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-              "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-            )
-            .required("Required"),
-        }),
+
+        fullName: Yup.string().required("Required"),
+        username: Yup.string()
+          .min(3, "Must be 3 characters or more")
+          .max(20, "Must be 20 characters or less")
+          .required("Required")
+          .test("value-name", "Username is in used", (name: any): boolean => {
+            const clientUrl = urlcat(SERVER, `clients/findByName/${name}`);
+            axios
+              .get(clientUrl)
+              .then((res) =>
+                setUserName(res.data.length === 0 ? "" : res.data[0].username)
+              )
+              .catch((err) => console.log(err));
+            return userName === "" || userName === clientAccount.username
+              ? true
+              : false;
+          }),
+        password: Yup.string()
+          .matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+          )
+          .required("Required"),
+      }),
 
     onSubmit: (values: any) => {
-      console.log("submit button");
+      console.log("submit button", values);
       if (offEditMode) {
         setOffEditMode(!offEditMode);
       } else {
@@ -218,13 +212,10 @@ const ClientAccount: FC = () => {
               ) : null}
             </Grid>
 
-            <Grid item xs={12}>
-              <Typography
-                variant="body2"
-                sx={{ mb: "0.5rem", color: "#444444" }}
-              >
-                PASSWORD
-              </Typography>
+
+
+            {/* <Grid item xs={12}>
+              <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>PASSWORD</Typography>
 
               <TextField
                 required
@@ -240,7 +231,7 @@ const ClientAccount: FC = () => {
               {formik.touched.password && formik.errors.password ? (
                 <div>{formik.errors.password}</div>
               ) : null}
-            </Grid>
+            </Grid> */}
           </Grid>
 
           <Grid item sx={{ textAlign: "center" }}>

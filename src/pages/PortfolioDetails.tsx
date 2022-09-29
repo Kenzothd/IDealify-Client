@@ -51,8 +51,6 @@ const PortfolioDetails: FC = () => {
         <Container
             maxWidth="lg"
             sx={{
-                borderBottom: 1,
-                borderBottomColor: "#444444",
                 mt: '10rem',
                 mb: "10rem",
                 pb: "0.5rem",

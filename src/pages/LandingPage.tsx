@@ -112,11 +112,11 @@ const LandingPage: FC = () => {
                     </Typography>
                     <Typography
                       sx={{
-                        fontWeight: "600",
-                        fontSize: "medium",
+                        fontWeight: "500",
+                        fontSize: "small",
                       }}
                     >
-                      {img.designTheme}
+                      @{img.vendorId?.username}
                     </Typography>
                   </CardContent>
                   <CardActions
