@@ -29,6 +29,7 @@ import VendorActivity from "./components/vendor/VendorActivity";
 import NavBar from "./components/UI/NavBar";
 import VendorPortfolioForm from "./components/vendor/VendorPortfolioForm";
 import PortfolioDetails from "./pages/PortfolioDetails";
+import ClientChangePassword from "./components/client/ClientChangePassword";
 
 function App() {
   return (
@@ -65,6 +66,10 @@ function App() {
             <Route
               path="/client/:clientid/account"
               element={<PrivateRoute outlet={<ClientAccount />} />}
+            />
+            <Route
+              path="/client/:clientid/account/changepassword"
+              element={<PrivateRoute outlet={<ClientChangePassword />} />}
             />
             <Route
               path="/client/:clientid/projects/:projectid/activity/:activityid"

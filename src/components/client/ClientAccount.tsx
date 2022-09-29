@@ -51,13 +51,6 @@ const ClientAccount: FC = () => {
 
   }, []);
 
-  const FILE_SIZE = 160 * 1024;
-  const SUPPORTED_FORMATS = [
-    "image/jpg",
-    "image/jpeg",
-    "image/gif",
-    "image/png",
-  ];
 
 
   const formik = useFormik({
@@ -100,16 +93,16 @@ const ClientAccount: FC = () => {
             return userName === '' || userName === clientAccount.username ? true : false;
           }
         ),
-      password: Yup.string()
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-        )
-        .required("Required"),
+      // password: Yup.string()
+      //   .matches(
+      //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      //     "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      //   )
+      //   .required("Required"),
     }),
 
     onSubmit: (values: any) => {
-      console.log("submit button");
+      console.log("submit button", values);
       if (offEditMode) {
         setOffEditMode(!offEditMode);
       } else {
@@ -204,7 +197,7 @@ const ClientAccount: FC = () => {
               ) : null}
             </Grid>
 
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Typography variant='body2' sx={{ mb: '0.5rem', color: '#444444' }}>PASSWORD</Typography>
 
               <TextField
@@ -221,7 +214,7 @@ const ClientAccount: FC = () => {
               {formik.touched.password && formik.errors.password ? (
                 <div>{formik.errors.password}</div>
               ) : null}
-            </Grid>
+            </Grid> */}
           </Grid>
 
           <Grid item sx={{ textAlign: 'center' }}>
