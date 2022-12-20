@@ -43,6 +43,7 @@ const LandingPage: FC = () => {
       .get(imageUrl)
       .then((res) => {
         setImages(res.data);
+        console.log(res.data)
       })
       .catch((error) => console.log(error));
   }, []);
