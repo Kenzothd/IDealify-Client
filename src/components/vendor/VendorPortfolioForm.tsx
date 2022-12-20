@@ -309,7 +309,6 @@ const VendorPortfolioForm: FC = () => {
               >
                 UPLOAD IMAGES
               </Typography>
-
               <TextField
                 id="images"
                 name="images"

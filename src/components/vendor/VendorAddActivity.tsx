@@ -20,6 +20,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Box, Container } from "@mui/system";
 
 const SERVER = import.meta.env.VITE_SERVER;
+
 const buttonSx = {
   backgroundColor: "#74ace4",
   color: "white",
