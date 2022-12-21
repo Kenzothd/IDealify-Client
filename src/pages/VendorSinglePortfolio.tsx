@@ -8,7 +8,6 @@ import {
   Container,
   FormControl,
   Grid,
-  InputLabel,
   MenuItem,
   TextField,
   Typography,
@@ -48,19 +47,16 @@ const VendorSinglePortfolio = () => {
   });
   const { vendorid } = useParams();
   const { portfolioid } = useParams();
+  const navigate = useNavigate();
   const SERVER = import.meta.env.VITE_SERVER;
-  const portfolioUrl = urlcat(
-    SERVER,
-    `/portfolios/id/${"63347f0ee71c2eee2a171e8c"}`
-  );
-
-  console.log(vendorPortfolio);
-
+  const portfolioUrl = urlcat(SERVER, `/portfolios/id/${portfolioid}`);
+  const token: any = sessionStorage.getItem("token");
   useEffect(() => {
     axios
       .get(portfolioUrl)
       .then((res) => {
         setBigImg(res.data.images[0]);
+        console.log("res.data", res.data);
         setSmallImg(res.data.images.slice(1, res.data.images.length));
         setVendorPortfolio(res.data);
       })
@@ -115,6 +111,7 @@ const VendorSinglePortfolio = () => {
   ];
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       vendorId: vendorPortfolio.vendorId,
       portfolioName: vendorPortfolio.portfolioName,
@@ -123,18 +120,34 @@ const VendorSinglePortfolio = () => {
       description: vendorPortfolio.description,
       designTheme: vendorPortfolio.designTheme,
     },
-    validationSchema: Yup.object({
+    validationSchema: Yup.object().shape({
       portfolioName: Yup.string().max(35).required("Required"),
       housingType: Yup.string().required("Required"),
       designTheme: Yup.string().required("Required"),
       description: Yup.string().required("Required"),
       images: Yup.mixed().required("A file is required"),
     }),
+
     onSubmit: (values) => {
       if (offEditMode) {
         setOffEditMode(!offEditMode);
       } else {
         setOffEditMode(!offEditMode);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const url = urlcat(SERVER, `/portfolios/id/${portfolioid}`);
+        const body = { ...values, vendorId: vendorid };
+        console.log(token);
+        console.log("body", body, vendorid, portfolioid);
+        axios
+          .put(url, body, config)
+          .then((res) => {
+            setVendorPortfolio(res.data);
+          })
+          .catch((err) => console.log(err));
       }
     },
   });
@@ -147,49 +160,71 @@ const VendorSinglePortfolio = () => {
     setHousingType(event.target.value);
   };
 
+  const handleReturnToProfile = () => {
+    navigate(`/vendor/${vendorid}/profile`);
+  };
+
   return (
     <>
       <Container
         maxWidth="lg"
         sx={{
-          mt: "5rem",
           mb: "5rem",
-          pr: "2rem",
-          pl: "2rem",
+          px: "2rem",
         }}
       >
         <form onSubmit={formik.handleSubmit}>
-          <Grid container spacing={6} sx={{ mb: "5rem" }}>
-            <Grid item xs={12}>
-              {offEditMode ? (
-                <Typography
-                  variant="h3"
-                  sx={{
-                    borderBottom: 1,
-                    borderBottomColor: "#444444",
-                    mb: "1rem",
-                    pb: "0.5rem",
-                  }}
-                >
-                  {vendorPortfolio.portfolioName}
-                </Typography>
-              ) : (
-                <TextField
-                  required
-                  id="portfolioName"
-                  autoComplete="off"
-                  name="portfolioName"
-                  value={formik.values.portfolioName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  sx={{ width: "100%" }}
-                />
-              )}
-            </Grid>
-            {formik.touched.portfolioName && formik.errors.portfolioName ? (
-              <div>{formik.errors.portfolioName}</div>
-            ) : null}
+          {offEditMode ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                borderBottom: 1,
+                pb: "0.5rem",
+                mb: "2.5rem",
+              }}
+            >
+              <Typography variant="h3" sx={{}}>
+                {vendorPortfolio.portfolioName} test
+              </Typography>
 
+              <Box
+                sx={{
+                  display: "inline-block",
+                  cursor: "pointer",
+                  border: 1,
+                  p: "0.3rem",
+                  borderRadius: "1rem",
+                }}
+              >
+                <Typography
+                  variant="body1"
+                  sx={{ alignItems: "center", right: "1px" }}
+                  onClick={handleReturnToProfile}
+                >
+                  <KeyboardReturnIcon
+                    sx={{ pr: "0.3rem", fontSize: "0.8rem" }}
+                  />
+                  Back To Profile
+                </Typography>
+              </Box>
+            </Box>
+          ) : (
+            <TextField
+              required
+              id="portfolioName"
+              autoComplete="off"
+              name="portfolioName"
+              value={formik.values.portfolioName}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              sx={{ width: "100%", mb: "2.5rem" }}
+            />
+          )}
+          {formik.touched.portfolioName && formik.errors.portfolioName ? (
+            <div>{formik.errors.portfolioName}</div>
+          ) : null}
+          <Grid container spacing={6} sx={{ mb: "1rem" }}>
             <Grid item xs={12} sm={6}>
               <img
                 src={bigImg}
@@ -215,8 +250,8 @@ const VendorSinglePortfolio = () => {
               </Box>
             </Grid>
 
-            <Grid item xs={12} sm={6} sx={{ mb: "5rem" }}>
-              <Grid container sx={{ mb: "2rem" }} spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <Grid container sx={{ mb: "1.2rem" }} spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <Typography
                     variant="body2"
@@ -330,6 +365,7 @@ const VendorSinglePortfolio = () => {
                     width: "100%",
                     "& .MuiInputBase-root": {
                       height: 200,
+                      mb: "1.2rem",
                     },
                   }}
                 />
@@ -339,39 +375,44 @@ const VendorSinglePortfolio = () => {
                 <div>{formik.errors.description}</div>
               ) : null}
 
-              <Grid item xs={12} sm={6}>
-                <Typography
-                  variant="body2"
-                  sx={{ mb: "0.5rem", color: "#444444" }}
-                >
-                  UPLOAD IMAGES
-                </Typography>
-              </Grid>
               {offEditMode ? (
-                <p></p>
+                <></>
               ) : (
-                <TextField
-                  id="images"
-                  name="images"
-                  inputProps={{
-                    multiple: true,
-                  }}
-                  type="file"
-                  onChange={(event: any) => {
-                    formik.setFieldValue("images", event.currentTarget.files);
-                  }}
-                  onBlur={formik.handleBlur}
-                  sx={{ width: "100%" }}
-                  hidden
-                />
+                <>
+                  <Typography
+                    variant="body2"
+                    sx={{ mb: "0.5rem", color: "#444444" }}
+                  >
+                    UPLOAD IMAGES
+                  </Typography>
+
+                  <TextField
+                    id="images"
+                    name="images"
+                    inputProps={{
+                      multiple: true,
+                    }}
+                    type="file"
+                    onChange={(event: any) => {
+                      formik.setFieldValue("images", event.currentTarget.files);
+                    }}
+                    onBlur={formik.handleBlur}
+                    sx={{ width: "100%" }}
+                    hidden
+                  />
+                </>
               )}
               {formik.touched.images && formik.errors.images ? (
                 <div>{formik.errors.images}</div>
               ) : null}
             </Grid>
           </Grid>
-
-          <Grid item sx={{ textAlign: "center" }}>
+          <Grid
+            item
+            sx={{
+              textAlign: "center",
+            }}
+          >
             <Button
               type="submit"
               sx={{

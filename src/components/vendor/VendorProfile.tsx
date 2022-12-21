@@ -103,6 +103,10 @@ const VendorProfile: FC = () => {
     navigate(`/vendor/${vendorid}/portfolio-form`);
   };
 
+  const handleClick = (e: any) => {
+    navigate(`/vendor/${vendorid}/profile/portfolio/${e.target.id}`);
+  };
+
   return (
     <>
       <Container
@@ -209,7 +213,14 @@ const VendorProfile: FC = () => {
                       justifyContent: "flex-end",
                     }}
                   >
-                    <Button size="small">Learn More</Button>
+                    <Button
+                      size="small"
+                      name={item.vendorId?.username}
+                      id={item._id}
+                      onClick={handleClick}
+                    >
+                      Learn More
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>

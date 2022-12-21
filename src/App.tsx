@@ -32,7 +32,6 @@ import PortfolioDetails from "./pages/PortfolioDetails";
 import VendorSinglePortfolio from "./pages/VendorSinglePortfolio";
 import ClientChangePassword from "./components/client/ClientChangePassword";
 
-
 function App() {
   return (
     <TokenProvider>
@@ -49,10 +48,6 @@ function App() {
             <Route
               path="/:vendorname/:portfolioid"
               element={<PortfolioDetails />}
-            />
-            <Route
-              path="/singleportfolio"
-              element={<VendorSinglePortfolio />}
             />
           </Route>
 
@@ -105,6 +100,10 @@ function App() {
             <Route
               path="/vendor/:vendorid/profile"
               element={<PrivateRoute outlet={<VendorProfile />} />}
+            />
+            <Route
+              path="/vendor/:vendorid/profile/portfolio/:portfolioid"
+              element={<VendorSinglePortfolio />}
             />
             <Route
               path="/vendor/:vendorid/portfolio-form"
