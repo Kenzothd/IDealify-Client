@@ -50,7 +50,7 @@ export interface IPortfolio {
 
 export interface IPortfolio2 {
   _id?: string;
-  vendorId?: { _id: string, username: string };
+  vendorId?: { _id: string; username: string };
   portfolioName: string;
   housingType: string;
   images: string[];
@@ -65,8 +65,6 @@ export interface IVendorProfile {
   contactPersonName: string;
   contactNumber: string;
   email: string;
-
-
 }
 export interface IVendorPortfolio {
   _id?: string;
@@ -76,7 +74,7 @@ export interface IVendorPortfolio {
   images: string[];
   description?: string;
   designTheme: string;
-  __v?: number
+  __v?: number;
 }
 
 export interface IClient {
