@@ -51,11 +51,11 @@ const VendorAccount: FC = () => {
     trackedProjects: [""],
     brandSummary: "",
     portfolio: [""],
+    createdAt: new Date(),
+    updatedAt: new Date(),
   });
 
   useEffect(() => {
-    console.log("axios call done");
-    const url = urlcat(SERVER, `/vendors/id/${vendorid}`);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,

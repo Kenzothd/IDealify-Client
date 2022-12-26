@@ -14,6 +14,8 @@ export interface IVendor {
   trackedProjects?: string[];
   brandSummary?: string;
   portfolio: string[];
+  createdAt: Date | string;
+  updatedAt: Date | string;
   // messages: [{type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
   // review: [{type: mongoose.Schema.Types.ObjectId, ref: "Review" }]
 }

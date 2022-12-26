@@ -31,6 +31,7 @@ import VendorPortfolioForm from "./components/vendor/VendorPortfolioForm";
 import PortfolioDetails from "./pages/PortfolioDetails";
 import VendorSinglePortfolio from "./pages/VendorSinglePortfolio";
 import ClientChangePassword from "./components/client/ClientChangePassword";
+import VendorDetails from "./pages/VendorDetails";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
             <Route path="/client/login" element={<ClientLogIn />} />
             <Route path="/vendor/sign-up" element={<VendorSignUp />} />
             <Route path="/vendor/login" element={<VendorLogIn />} />
+            <Route path="/:vendorname" element={<VendorDetails />} />
             <Route
               path="/:vendorname/:portfolioid"
               element={<PortfolioDetails />}

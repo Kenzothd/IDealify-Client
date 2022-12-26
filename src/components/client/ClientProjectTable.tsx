@@ -4,7 +4,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import urlcat from "urlcat";
-import format from "date-fns/format";
+import format from "/format";
 import { IActivities } from "../../Interface";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import RefreshIcon from "@mui/icons-material/Refresh";

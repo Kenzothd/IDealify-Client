@@ -43,7 +43,7 @@ const LandingPage: FC = () => {
       .get(imageUrl)
       .then((res) => {
         setImages(res.data);
-        console.log(res.data)
+        console.log(res.data);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -54,10 +54,12 @@ const LandingPage: FC = () => {
     navigate("/client/login");
   };
 
-
-
-  const handleClick = (e: any) => {
+  const navigatePortfolioDetails = (e: any) => {
     navigate(`/${e.target.name}/${e.target.id}`);
+  };
+
+  const navigateVendorDetails = (e: any) => {
+    navigate(`/${e.target.id}`);
   };
 
   return (
@@ -81,7 +83,7 @@ const LandingPage: FC = () => {
       <Container
         maxWidth="lg"
         sx={{
-          mt: '10rem',
+          mt: "10rem",
           mb: "5rem",
           px: "2rem",
         }}
@@ -112,9 +114,15 @@ const LandingPage: FC = () => {
                       {img.designTheme}
                     </Typography>
                     <Typography
+                      id={img.vendorId?.username}
+                      onClick={navigateVendorDetails}
                       sx={{
                         fontWeight: "500",
                         fontSize: "small",
+                        "&:hover": {
+                          color: "gray",
+                        },
+                        cursor: "pointer",
                       }}
                     >
                       @{img.vendorId?.username}
@@ -134,7 +142,7 @@ const LandingPage: FC = () => {
                       size="small"
                       name={img.vendorId?.username}
                       id={img._id}
-                      onClick={handleClick}
+                      onClick={navigatePortfolioDetails}
                     >
                       Learn More
                     </Button>

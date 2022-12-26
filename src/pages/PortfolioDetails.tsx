@@ -32,7 +32,6 @@ const PortfolioDetails: FC = () => {
   });
 
   const [bigImg, setBigImg] = useState("");
-
   const { portfolioid } = useParams();
   const SERVER = import.meta.env.VITE_SERVER;
   const portfolioUrl = urlcat(SERVER, `/portfolios/id/${portfolioid}`);
