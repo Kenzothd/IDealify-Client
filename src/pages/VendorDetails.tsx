@@ -25,7 +25,6 @@ import {
   subDays,
 } from "date-fns";
 import { useNavigate, useParams } from "react-router-dom";
-import Tooltip from "@uiw/react-tooltip";
 import HeatMap from "@uiw/react-heat-map";
 import { compareAsc } from "date-fns/esm";
 
