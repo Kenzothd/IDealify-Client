@@ -14,14 +14,9 @@ import React, { FC, useEffect, useState } from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { CalendarMonth } from "@mui/icons-material";
 import axios from "axios";
-import {IPortfolio2, IVendor } from "../Interface";
+import { IPortfolio2, IVendor } from "../Interface";
 import urlcat from "urlcat";
-import {
-  compareDesc,
-  format,
-  formatDistance,
-  subDays,
-} from "date-fns";
+import { compareDesc, format, formatDistance, subDays } from "date-fns";
 import { useNavigate, useParams } from "react-router-dom";
 import HeatMap from "@uiw/react-heat-map";
 
@@ -232,7 +227,7 @@ const VendorDetails: FC = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Box sx={{ mt: "3rem", mx: "3rem", backgroundColor: "pink" }}>
+        <Box sx={{ mt: "3rem", mx: "3rem" }}>
           <Box
             sx={{
               px: 3,
