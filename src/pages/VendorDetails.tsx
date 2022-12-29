@@ -261,7 +261,7 @@ const VendorDetails: FC = () => {
                 {count === 999 ? "" : `Count: ${count}`}
               </Typography>
               <Typography sx={{ fontSize: "medium", fontWeight: 500 }}>
-                Portfolios Created Past Year: {portfolios.length}
+                Total Portfolios Created: {portfolios.length}
               </Typography>
             </Box>
           </Box>
