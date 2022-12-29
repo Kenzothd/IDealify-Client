@@ -15,12 +15,23 @@ import { styled } from "@mui/material/styles";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { CalendarMonth } from "@mui/icons-material";
 import axios from "axios";
-import { IPortfolio, IVendor } from "../Interface";
+import { IPortfolio, IPortfolio2, IVendor } from "../Interface";
 import urlcat from "urlcat";
-import { format } from "date-fns";
+import {
+  compareDesc,
+  format,
+  formatDistance,
+  parseISO,
+  subDays,
+} from "date-fns";
 import { useNavigate, useParams } from "react-router-dom";
+import Tooltip from "@uiw/react-tooltip";
+import HeatMap from "@uiw/react-heat-map";
+import { compareAsc } from "date-fns/esm";
 
 const VendorDetails: FC = () => {
+  const [selected, setSelected] = useState("");
+  const [count, setCount] = useState(999);
   const [vendor, setVendor] = useState<IVendor>({
     email: "",
     contactPersonName: "",
@@ -38,7 +49,7 @@ const VendorDetails: FC = () => {
     createdAt: new Date(),
     updatedAt: new Date(),
   });
-  const [portfolios, setPortfolios] = useState<IPortfolio[]>([]);
+  const [portfolios, setPortfolios] = useState<IPortfolio2[]>([]);
   const SERVER = import.meta.env.VITE_SERVER;
   const { vendorname } = useParams();
   const navigate = useNavigate();
@@ -67,6 +78,37 @@ const VendorDetails: FC = () => {
   const navigatePortfolioDetails = (e: any) => {
     navigate(`/${e.target.name}/${e.target.id}`);
   };
+
+  function countDuplicates(
+    arr: any[]
+  ): { date: any; count: number; content: string }[] {
+    // Create an empty object to store the counts of each element
+    const counts: { [key: string]: number } = {};
+
+    // Iterate through the input array and count the occurrences of each element
+    for (const element of arr) {
+      counts[element] ? counts[element]++ : (counts[element] = 1);
+    }
+
+    // Convert the counts object into an array of objects with the format { date: element, count: count }
+    const result: { date: any; count: number; content: string }[] = [];
+    for (const element in counts) {
+      result.push({ date: element, count: counts[element], content: "" });
+    }
+
+    // Return the result array
+    return result;
+  }
+
+  const value = countDuplicates(
+    portfolios.map((e) => format(new Date(e.createdAt), "yyyy/MM/dd"))
+  );
+
+  const mostToLeastRecentContribution = portfolios
+    .map((e) => new Date(e?.createdAt))
+    .sort(compareDesc);
+
+  const today = new Date();
 
   return (
     <>
@@ -124,7 +166,6 @@ const VendorDetails: FC = () => {
               container
               sx={{
                 fontSize: 30,
-
                 pl: 0,
               }}
             >
@@ -168,6 +209,15 @@ const VendorDetails: FC = () => {
                 Joined {format(new Date(vendor.createdAt), "dd MMMM yyyy")}
               </Typography>
             </Box>
+            <Box>
+              Last Active:{" "}
+              {mostToLeastRecentContribution[0] === undefined
+                ? "Loading..."
+                : formatDistance(mostToLeastRecentContribution[0], new Date(), {
+                    addSuffix: true,
+                    includeSeconds: true,
+                  })}
+            </Box>
           </Grid>
           <Grid item md={9}>
             <Typography
@@ -186,6 +236,82 @@ const VendorDetails: FC = () => {
             </Typography>
           </Grid>
         </Grid>
+        <Box sx={{ mt: "3rem", mx: "3rem", backgroundColor: "pink" }}>
+          <Box
+            sx={{
+              px: 3,
+              borderBottom: 2,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: 36,
+                fontWeight: 800,
+              }}
+            >
+              Portfolio Overview
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                gap: 2,
+              }}
+            >
+              <Typography sx={{ fontSize: "medium", fontWeight: 500 }}>
+                {selected === ""
+                  ? ""
+                  : `Date: ${format(new Date(selected), "dd MMM yyyy")}`}
+              </Typography>
+              <Typography sx={{ fontSize: "medium", fontWeight: 500 }}>
+                {count === 999 ? "" : `Count: ${count}`}
+              </Typography>
+              <Typography sx={{ fontSize: "medium", fontWeight: 500 }}>
+                Portfolio done this year: {portfolios.length}
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ mt: "1rem", mx: "2rem" }}>
+            <HeatMap
+              value={value}
+              width={"100%"}
+              height={210}
+              rectSize={23}
+              startDate={subDays(today, 365)}
+              endDate={today}
+              legendCellSize={0}
+              rectProps={{
+                rx: 3,
+              }}
+              panelColors={{
+                1: "#EBEDF0",
+                2: "#7BC96F",
+                3: "#C6E48B",
+                4: "#239A3B",
+                5: "#196127",
+              }}
+              rectRender={(props, data) => {
+                return (
+                  <rect
+                    onMouseLeave={() => {
+                      setSelected("");
+                      setCount(999);
+                    }}
+                    {...props}
+                    onMouseOver={() => {
+                      setCount(data.count === undefined ? 0 : data.count);
+                      setSelected(data.date);
+                    }}
+                  />
+                );
+              }}
+            />
+          </Box>
+        </Box>
+
         <Box sx={{ mt: "3rem" }}>
           <Typography
             sx={{

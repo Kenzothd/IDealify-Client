@@ -58,6 +58,8 @@ export interface IPortfolio2 {
   images: string[];
   description?: string;
   designTheme: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IVendorProfile {
