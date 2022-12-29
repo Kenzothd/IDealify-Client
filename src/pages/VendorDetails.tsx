@@ -270,7 +270,7 @@ const VendorDetails: FC = () => {
               value={value}
               width={"100%"}
               height={210}
-              rectSize={21}
+              rectSize={20}
               startDate={subDays(today, 365)}
               endDate={today}
               legendCellSize={0}
