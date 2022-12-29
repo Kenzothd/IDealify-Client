@@ -59,6 +59,8 @@ const VendorProfile: FC = () => {
     trackedProjects: [""],
     brandSummary: "",
     portfolio: [""],
+    createdAt: "",
+    updatedAt: "",
   });
 
   useEffect(() => {

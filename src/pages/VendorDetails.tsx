@@ -11,22 +11,19 @@ import {
 } from "@mui/material";
 import { Box, width } from "@mui/system";
 import React, { FC, useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { CalendarMonth } from "@mui/icons-material";
 import axios from "axios";
-import { IPortfolio, IPortfolio2, IVendor } from "../Interface";
+import {IPortfolio2, IVendor } from "../Interface";
 import urlcat from "urlcat";
 import {
   compareDesc,
   format,
   formatDistance,
-  parseISO,
   subDays,
 } from "date-fns";
 import { useNavigate, useParams } from "react-router-dom";
 import HeatMap from "@uiw/react-heat-map";
-import { compareAsc } from "date-fns/esm";
 
 const VendorDetails: FC = () => {
   const [selected, setSelected] = useState("");
