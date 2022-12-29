@@ -261,7 +261,7 @@ const VendorDetails: FC = () => {
                 {count === 999 ? "" : `Count: ${count}`}
               </Typography>
               <Typography sx={{ fontSize: "medium", fontWeight: 500 }}>
-                Portfolio done this year: {portfolios.length}
+                Portfolios Created Past Year: {portfolios.length}
               </Typography>
             </Box>
           </Box>
@@ -270,7 +270,7 @@ const VendorDetails: FC = () => {
               value={value}
               width={"100%"}
               height={210}
-              rectSize={23}
+              rectSize={21}
               startDate={subDays(today, 365)}
               endDate={today}
               legendCellSize={0}
