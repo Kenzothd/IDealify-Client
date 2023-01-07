@@ -123,3 +123,9 @@ export interface IProjectTwo {
   totalCosting: number;
   comments: string;
 }
+
+export interface IHomeCarouselItems {
+  name: string;
+  description: string;
+  color: string;
+}

@@ -4,6 +4,10 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import LoginDialog from "../landing/LoginDialog";
+import RegisterDialog from "../landing/RegisterDialog";
+import Footer from "../landing/Footer";
 
 const projectButtonSx = {
   backgroundColor: "#D9DFE4",
@@ -17,13 +21,31 @@ const projectButtonSx = {
 };
 
 const NavBar = () => {
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
+
   const navigate = useNavigate();
-  const vendorLogin = () => {
-    navigate("/vendor/login");
+
+
+  const handleLogin = () => {
+    setLoginOpen(true)
   };
-  const clientLogin = () => {
-    navigate("/client/login");
+
+  const handleLoginClose = () => {
+    setLoginOpen(false);
   };
+
+
+  const handleRegister = () => {
+    setRegisterOpen(true)
+  };
+
+  const handleRegisterClose = () => {
+    setRegisterOpen(false);
+  };
+
+
+
   return (
     <>
       <AppBar>
@@ -49,12 +71,21 @@ const NavBar = () => {
               </Typography>
 
               <Box sx={{ display: "flex", gap: "1rem" }}>
-                <Button sx={projectButtonSx} onClick={clientLogin}>
-                  Homeowners
+                <Button sx={projectButtonSx} onClick={handleLogin}>
+                  Login
                 </Button>
-                <Button sx={projectButtonSx} onClick={vendorLogin}>
-                  Interior Designers
+                <LoginDialog
+                  loginOpen={loginOpen}
+                  handleLoginClose={handleLoginClose}
+                />
+
+                <Button sx={projectButtonSx} onClick={handleRegister}>
+                  Register
                 </Button>
+                <RegisterDialog
+                  registerOpen={registerOpen}
+                  handleRegisterClose={handleRegisterClose}
+                />
               </Box>
             </Box>
           </Container>
@@ -62,6 +93,9 @@ const NavBar = () => {
       </AppBar>
 
       <Outlet />
+
+
+      <Footer />
     </>
   );
 };
