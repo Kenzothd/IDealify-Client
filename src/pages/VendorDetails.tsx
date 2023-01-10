@@ -60,6 +60,7 @@ const VendorDetails: FC = () => {
           .get(portfoliosUrl)
           .then((res) => {
             setPortfolios(res.data);
+            console.log(res.data);
           })
           .catch((error) => console.log(error));
       })
@@ -219,12 +220,7 @@ const VendorDetails: FC = () => {
             >
               Brand Story
             </Typography>
-            <Typography sx={{ fontSize: 16 }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. {vendor.brandSummary}
-            </Typography>
+            <Typography sx={{ fontSize: 16 }}>{vendor.brandSummary}</Typography>
           </Grid>
         </Grid>
         <Box sx={{ mt: "3rem", mx: "3rem" }}>

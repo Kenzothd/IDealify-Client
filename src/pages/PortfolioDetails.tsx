@@ -42,6 +42,7 @@ const PortfolioDetails: FC = () => {
       .then((res) => {
         setBigImg(res.data.images[0]);
         setVendorPortfolio(res.data);
+        console.log(res.data);
       })
       .catch((error) => console.log(error));
   }, []);
