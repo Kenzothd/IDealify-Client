@@ -4,6 +4,7 @@ import urlcat from "urlcat";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+
 import {
   Box,
   Button,
@@ -12,25 +13,39 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import jwt_decode from "jwt-decode";
 
 const ClientLoginForm: FC = () => {
   const [error, setError] = useState<String>("");
 
   const SERVER = import.meta.env.VITE_SERVER;
   const url = urlcat(SERVER, "/clients/login");
+  const googleurl = urlcat(SERVER, "/clients/google");
+
   const token: any = sessionStorage.getItem("token");
 
   const navigate = useNavigate();
 
   const handleSignInWithGoogle = (response: any) => {
     console.log("google sign in");
+    console.log(jwt_decode(response.credential));
+    axios
+      .post(googleurl, jwt_decode(response.credential))
+      .then((res) => {
+        console.log(res.data.token);
+        sessionStorage.setItem("token", res.data.token);
+        const payload = parseJwt(res.data.token);
+        console.log(payload.userId);
+        navigate(`/client/${payload.userId}/dashboard`);
+      })
+      .catch((error) => setError(error.response.data.error));
   };
 
   useEffect(() => {
     //global google
     google.accounts.id.initialize({
       client_id:
-        "60536065681-el72it8okrce4mkj2ldg7la7aaqdvcgh.apps.googleusercontent.com",
+        "505631696316-r6irfrjv1osgcsd9osrim1c9p357nr9l.apps.googleusercontent.com",
       callback: handleSignInWithGoogle,
     });
     const googleLoginDiv: HTMLElement =
