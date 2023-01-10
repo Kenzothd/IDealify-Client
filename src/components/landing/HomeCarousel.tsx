@@ -9,7 +9,7 @@ const HomeCarousel = () => {
   var items = [
     {
       id: 1,
-      name: "All the interior designs in one place",
+      name: "All interior designs in one place",
       image:
         "https://images.pexels.com/photos/921294/pexels-photo-921294.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       description:
@@ -23,6 +23,15 @@ const HomeCarousel = () => {
         "https://images.pexels.com/photos/1144871/pexels-photo-1144871.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       description: "A pool of credible IDs ready to serve your needs",
       color: "grey",
+    },
+    {
+      id: 3,
+      name: "Manage and Connect on IDealify",
+      image:
+        "https://images.pexels.com/photos/7897470/pexels-photo-7897470.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      description:
+        "Manage your projects with your Interior Designer in one place",
+      color: "pink",
     },
   ];
 
@@ -58,7 +67,7 @@ function Item({ item }: Props) {
         >
           {item.name}
         </Typography>
-      ) : (
+      ) : item.id === 2 ? (
         <Typography
           sx={{
             position: "absolute",
@@ -68,6 +77,20 @@ function Item({ item }: Props) {
             fontWeight: "bold",
           }}
           variant="h3"
+        >
+          {item.name}
+        </Typography>
+      ) : (
+        <Typography
+          sx={{
+            position: "absolute",
+            top: "20%",
+            right: "28%",
+            color: "white",
+            fontWeight: "bold",
+            fontSize: "30px",
+          }}
+          //   variant="h3"
         >
           {item.name}
         </Typography>
