@@ -77,7 +77,7 @@ const ClientLogIn: FC = () => {
                 onClick={() => {
                   console.log("clicked");
                   setUseTestUser({
-                    username: "mockHomeownerAccount",
+                    username: "testHomeownerAccount",
                     password: "Password123!",
                   });
                 }}

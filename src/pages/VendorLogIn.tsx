@@ -68,7 +68,7 @@ const VendorLogIn: FC = () => {
                 onClick={() => {
                   console.log("clicked");
                   setUseTestUser({
-                    username: "mockVendorAccount",
+                    username: "testVendorAccount",
                     password: "Password123!",
                   });
                 }}
