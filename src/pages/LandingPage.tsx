@@ -132,16 +132,16 @@ const LandingPage: FC = () => {
       <Container
         maxWidth="lg"
         sx={{
-          mt: "10rem",
+          mt: "7rem",
           mb: "5rem",
-          px: "2rem",
+          // px: "2rem",
         }}
       >
         <HomeCarousel />
 
-        <Grid container sx={{ mt: 8 }}>
+        <Grid container sx={{ mt: 3 }}>
           <Grid item>
-            <Typography variant="h3" sx={{ fontWeight: "600" }}>
+            <Typography variant="h4" sx={{ fontWeight: "600" }}>
               Home Inspiration
             </Typography>
 
@@ -149,7 +149,7 @@ const LandingPage: FC = () => {
               <Typography variant="h5" sx={{ mr: 2 }}>
                 Select Design:
               </Typography>
-              <FormControl sx={{ minWidth: 250 }}>
+              <FormControl size="small" sx={{ minWidth: 250 }}>
                 <Select
                   value={currentSelection}
                   onChange={handleChange}
