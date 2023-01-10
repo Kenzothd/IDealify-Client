@@ -153,39 +153,43 @@ const ClientLoginForm = ({ useTestUser }: ClientLoginFormProp) => {
         </Grid>
 
         <Container sx={{ alignItems: "center", textAlign: "center" }}>
-          <Button
-            type="submit"
-            sx={{
-              background: "#254D71",
-              color: "white",
-              width: "400px",
-              height: "45px",
-              letterSpacing: "0.2rem",
-              borderRadius: 8,
-              mb: "0.5rem",
-              "&:hover": {
-                backgroundColor: "#173754",
-              },
-            }}
-          >
-            Log In
-          </Button>
-          <Button
-            type="submit"
-            sx={{
-              // background: "#254D71",
-              color: "white",
-              width: "400",
-              letterSpacing: "0.2rem",
-              mb: "0.5rem",
-              borderRadius: 8,
-              // "&:hover": {
-              //   backgroundColor: "#173754",
-              // },
-            }}
-          >
-            <div id="googlelogInDiv"></div>
-          </Button>
+          <div>
+            <Button
+              type="submit"
+              sx={{
+                background: "#254D71",
+                color: "white",
+                width: "400px",
+                height: "45px",
+                letterSpacing: "0.2rem",
+                borderRadius: 8,
+                mb: "0.5rem",
+                "&:hover": {
+                  backgroundColor: "#173754",
+                },
+              }}
+            >
+              Log In
+            </Button>
+          </div>
+          <div>
+            <Button
+              type="submit"
+              sx={{
+                // background: "#254D71",
+                color: "white",
+                width: "400",
+                letterSpacing: "0.2rem",
+                mb: "0.5rem",
+                borderRadius: 8,
+                // "&:hover": {
+                //   backgroundColor: "#173754",
+                // },
+              }}
+            >
+              <div id="googlelogInDiv"></div>
+            </Button>
+          </div>
         </Container>
         <Typography
           variant="body2"
