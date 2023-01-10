@@ -87,14 +87,14 @@ const FeaturedVendors = () => {
                 >
                   {vendor.companyName}
                 </Typography>
-                <Typography
+                {/* <Typography
                   sx={{
                     fontWeight: "500",
                     fontSize: "small",
                   }}
                 >
                   {vendor.brandSummary}
-                </Typography>
+                </Typography> */}
               </CardContent>
               <CardActions
                 sx={{
