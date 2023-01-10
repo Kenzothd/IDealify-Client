@@ -1,10 +1,15 @@
 import { Container, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import VendorLoginForm from "../components/vendor/VendorLoginForm";
 
 const VendorLogIn: FC = () => {
+  const [useTestUser, setUseTestUser] = useState({
+    username: "",
+    password: "",
+  });
+
   return (
     <Box>
       <Grid container>
@@ -28,7 +33,7 @@ const VendorLogIn: FC = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            mt: { xs: "6rem", sm: "0" },
+            mt: { xs: "6rem", sm: "0", md: 8 },
           }}
         >
           <Box sx={{ p: "2rem" }}>
@@ -37,7 +42,7 @@ const VendorLogIn: FC = () => {
               <Typography variant="h2">Interior Designers,</Typography>
             </Box>
 
-            <VendorLoginForm />
+            <VendorLoginForm useTestUser={useTestUser} />
 
             <Box
               sx={{
@@ -48,10 +53,28 @@ const VendorLogIn: FC = () => {
               }}
             >
               <Typography variant="body2">Not a member yet?</Typography>
-
               <Link to="/vendor/sign-up">
                 <Typography variant="body2">SIGN UP</Typography>
               </Link>
+              /
+              <Typography
+                sx={{
+                  textDecoration: "underline",
+                  "&:hover": {
+                    color: "green",
+                  },
+                }}
+                variant="body2"
+                onClick={() => {
+                  console.log("clicked");
+                  setUseTestUser({
+                    username: "testVendorAccount",
+                    password: "password123",
+                  });
+                }}
+              >
+                GENERATE TEST ACCOUNT
+              </Typography>
             </Box>
           </Box>
         </Grid>

@@ -15,7 +15,10 @@ import {
 } from "@mui/material";
 import jwt_decode from "jwt-decode";
 
-const ClientLoginForm: FC = () => {
+interface ClientLoginFormProp {
+  useTestUser: { username: string; password: string };
+}
+const ClientLoginForm = ({ useTestUser }: ClientLoginFormProp) => {
   const [error, setError] = useState<String>("");
 
   const SERVER = import.meta.env.VITE_SERVER;
@@ -76,9 +79,10 @@ const ClientLoginForm: FC = () => {
     return JSON.parse(jsonPayload);
   };
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      username: "",
-      password: "",
+      username: useTestUser.username,
+      password: useTestUser.password,
     },
     validationSchema: Yup.object({
       username: Yup.string().required("Required"),
@@ -134,6 +138,7 @@ const ClientLoginForm: FC = () => {
             </Typography>
             <TextField
               id="password"
+              // type="password"
               autoComplete="off"
               name="password"
               onChange={formik.handleChange}
@@ -146,6 +151,7 @@ const ClientLoginForm: FC = () => {
             ) : null}
           </Grid>
         </Grid>
+
         <Container sx={{ alignItems: "center", textAlign: "center" }}>
           <Button
             type="submit"
@@ -181,7 +187,12 @@ const ClientLoginForm: FC = () => {
             <div id="googlelogInDiv"></div>
           </Button>
         </Container>
-        <Typography variant="body2" sx={{ color: "red" }}>
+        <Typography
+          variant="body2"
+          sx={{
+            color: "red",
+          }}
+        >
           {error}
         </Typography>
       </form>

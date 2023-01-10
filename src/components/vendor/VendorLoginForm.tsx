@@ -14,7 +14,11 @@ import {
 } from "@mui/material";
 import jwt_decode from "jwt-decode";
 
-const VendorLoginForm: FC = () => {
+interface VendorLoginFormProp {
+  useTestUser: { username: string; password: string };
+}
+
+const VendorLoginForm = ({ useTestUser }: VendorLoginFormProp) => {
   const [error, setError] = useState<String>("");
 
   const SERVER = import.meta.env.VITE_SERVER;
@@ -76,9 +80,10 @@ const VendorLoginForm: FC = () => {
     return JSON.parse(jsonPayload);
   };
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      username: "",
-      password: "",
+      username: useTestUser.username,
+      password: useTestUser.password,
     },
     validationSchema: Yup.object({
       username: Yup.string().required("Required"),
@@ -134,6 +139,7 @@ const VendorLoginForm: FC = () => {
             </Typography>
             <TextField
               id="password"
+              // type="password"
               autoComplete="off"
               name="password"
               onChange={formik.handleChange}
