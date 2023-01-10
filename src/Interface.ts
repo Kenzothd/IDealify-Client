@@ -125,6 +125,8 @@ export interface IProjectTwo {
 }
 
 export interface IHomeCarouselItems {
+  id: number;
+  image: string;
   name: string;
   description: string;
   color: string;
