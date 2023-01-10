@@ -2,7 +2,18 @@ import React, { FC, useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import { Button, CardContent, FormControl, Grid, InputLabel, MenuItem, NativeSelect, Select, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  CardContent,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  NativeSelect,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box, Container } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
@@ -21,7 +32,6 @@ import HomeCarousel from "../components/landing/HomeCarousel";
 import FeaturedVendors from "../components/landing/FeaturedVendors";
 import { Input } from "postcss";
 
-
 const projectButtonSx = {
   backgroundColor: "#D9DFE4",
   color: "#444444",
@@ -35,7 +45,7 @@ const projectButtonSx = {
 
 const LandingPage: FC = () => {
   const [images, setImages] = useState<IPortfolio2[]>([]);
-  const [currentSelection, setCurrentSelection] = useState('All')
+  const [currentSelection, setCurrentSelection] = useState("All");
   const navigate = useNavigate();
   const SERVER = import.meta.env.VITE_SERVER;
   // const imageUrl = urlcat(SERVER, "/getimages");
@@ -50,7 +60,6 @@ const LandingPage: FC = () => {
       })
       .catch((error) => console.log(error));
   }, []);
-
 
   const selectList = [
     "Modern",
@@ -76,10 +85,12 @@ const LandingPage: FC = () => {
     "Modern farmhouse",
     "Black & White",
     "Others",
-  ]
+  ];
 
-  const filteredDesigns = currentSelection === 'All' ? images :
-    images.filter((image) => image.designTheme === currentSelection)
+  const filteredDesigns =
+    currentSelection === "All"
+      ? images
+      : images.filter((image) => image.designTheme === currentSelection);
 
   const vendorLogin = () => {
     navigate("/vendor/login");
@@ -97,8 +108,8 @@ const LandingPage: FC = () => {
   };
 
   const handleChange = (event: any) => {
-    setCurrentSelection(event.target.value)
-  }
+    setCurrentSelection(event.target.value);
+  };
 
   return (
     <>
@@ -126,40 +137,36 @@ const LandingPage: FC = () => {
           px: "2rem",
         }}
       >
-
         <HomeCarousel />
 
         <Grid container sx={{ mt: 8 }}>
-          <Grid item >
-
+          <Grid item>
             <Typography variant="h3" sx={{ fontWeight: "600" }}>
               Home Inspiration
             </Typography>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', mt: 3 }}>
-
+            <Box sx={{ display: "flex", alignItems: "center", mt: 3 }}>
               <Typography variant="h5" sx={{ mr: 2 }}>
                 Select Design:
               </Typography>
               <FormControl sx={{ minWidth: 250 }}>
-
                 <Select
                   value={currentSelection}
                   onChange={handleChange}
-                  inputProps={{ 'aria-label': 'Without label' }}
+                  inputProps={{ "aria-label": "Without label" }}
                 >
-                  <MenuItem value={'All'}>All</MenuItem>
-                  {selectList.sort().map((design) => <MenuItem value={design}>{design}</MenuItem>)}
+                  <MenuItem value={"All"}>All</MenuItem>
+                  {selectList.sort().map((design, idx) => (
+                    <MenuItem key={idx} value={design}>
+                      {design}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
-
             </Box>
-
           </Grid>
 
-
           <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
-
             {filteredDesigns.slice(0, 12).map((img, index) => (
               <Grid item sm={12} md={3} key={index} sx={{ padding: 0 }}>
                 <Card>
@@ -215,7 +222,6 @@ const LandingPage: FC = () => {
               </Grid>
             ))}
 
-
             {/* <Grid item sm={12} md={3}>
               <Card>
                 <CardMedia
@@ -256,9 +262,7 @@ const LandingPage: FC = () => {
           </Grid>
         </Grid>
 
-
         <FeaturedVendors />
-
       </Container>
     </>
   );

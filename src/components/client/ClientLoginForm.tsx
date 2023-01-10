@@ -22,6 +22,30 @@ const ClientLoginForm: FC = () => {
 
   const navigate = useNavigate();
 
+  const handleSignInWithGoogle = (response: any) => {
+    console.log("google sign in");
+  };
+
+  useEffect(() => {
+    //global google
+    google.accounts.id.initialize({
+      client_id:
+        "60536065681-el72it8okrce4mkj2ldg7la7aaqdvcgh.apps.googleusercontent.com",
+      callback: handleSignInWithGoogle,
+    });
+    const googleLoginDiv: HTMLElement =
+      document.getElementById("googlelogInDiv")!;
+    google.accounts.id.renderButton(googleLoginDiv, {
+      type: "standard",
+      text: "signin_with",
+      theme: "outline",
+      size: "large",
+      shape: "circle",
+      width: "400",
+    });
+
+    // google.accounts.id.prompt();
+  }, []);
   const parseJwt = (token: string) => {
     var base64Url = token.split(".")[1];
     var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -107,22 +131,41 @@ const ClientLoginForm: FC = () => {
             ) : null}
           </Grid>
         </Grid>
-
-        <Button
-          type="submit"
-          sx={{
-            background: "#254D71",
-            color: "white",
-            width: "100%",
-            letterSpacing: "0.2rem",
-            mb: "0.5rem",
-            "&:hover": {
-              backgroundColor: "#173754",
-            },
-          }}
-        >
-          Log In
-        </Button>
+        <Container sx={{ alignItems: "center", textAlign: "center" }}>
+          <Button
+            type="submit"
+            sx={{
+              background: "#254D71",
+              color: "white",
+              width: "400px",
+              height: "45px",
+              letterSpacing: "0.2rem",
+              borderRadius: 8,
+              mb: "0.5rem",
+              "&:hover": {
+                backgroundColor: "#173754",
+              },
+            }}
+          >
+            Log In
+          </Button>
+          <Button
+            type="submit"
+            sx={{
+              // background: "#254D71",
+              color: "white",
+              width: "400",
+              letterSpacing: "0.2rem",
+              mb: "0.5rem",
+              borderRadius: 8,
+              // "&:hover": {
+              //   backgroundColor: "#173754",
+              // },
+            }}
+          >
+            <div id="googlelogInDiv"></div>
+          </Button>
+        </Container>
         <Typography variant="body2" sx={{ color: "red" }}>
           {error}
         </Typography>

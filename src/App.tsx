@@ -45,6 +45,7 @@ function App() {
             <Route path="/client/sign-up" element={<ClientSignUp />} />
             <Route path="/client/login" element={<ClientLogIn />} />
             <Route path="/vendor/sign-up" element={<VendorSignUp />} />
+
             <Route path="/vendor/login" element={<VendorLogIn />} />
             <Route path="/:vendorname" element={<VendorDetails />} />
             <Route
