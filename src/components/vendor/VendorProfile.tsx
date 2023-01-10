@@ -65,11 +65,21 @@ const VendorProfile: FC = () => {
 
   useEffect(() => {
     //get portfolios
+    console.log(vendorid);
     const portfolioUrl = urlcat(SERVER, `/portfolios/findById/${vendorid}`);
     axios
       .get(portfolioUrl)
       .then((res) => {
         setPortfolio(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    const vendorUrl = urlcat(SERVER, `/vendors/id/${vendorid}`);
+    axios
+      .get(vendorUrl)
+      .then((res) => {
+        setVendorAccount(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, [offEditMode]);
@@ -160,7 +170,7 @@ const VendorProfile: FC = () => {
             sx={{ mb: "0.5rem", color: "#444444", width: "100%" }}
             multiline
             rows={10}
-            placeholder="Please input your brand story here!"
+            placeholder={vendorAccount.brandSummary}
             value={value}
             onChange={handleChange}
           />
