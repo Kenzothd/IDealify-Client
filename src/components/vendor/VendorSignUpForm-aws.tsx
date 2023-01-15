@@ -395,7 +395,7 @@ const AWSVendorSignUpForm: FC = () => {
                   variant="body2"
                   sx={{ mb: "0.5rem", color: "#444444" }}
                 >
-                  UPLOAD FILES
+                  COMPANY REGISTRATION DOCUMENTS (PDF only)
                 </Typography>
 
                 <TextField
@@ -403,6 +403,7 @@ const AWSVendorSignUpForm: FC = () => {
                   name="uploadedFiles"
                   inputProps={{
                     multiple: true,
+                    accept: "application/pdf",
                   }}
                   type="file"
                   onChange={(event: any) => {

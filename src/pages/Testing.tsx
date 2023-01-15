@@ -50,6 +50,8 @@ const Testing = () => {
 
   return (
     <div>
+      {/* TESTING OF CLOUDINARY PICTURE UPLOAD */}
+
       <h1>Upload</h1>
       <form onSubmit={handleSubmitFile}>
         <input
@@ -65,6 +67,18 @@ const Testing = () => {
       {previewSource && (
         <img src={previewSource} alt="chosen" style={{ height: "300px" }} />
       )}
+
+      {/* TESTING OF DISPLAY OF PDF */}
+      {/* <object
+        data="https://idealify-upload.s3.ap-northeast-1.amazonaws.com/Faith+Ye+En+Xin+Resume+V5.pdf"
+        type="application/pdf"
+        style={{ width: "100%", height: "100%" }}
+      >
+        <p>
+          Alternative text - include a link{" "}
+          <a href="http://africau.edu/images/default/sample.pdf">to the PDF!</a>
+        </p>
+      </object> */}
     </div>
   );
 };

@@ -211,7 +211,8 @@ const VendorAccount: FC = () => {
         // );
 
         const url = urlcat(SERVER, `vendors/id/${vendorid}`);
-        const uploadImgUrl = urlcat(SERVER, "/upload-images");
+        // const uploadImgUrl = urlcat(SERVER, "/upload-images");
+        const uploadImgUrl = urlcat(SERVER, "/aws/upload-files");
 
         const config = {
           headers: {
@@ -233,10 +234,17 @@ const VendorAccount: FC = () => {
         axios
           .post(uploadImgUrl, formData, configForImg)
           .then((res) => {
-            values.uploadedFiles = res.data.imageLinks;
-            console.log("check values", values);
-            return axios.put(url, values, config);
+            // AWS immediately returns a list with file objects
+            console.log(res.data);
+            let filesArr = [];
+            for (let i = 0; i < res.data.length; i++) {
+              filesArr.push(res.data[i].location);
+            }
+            console.log(filesArr);
+            values.uploadedFiles = filesArr;
+            console.log(values);
           })
+          .then((res) => axios.put(url, values, config))
           .then((res) => setVendorAccount(res.data))
           .catch((error) => console.log(error));
       }
@@ -481,7 +489,7 @@ const VendorAccount: FC = () => {
                 variant="body2"
                 sx={{ mb: "0.5rem", color: "#444444" }}
               >
-                UPLOAD FILES
+                COMPANY REGISTRATION DOCUMENTS (PDF only)
               </Typography>
 
               <TextField
