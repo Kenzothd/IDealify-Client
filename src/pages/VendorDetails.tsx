@@ -387,7 +387,7 @@ const VendorDetails: FC = () => {
           </Box>
           <Box sx={{ mx: "5rem", mt: "2rem" }}>
             <Grid container spacing={6}>
-              {filteredDesigns ? (
+              {filteredDesigns[0] ? (
                 filteredDesigns?.map((portfolio) => {
                   return (
                     <Grid
@@ -451,6 +451,7 @@ const VendorDetails: FC = () => {
                     textAlign: "center",
                     height: "full",
                     p: 10,
+                    mx: "auto",
                   }}
                 >
                   <CircularProgress />
