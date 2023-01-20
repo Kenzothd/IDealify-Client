@@ -3,7 +3,7 @@ import { IClient, IProject } from "../../Interface";
 import urlcat from "urlcat";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Grid, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Container, Grid, Tab, Tabs, Typography } from "@mui/material";
 import ClientProjectTable from "./ClientProjectTable";
 
 // import TokenContext from "../../contextStore/token-context";
@@ -85,7 +85,28 @@ const ClientProjectTracker: FC = () => {
 
   return (
     <>
-      <ClientProjectTable revampProjects={revampProjects} />
+      {revampProjects[0] ? (
+        <ClientProjectTable revampProjects={revampProjects} />
+      ) : (
+        <Box
+          sx={{
+            textAlign: "center",
+            height: "full",
+            p: 10,
+            mx: "auto",
+          }}
+        >
+          <CircularProgress />
+          <Typography
+            sx={{
+              fontWeight: "600",
+              fontSize: "medium",
+            }}
+          >
+            Loading might take awhile...
+          </Typography>
+        </Box>
+      )}
     </>
   );
 };

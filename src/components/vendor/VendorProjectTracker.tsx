@@ -89,7 +89,7 @@ const VendorProjectTracker: FC = () => {
 
   return (
     <>
-      {revampProjects ? (
+      {revampProjects[0] ? (
         <VendorProjectTable revampProjects={revampProjects} />
       ) : (
         <Box
