@@ -3,8 +3,16 @@ import { IClient, IProject } from "../../Interface";
 import urlcat from "urlcat";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Grid, Tab, Tabs, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  Container,
+  Grid,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import VendorProjectTable from "./VendorProjectTable";
+import { Box } from "@mui/system";
 
 // import TokenContext from "../../contextStore/token-context";
 // import { ITokenContext } from "../../Interface";
@@ -81,7 +89,28 @@ const VendorProjectTracker: FC = () => {
 
   return (
     <>
-      <VendorProjectTable revampProjects={revampProjects} />
+      {revampProjects ? (
+        <VendorProjectTable revampProjects={revampProjects} />
+      ) : (
+        <Box
+          sx={{
+            textAlign: "center",
+            height: "full",
+            p: 10,
+            mx: "auto",
+          }}
+        >
+          <CircularProgress />
+          <Typography
+            sx={{
+              fontWeight: "600",
+              fontSize: "medium",
+            }}
+          >
+            Loading might take awhile...
+          </Typography>
+        </Box>
+      )}
     </>
   );
 };
