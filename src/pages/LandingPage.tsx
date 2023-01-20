@@ -5,6 +5,7 @@ import { styled } from "@mui/material/styles";
 import {
   Button,
   CardContent,
+  CircularProgress,
   FormControl,
   Grid,
   InputLabel,
@@ -171,99 +172,90 @@ const LandingPage: FC = () => {
             </Box>
           </Grid>
 
-          <Grid container sx={{ mt: "1rem", display: "flex" }} spacing={2}>
-            {filteredDesigns.slice(0, 12).map((img, index) => (
-              <Grid item sm={12} md={3} key={index} sx={{ padding: 0 }}>
-                <Card>
-                  <CardMedia
-                    component="img"
-                    height="170"
-                    image={img.images[0]}
-                  />
-                  <CardContent sx={{ pt: 1, pl: 1, pr: 0, pb: 0 }}>
-                    <Typography
+          <Grid
+            container
+            sx={{
+              mt: "1rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            spacing={2}
+          >
+            {filteredDesigns[0] ? (
+              filteredDesigns.slice(0, 12).map((img, index) => (
+                <Grid item sm={12} md={3} key={index} sx={{ padding: 0 }}>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      height="170"
+                      image={img.images[0]}
+                    />
+                    <CardContent sx={{ pt: 1, pl: 1, pr: 0, pb: 0 }}>
+                      <Typography
+                        sx={{
+                          fontWeight: "600",
+                          fontSize: "medium",
+                        }}
+                      >
+                        {img.designTheme}
+                      </Typography>
+                      <Typography
+                        id={img.vendorId?.username}
+                        onClick={navigateVendorDetails}
+                        sx={{
+                          fontWeight: "500",
+                          fontSize: "small",
+                          "&:hover": {
+                            color: "gray",
+                          },
+                          cursor: "pointer",
+                        }}
+                      >
+                        @{img.vendorId?.username}
+                      </Typography>
+                    </CardContent>
+                    <CardActions
                       sx={{
-                        fontWeight: "600",
-                        fontSize: "medium",
+                        pt: 0,
+                        pl: 0,
+                        pr: 1,
+                        pb: 1,
+                        display: "flex",
+                        justifyContent: "flex-end",
                       }}
                     >
-                      {img.designTheme}
-                    </Typography>
-                    <Typography
-                      id={img.vendorId?.username}
-                      onClick={navigateVendorDetails}
-                      sx={{
-                        fontWeight: "500",
-                        fontSize: "small",
-                        "&:hover": {
-                          color: "gray",
-                        },
-                        cursor: "pointer",
-                      }}
-                    >
-                      @{img.vendorId?.username}
-                    </Typography>
-                  </CardContent>
-                  <CardActions
-                    sx={{
-                      pt: 0,
-                      pl: 0,
-                      pr: 1,
-                      pb: 1,
-                      display: "flex",
-                      justifyContent: "flex-end",
-                    }}
-                  >
-                    <Button
-                      size="small"
-                      name={img.vendorId?.username}
-                      id={img._id}
-                      onClick={navigatePortfolioDetails}
-                    >
-                      Learn More
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-
-            {/* <Grid item sm={12} md={3}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="170"
-                  image="https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=400"
-                />
-                <CardContent>
-                  <Typography>Tropical style</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item sm={12} md={3}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="170"
-                  image="https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=400"
-                />
-                <CardContent>
-                  <Typography>Hollywood Regency</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item sm={12} md={3}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="170"
-                  width="170"
-                  image="https://images.pexels.com/photos/1648771/pexels-photo-1648771.jpeg?auto=compress&cs=tinysrgb&w=400"
-                />
-                <CardContent>
-                  <Typography>Peter Tan Pte Ltd</Typography>
-                </CardContent>
-              </Card>
-            </Grid> */}
+                      <Button
+                        size="small"
+                        name={img.vendorId?.username}
+                        id={img._id}
+                        onClick={navigatePortfolioDetails}
+                      >
+                        Learn More
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))
+            ) : (
+              <Box
+                sx={{
+                  textAlign: "center",
+                  height: "full",
+                  p: 10,
+                }}
+              >
+                <CircularProgress />
+                <Typography
+                  sx={{
+                    fontWeight: "600",
+                    fontSize: "medium",
+                  }}
+                >
+                  Loading might take awhile...
+                </Typography>
+              </Box>
+            )}
           </Grid>
         </Grid>
 

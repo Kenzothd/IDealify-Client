@@ -4,6 +4,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  CircularProgress,
   Container,
   FormControl,
   Grid,
@@ -386,63 +387,83 @@ const VendorDetails: FC = () => {
           </Box>
           <Box sx={{ mx: "5rem", mt: "2rem" }}>
             <Grid container spacing={6}>
-              {filteredDesigns?.map((portfolio) => {
-                return (
-                  <Grid
-                    item
-                    key={portfolio._id}
-                    sm={12}
-                    md={4}
-                    sx={{ padding: 0 }}
+              {filteredDesigns ? (
+                filteredDesigns?.map((portfolio) => {
+                  return (
+                    <Grid
+                      item
+                      key={portfolio._id}
+                      sm={12}
+                      md={4}
+                      sx={{ padding: 0 }}
+                    >
+                      <Card>
+                        <CardMedia
+                          component="img"
+                          height="240"
+                          width="150"
+                          image={portfolio.images[0]}
+                        />
+                        <CardContent sx={{ pt: 1, pl: 1, pr: 0, pb: 1 }}>
+                          <Typography
+                            sx={{
+                              fontWeight: "600",
+                              fontSize: "medium",
+                            }}
+                          >
+                            {portfolio.portfolioName}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontWeight: "500",
+                              fontSize: 15,
+                            }}
+                          >
+                            {portfolio.designTheme}
+                          </Typography>
+                        </CardContent>
+                        <CardActions
+                          sx={{
+                            pt: 0,
+                            pl: 0,
+                            pr: 1,
+                            pb: 1,
+                            display: "flex",
+                            justifyContent: "flex-end",
+                          }}
+                        >
+                          <Button
+                            size="small"
+                            name={vendor.username}
+                            id={portfolio._id}
+                            onClick={navigatePortfolioDetails}
+                          >
+                            Learn More
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+                  );
+                })
+              ) : (
+                <Box
+                  sx={{
+                    textAlign: "center",
+                    height: "full",
+                    p: 10,
+                  }}
+                >
+                  <CircularProgress />
+                  <Typography
+                    sx={{
+                      fontWeight: "600",
+                      fontSize: "medium",
+                    }}
                   >
-                    <Card>
-                      <CardMedia
-                        component="img"
-                        height="240"
-                        width="150"
-                        image={portfolio.images[0]}
-                      />
-                      <CardContent sx={{ pt: 1, pl: 1, pr: 0, pb: 1 }}>
-                        <Typography
-                          sx={{
-                            fontWeight: "600",
-                            fontSize: "medium",
-                          }}
-                        >
-                          {portfolio.portfolioName}
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontWeight: "500",
-                            fontSize: 15,
-                          }}
-                        >
-                          {portfolio.designTheme}
-                        </Typography>
-                      </CardContent>
-                      <CardActions
-                        sx={{
-                          pt: 0,
-                          pl: 0,
-                          pr: 1,
-                          pb: 1,
-                          display: "flex",
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        <Button
-                          size="small"
-                          name={vendor.username}
-                          id={portfolio._id}
-                          onClick={navigatePortfolioDetails}
-                        >
-                          Learn More
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
-                );
-              })}
+                    Loading might take awhile...
+                  </Typography>
+                </Box>
+              )}
             </Grid>
           </Box>
         </Box>
