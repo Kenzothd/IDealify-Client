@@ -92,6 +92,11 @@ const LandingPage: FC = () => {
       ? images
       : images.filter((image) => image.designTheme === currentSelection);
 
+  const filteredDesignThemes = selectList.filter(
+    (item) =>
+      item === images?.find((ele) => ele.designTheme === item)?.designTheme
+  );
+
   const vendorLogin = () => {
     navigate("/vendor/login");
   };
@@ -156,7 +161,7 @@ const LandingPage: FC = () => {
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem value={"All"}>All</MenuItem>
-                  {selectList.sort().map((design, idx) => (
+                  {filteredDesignThemes.sort().map((design, idx) => (
                     <MenuItem key={idx} value={design}>
                       {design}
                     </MenuItem>

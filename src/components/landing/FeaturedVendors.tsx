@@ -107,7 +107,7 @@ const FeaturedVendors = () => {
                 }}
               >
                 <Button size="small" onClick={handleClick} id={vendor.username}>
-                  View portfolio
+                  View profile
                 </Button>
               </CardActions>
             </Card>

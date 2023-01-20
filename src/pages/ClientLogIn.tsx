@@ -20,7 +20,7 @@ const ClientLogIn: FC = () => {
             backgroundImage: `url(https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg?auto=compress&cs=tinysrgb&w=1600)`,
             backgroundSize: "cover",
             backgroundPosition: "center center",
-            height: "100vh",
+            height: "full",
             display: { xs: "none", sm: "block" },
             mt: "4rem",
           }}
@@ -36,7 +36,7 @@ const ClientLogIn: FC = () => {
             mt: { xs: "6rem", sm: "0", md: 8 },
           }}
         >
-          <Box sx={{ p: "2rem" }}>
+          <Box sx={{ px: "2rem", py: "6rem" }}>
             <Box sx={{ mb: "3rem" }}>
               <Typography variant="h2">Hello</Typography>
               <Typography variant="h2">Homeowners,</Typography>
@@ -71,6 +71,7 @@ const ClientLogIn: FC = () => {
                   textDecoration: "underline",
                   "&:hover": {
                     color: "green",
+                    cursor: "pointer",
                   },
                 }}
                 variant="body2"

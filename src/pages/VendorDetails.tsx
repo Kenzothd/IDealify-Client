@@ -5,8 +5,11 @@ import {
   CardContent,
   CardMedia,
   Container,
+  FormControl,
   Grid,
   Icon,
+  MenuItem,
+  Select,
   Typography,
 } from "@mui/material";
 import { Box, width } from "@mui/system";
@@ -101,6 +104,49 @@ const VendorDetails: FC = () => {
     .sort(compareDesc);
 
   const today = new Date();
+
+  const [currentSelection, setCurrentSelection] = useState("All");
+  const selectList = [
+    "Modern",
+    "Mid-century modern",
+    "Minimalist",
+    "Scandinavian",
+    "Industrial style",
+    "Contemporary interior design",
+    "Urban style",
+    "Traditional / Classic style",
+    "Transitional style",
+    "Art Deco style",
+    "Country style",
+    "Coastal style",
+    "Shabby chic",
+    "Eclectic",
+    "Vintage style",
+    "Asian / Zen interior design",
+    "Bohemian style",
+    "Tropical style",
+    "Rustic style ",
+    "Hollywood Regency",
+    "Modern farmhouse",
+    "Black & White",
+    "Others",
+  ];
+
+  const filteredDesigns =
+    currentSelection === "All"
+      ? portfolios
+      : portfolios.filter(
+          (portfolio) => portfolio.designTheme === currentSelection
+        );
+
+  const filteredDesignThemes = selectList.filter(
+    (item) =>
+      item === portfolios?.find((ele) => ele.designTheme === item)?.designTheme
+  );
+
+  const handleChange = (event: any) => {
+    setCurrentSelection(event.target.value);
+  };
 
   return (
     <>
@@ -239,8 +285,9 @@ const VendorDetails: FC = () => {
                 fontWeight: 800,
               }}
             >
-              Portfolio Overview
+              Overview
             </Typography>
+
             <Box
               sx={{
                 display: "flex",
@@ -299,7 +346,7 @@ const VendorDetails: FC = () => {
           </Box>
         </Box>
 
-        <Box sx={{ mt: "3rem" }}>
+        <Box sx={{ mt: "1.5rem" }}>
           <Typography
             sx={{
               fontSize: 36,
@@ -311,9 +358,35 @@ const VendorDetails: FC = () => {
           >
             Portfolio
           </Typography>
-          <Box sx={{ mx: "5rem", mt: "3rem" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              mt: "2rem",
+              mx: "5rem",
+            }}
+          >
+            <Typography variant="h5" sx={{ mr: 2 }}>
+              Select Design:
+            </Typography>
+            <FormControl size="small" sx={{ minWidth: 250 }}>
+              <Select
+                value={currentSelection}
+                onChange={handleChange}
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem value={"All"}>All</MenuItem>
+                {filteredDesignThemes.sort().map((design, idx) => (
+                  <MenuItem key={idx} value={design}>
+                    {design}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          <Box sx={{ mx: "5rem", mt: "2rem" }}>
             <Grid container spacing={6}>
-              {portfolios?.map((portfolio) => {
+              {filteredDesigns?.map((portfolio) => {
                 return (
                   <Grid
                     item
