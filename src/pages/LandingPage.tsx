@@ -183,8 +183,6 @@ const LandingPage: FC = () => {
             sx={{
               mt: "1rem",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
             }}
             spacing={2}
           >
@@ -249,6 +247,7 @@ const LandingPage: FC = () => {
                   textAlign: "center",
                   height: "full",
                   p: 10,
+                  mx: "auto",
                 }}
               >
                 <CircularProgress />
