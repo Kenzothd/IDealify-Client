@@ -145,9 +145,15 @@ const LandingPage: FC = () => {
       >
         <HomeCarousel />
 
-        <Grid container sx={{ mt: 3 }}>
-          <Grid item>
-            <Typography variant="h4" sx={{ fontWeight: "600" }}>
+        <Grid container sx={{ mt: 8 }}>
+          <Grid item md={12}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: 36,
+                fontWeight: 800,
+              }}
+            >
               Home Inspiration
             </Typography>
 

@@ -57,9 +57,11 @@ const FeaturedVendors = () => {
 
   return (
     <Grid container sx={{ mt: 8 }}>
-      <Typography variant="h4" sx={{ fontWeight: "600" }}>
-        Featured Vendors
-      </Typography>
+      <Grid item md={12}>
+        <Typography variant="h4" sx={{ fontSize: 36, fontWeight: 800 }}>
+          Featured Vendors
+        </Typography>
+      </Grid>
 
       <Grid container sx={{ mt: "2rem", display: "flex" }} spacing={2}>
         {vendors.map((vendor, idx) => (
